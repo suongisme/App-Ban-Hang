@@ -8,7 +8,6 @@ package giaodien;
 import java.awt.CardLayout;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
-import sun.swing.UIAction;
 
 /**
  *
@@ -23,6 +22,7 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -78,6 +78,7 @@ public class Home extends javax.swing.JFrame {
         btnOrder.setBackground(new java.awt.Color(59, 175, 218));
         btnOrder.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btnOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/order.png"))); // NOI18N
         btnOrder.setText("Order");
         btnOrder.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnOrder.setFocusPainted(false);
@@ -93,6 +94,7 @@ public class Home extends javax.swing.JFrame {
         btnHome.setBackground(new java.awt.Color(59, 175, 218));
         btnHome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/home.png"))); // NOI18N
         btnHome.setText("Home");
         btnHome.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnHome.setFocusPainted(false);
@@ -107,6 +109,7 @@ public class Home extends javax.swing.JFrame {
         btnSanPham.setBackground(new java.awt.Color(59, 175, 218));
         btnSanPham.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSanPham.setForeground(new java.awt.Color(255, 255, 255));
+        btnSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/product.png"))); // NOI18N
         btnSanPham.setText("Sản phẩm");
         btnSanPham.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnSanPham.setFocusPainted(false);
@@ -121,6 +124,7 @@ public class Home extends javax.swing.JFrame {
         btnNhanVien.setBackground(new java.awt.Color(59, 175, 218));
         btnNhanVien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnNhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        btnNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/employee.png"))); // NOI18N
         btnNhanVien.setText("Nhân viên");
         btnNhanVien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnNhanVien.setFocusPainted(false);
@@ -135,6 +139,7 @@ public class Home extends javax.swing.JFrame {
         btnLoaiSanPham.setBackground(new java.awt.Color(59, 175, 218));
         btnLoaiSanPham.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnLoaiSanPham.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoaiSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/type.png"))); // NOI18N
         btnLoaiSanPham.setText("Loại sản phẩm");
         btnLoaiSanPham.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnLoaiSanPham.setFocusPainted(false);
@@ -149,6 +154,7 @@ public class Home extends javax.swing.JFrame {
         btnLuong.setBackground(new java.awt.Color(59, 175, 218));
         btnLuong.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnLuong.setForeground(new java.awt.Color(255, 255, 255));
+        btnLuong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/salary.png"))); // NOI18N
         btnLuong.setText("Lương");
         btnLuong.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnLuong.setFocusPainted(false);
@@ -163,6 +169,7 @@ public class Home extends javax.swing.JFrame {
         btnHoaDon.setBackground(new java.awt.Color(59, 175, 218));
         btnHoaDon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        btnHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/receipt.png"))); // NOI18N
         btnHoaDon.setText("Hoá đơn");
         btnHoaDon.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnHoaDon.setFocusPainted(false);
@@ -177,6 +184,7 @@ public class Home extends javax.swing.JFrame {
         btnDoiMatKhau.setBackground(new java.awt.Color(59, 175, 218));
         btnDoiMatKhau.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDoiMatKhau.setForeground(new java.awt.Color(255, 255, 255));
+        btnDoiMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/changepass.png"))); // NOI18N
         btnDoiMatKhau.setText("Đổi mật khẩu");
         btnDoiMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         btnDoiMatKhau.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -190,6 +198,7 @@ public class Home extends javax.swing.JFrame {
         btnThongKe.setBackground(new java.awt.Color(59, 175, 218));
         btnThongKe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnThongKe.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/total.png"))); // NOI18N
         btnThongKe.setText("Thống kê");
         btnThongKe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnThongKe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -266,7 +275,7 @@ public class Home extends javax.swing.JFrame {
         pnlHomeLayout.setVerticalGroup(
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHomeLayout.createSequentialGroup()
-                .addComponent(lblMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
+                .addComponent(lblMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -618,8 +627,28 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-    private void showForm(JComponent form) {
+    public void showForm(JComponent form) {
+        this.alignSubForm(form);
         desktop.add(form);
         form.setVisible(true);
+    }
+    
+    // căn form con ra giữa
+    private void alignSubForm(JComponent form) {
+        form.setLocation(this.getWidthCenter(form), this.getHeightCenter(form));
+    }
+    
+    // lấy chiều ngang để căn form con ra giữa
+    private int getWidthCenter(JComponent form) {
+        int widthSuper = this.getWidth();
+        int widthSub = form.getWidth();
+        return (widthSuper - widthSub) /2;
+    }
+    
+    // lất dài để căn form con ra giữa
+    private int getHeightCenter(JComponent form) {
+        int heightSuper = this.getHeight();
+        int heightSub = form.getHeight();
+        return (heightSuper - heightSub) /2;
     }
 }

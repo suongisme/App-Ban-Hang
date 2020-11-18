@@ -50,6 +50,8 @@ public class ThongKe extends javax.swing.JInternalFrame {
         rdoNgoaiNuoc = new javax.swing.JRadioButton();
         rdoTrongNuoc = new javax.swing.JRadioButton();
 
+        setClosable(true);
+
         cbxDoanhThuNam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cbxDoanhThuNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Năm 2019", "Năm 2020", "Năm 2021" }));
 

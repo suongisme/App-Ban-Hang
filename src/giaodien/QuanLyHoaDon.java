@@ -37,6 +37,8 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
 
+        setClosable(true);
+
         lblNam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNam.setText("Năm");
 

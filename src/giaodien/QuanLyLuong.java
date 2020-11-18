@@ -50,6 +50,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setClosable(true);
+
         pnlMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 255)));
         pnlMenu.setPreferredSize(new java.awt.Dimension(263, 474));
 
@@ -61,7 +63,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         jLabel9.setText("IMG");
         jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btnCapNhat3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnCapNhat3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCapNhat3.setText("Chấm công");
         btnCapNhat3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,7 +71,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             }
         });
 
-        btnDanhSachNhanVien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnDanhSachNhanVien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDanhSachNhanVien.setText("Xem lương chi tiết");
         btnDanhSachNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,13 +110,13 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        btnTimKiem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTimKiem.setText("Import");
 
-        btnImport.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnImport.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnImport.setText("Tìm kiếm");
 
-        btnCapNhat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnCapNhat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCapNhat.setText("Cập nhật");
 
         tblLuong.setModel(new javax.swing.table.DefaultTableModel(
@@ -164,7 +166,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
 
         txtTimKiem1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        btnTimKiem1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnTimKiem1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTimKiem1.setText("Tìm kiếm");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -212,11 +214,11 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE))
+                .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
         );
 
@@ -234,25 +236,17 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
-    private javax.swing.JButton btnCapNhat1;
-    private javax.swing.JButton btnCapNhat2;
     private javax.swing.JButton btnCapNhat3;
     private javax.swing.JButton btnDanhSachNhanVien;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnTimKiem1;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lbTime;
-    private javax.swing.JLabel lbTime1;
     private javax.swing.JLabel lbTime2;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlScreenMain;
