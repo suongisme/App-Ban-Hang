@@ -87,6 +87,13 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
     public List<NhanVien> selectAll() {
         return this.selectBySQL(SQL_SELECT);
     }
+    
+    public NhanVien selectByEmail(String email) {
+        String sql = "SELECT * FROM nhanvien WHERE email = ?";
+        List<NhanVien> nhanVienList = this.selectBySQL(sql, email);
+        
+        return nhanVienList.isEmpty() ? null : nhanVienList.get(0);
+    }
 
     @Override
     public List<NhanVien> selectBySQL(String sql,Object...x) {
