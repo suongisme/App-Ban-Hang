@@ -5,6 +5,12 @@
  */
 package giaodien;
 
+import DAO.NhanVienDAO;
+import entity.NhanVien;
+import java.awt.Color;
+import tienich.Auth;
+import tienich.MsgBox;
+
 /**
  *
  * @author Admin
@@ -17,6 +23,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
     public QuenMatKhau() {
         initComponents();
         setLocationRelativeTo(null);
+        initialization();
     }
 
     /**
@@ -31,7 +38,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         btnTiepTuc = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,8 +59,19 @@ public class QuenMatKhau extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("back");
+        lblBack.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBack.setText("back");
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBackMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +88,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
                             .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(btnTiepTuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(74, Short.MAX_VALUE))
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,55 +100,76 @@ public class QuenMatKhau extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnTiepTuc, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
-                .addComponent(jLabel2))
+                .addComponent(lblBack))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTiepTucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTucActionPerformed
-        // TODO add your handling code here:
+        if  (isError(txtEmail.getText())) return;
+        new QuenMatKhau2().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTiepTucActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        this.dispose();
+        new DangNhap().setVisible(true);
+    }//GEN-LAST:event_lblBackMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuenMatKhau().setVisible(true);
-            }
-        });
-    }
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+        lblBack.setForeground(Color.BLUE);
+    }//GEN-LAST:event_lblBackMouseEntered
+
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+        lblBack.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lblBackMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTiepTuc;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblBack;
     private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
+
+    private String regex;
+    private NhanVienDAO nhanvienDAO;
+    
+    private void initialization() {
+        regex = "[a-z]\\w+@\\w+(\\.[a-z]+){1,2}";
+        nhanvienDAO = new NhanVienDAO();
+    }
+    
+    private boolean isError(String text) {
+        if (isEmpty(text)) {
+            MsgBox.notify("Email không được trống!", this);
+            return true;
+        }
+        
+        if (!isEmail(text)) {
+            MsgBox.notify("Email sai định dạng!", this);
+            return true;
+        }
+        
+        if (!isExist(text)) {
+            MsgBox.notify("Email chưa được đăng ký!", this);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private boolean isEmpty(String text) {
+        return text.isEmpty();
+    }
+    
+    private boolean isEmail(String text) {
+        return text.matches(regex);
+    }
+    
+    private boolean isExist(String email) {
+        Auth.user = nhanvienDAO.selectByEmail(email);
+        
+        return Auth.user != null;
+    }
 }

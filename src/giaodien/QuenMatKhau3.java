@@ -5,6 +5,11 @@
  */
 package giaodien;
 
+import DAO.NhanVienDAO;
+import java.awt.Color;
+import tienich.Auth;
+import tienich.MsgBox;
+
 /**
  *
  * @author Admin
@@ -16,6 +21,9 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
      */
     public QuenMatKhau3() {
         initComponents();
+        setLocationRelativeTo(null);
+        lblTenNguoiDung.setText(Auth.user.getTenNhanVien());
+        initialization();
     }
 
     /**
@@ -28,13 +36,13 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        lbEmail = new javax.swing.JLabel();
+        lblTenNguoiDung = new javax.swing.JLabel();
         txtMatKhauMoi = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNhapLai = new javax.swing.JTextField();
         btnXacNhan = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,9 +50,9 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cập nhật mật khẩu của");
 
-        lbEmail.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lbEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbEmail.setText("something@gmail.com.vn");
+        lblTenNguoiDung.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTenNguoiDung.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTenNguoiDung.setText("Nguyen Van A");
 
         txtMatKhauMoi.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -58,16 +66,32 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
 
         btnXacNhan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnXacNhan.setText("Xác nhận");
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("back");
+        lblBack.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBack.setText("back");
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBackMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTenNguoiDung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -79,7 +103,7 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
                     .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                     .addComponent(txtNhapLai, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                 .addGap(44, 44, 44))
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,7 +111,7 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTenNguoiDung, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNhapLai, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,55 +123,88 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(btnXacNhan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(jLabel4))
+                .addComponent(lblBack))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhau3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        this.dispose();
+        new QuenMatKhau2().setVisible(true);
+    }//GEN-LAST:event_lblBackMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new QuenMatKhau3().setVisible(true);
-            }
-        });
-    }
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+        lblBack.setForeground(Color.BLUE);
+    }//GEN-LAST:event_lblBackMouseEntered
+
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+        lblBack.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lblBackMouseExited
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        if (isError(txtMatKhauMoi.getText(), txtNhapLai.getText())) return;
+        
+        changePassword();
+        
+        if (MsgBox.confirm("Bạn có muốn đến trang đăng nhập không?", this)) {
+            this.dispose();
+            new DangNhap().setVisible(true);
+        }
+    }//GEN-LAST:event_btnXacNhanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lblBack;
+    private javax.swing.JLabel lblTenNguoiDung;
     private javax.swing.JTextField txtMatKhauMoi;
     private javax.swing.JTextField txtNhapLai;
     // End of variables declaration//GEN-END:variables
+    private NhanVienDAO nhanVienDAO;
+    private void initialization() {
+        nhanVienDAO = new NhanVienDAO();
+    }
+    
+    private boolean isError(String matKhauMoi, String xacNhanMatKhau) {
+        if (isEmpty(matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu không được trống", this);
+            return true;
+        }
+        
+        if (!isGreater8Char(matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu phải dài hơn 8 ký tự", this);
+            return true;
+        }
+        
+        if (!isMatch(matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu mới và xác nhận mật khẩu không trùng nhau", this);
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean isEmpty(String matKhau, String xacNhanMatKhau) {
+        return (matKhau.isEmpty() || xacNhanMatKhau.isEmpty());
+    }
+    
+    private boolean isGreater8Char(String matKhau, String xacNhanMatKhau) {
+        return (matKhau.length() >= 8 && xacNhanMatKhau.length() >= 8);
+    }
+    
+    private boolean isMatch(String matKhauMoi, String xacNhanMatKhau) {
+        return matKhauMoi.equals(xacNhanMatKhau);
+    }
+
+    private void changePassword() {
+        Auth.user.setMatKhau(txtMatKhauMoi.getText());
+        try {
+            nhanVienDAO.update(Auth.user);
+            MsgBox.notify("Đổi mật khẩu thành công", this);
+        } catch (Exception e) {
+            MsgBox.notify("lỗi", this);
+        }
+    }
 }

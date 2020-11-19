@@ -18,8 +18,8 @@ import tienich.JDBCHelper;
  */
 public class NhanVienDAO implements DAO<NhanVien, String>{
 
-    private final String SQL_INSERT_NHANVIEN = "INSERT INTO nhanvien(manhanvien,tennhanvien,loainhanvien,gioitinh,ngaysinh,diachi,sdt,emai,matkhau,hesoluong,hinh)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    private final String SQL_UPDATE_NHANVIEN = "UPDATE nhanvien SET tennhanvien = ?, loainhanvien = ?, gioitinh = ?, ngaysinh = ?, diachi = ?, sdt = ?, emai = ?, matkhau = ?, hesoluong = ?, hinh WHERE manhanvine = ?";
+    private final String SQL_INSERT_NHANVIEN = "INSERT INTO nhanvien(manhanvien,tennhanvien,loainhanvien,gioitinh,ngaysinh,diachi,sdt,email,matkhau,hesoluong,hinh)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+    private final String SQL_UPDATE_NHANVIEN = "UPDATE nhanvien SET tennhanvien = ?, loainhanvien = ?, gioitinh = ?, ngaysinh = ?, diachi = ?, sdt = ?, email = ?, matkhau = ?, hesoluong = ?, hinh = ? WHERE manhanvien = ?";
     private final String SQL_DELETE_NHANVIEN = "DELETE FROM nhanvien where manhanvien = ?";
     private final String SQL_SELECT = "SELECT * FROM nhanvien";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM nhanvien WHERE manhanvien = ?";
