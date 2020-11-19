@@ -12,7 +12,7 @@ import entity.NhanVien;
  * @author SuongNguyen
  */
 public class Auth {
-    private static NhanVien user;
+    public static NhanVien user;
     
     public static boolean isManger() {
         return "Quản lý".equalsIgnoreCase(user.getLoaiNhanVien());
