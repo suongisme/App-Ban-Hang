@@ -19,6 +19,7 @@ public class DangNhap extends javax.swing.JFrame {
     public DangNhap() {
         initComponents();
         setLocationRelativeTo(null);
+        new Chao(null, true).setVisible(true);
     }
 
     /**
