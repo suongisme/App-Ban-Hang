@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +20,7 @@ import java.sql.SQLException;
 public class JDBCHelper {
     
     private static Connection con;
-    private static final String USER = "amdin";
+    private static final String USER = "admin";
     private static final String PASSWORD = "123@123";
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static final String CONNECT = "jdbc:sqlserver://localhost:1433;databasename=AppBanHang";
@@ -52,5 +54,13 @@ public class JDBCHelper {
     
     public static ResultSet queryResult(String sql, Object...parameter) throws SQLException{
         return getPrepareStatement(sql, parameter).executeQuery();
+    }
+    
+    public static void main(String[] args) {
+        try {
+            JDBCHelper.openConnection();
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
     }
 }
