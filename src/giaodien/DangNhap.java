@@ -5,6 +5,7 @@
  */
 package giaodien;
 
+import java.awt.Color;
 import javax.swing.UIManager;
 
 /**
@@ -79,15 +80,23 @@ public class DangNhap extends javax.swing.JFrame {
         lblQuenMatKhau.setForeground(new java.awt.Color(255, 255, 255));
         lblQuenMatKhau.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblQuenMatKhau.setText("Quên mật khẩu?");
+        lblQuenMatKhau.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblQuenMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblQuenMatKhauMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblQuenMatKhauMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblQuenMatKhauMouseExited(evt);
             }
         });
 
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDangNhap.setForeground(new java.awt.Color(59, 175, 218));
         btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDangNhapActionPerformed(evt);
@@ -193,6 +202,14 @@ public class DangNhap extends javax.swing.JFrame {
         new QuenMatKhau().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblQuenMatKhauMouseClicked
+
+    private void lblQuenMatKhauMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseEntered
+        lblQuenMatKhau.setForeground(Color.BLACK);
+    }//GEN-LAST:event_lblQuenMatKhauMouseEntered
+
+    private void lblQuenMatKhauMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseExited
+        lblQuenMatKhau.setForeground(Color.WHITE);
+    }//GEN-LAST:event_lblQuenMatKhauMouseExited
 
     /**
      * @param args the command line arguments
