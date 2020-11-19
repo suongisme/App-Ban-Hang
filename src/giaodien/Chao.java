@@ -8,6 +8,7 @@ package giaodien;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import tienich.JDBCHelper;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Chao extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        
         new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -33,6 +35,13 @@ public class Chao extends javax.swing.JDialog {
                 }
             }
         }).start();
+        
+        try {
+            JDBCHelper.openConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
     }
 
     /**
