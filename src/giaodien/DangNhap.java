@@ -78,6 +78,11 @@ public class DangNhap extends javax.swing.JFrame {
         lblQuenMatKhau.setForeground(new java.awt.Color(255, 255, 255));
         lblQuenMatKhau.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblQuenMatKhau.setText("Quên mật khẩu?");
+        lblQuenMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblQuenMatKhauMouseClicked(evt);
+            }
+        });
 
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnDangNhap.setForeground(new java.awt.Color(59, 175, 218));
@@ -182,6 +187,11 @@ public class DangNhap extends javax.swing.JFrame {
         new Home().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDangNhapActionPerformed
+
+    private void lblQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseClicked
+        new QuenMatKhau().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblQuenMatKhauMouseClicked
 
     /**
      * @param args the command line arguments
