@@ -12,13 +12,17 @@ import entity.NhanVien;
  * @author SuongNguyen
  */
 public class Auth {
-    private static NhanVien user;
-    
+    public static NhanVien user = null;
+
+    public static void clear() {
+        Auth.user = null;
+    }
+
+    public static boolean isLogin() {
+        return Auth.user != null;
+    }
+
     public static boolean isManger() {
         return "Quản lý".equalsIgnoreCase(user.getLoaiNhanVien());
-    }
-    
-    public static void logout() {
-        user = null;
     }
 }
