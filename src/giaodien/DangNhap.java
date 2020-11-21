@@ -258,6 +258,10 @@ void dangNhap() {
             MsgBox.notify("Sai tên đăng nhập", this);
         } else if (!matKhau.equals(nv.getMatKhau())) {
             MsgBox.notify("Sai mật khẩu", this);
+        } else if (txtUsername.equals("")) {
+            MsgBox.notify("Trống tên đăng nhập", this);
+        }else if(txtMatKhau.equals("")){
+            MsgBox.notify("Trống mật khẩu", this);
         } else {
             Auth.user = nv;
             this.dispose();
