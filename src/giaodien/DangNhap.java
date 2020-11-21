@@ -10,6 +10,7 @@ import entity.NhanVien;
 import javax.swing.UIManager;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
+import java.awt.event.KeyEvent;
 import tienich.Auth;
 
 /**
@@ -26,7 +27,6 @@ public class DangNhap extends javax.swing.JFrame {
     public DangNhap() {
         initComponents();
         setLocationRelativeTo(null);
-        new Chao(null, true).setVisible(true);
     }
 
     /**
@@ -73,6 +73,11 @@ public class DangNhap extends javax.swing.JFrame {
         txtUsername.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(255, 255, 255));
         txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,6 +118,11 @@ public class DangNhap extends javax.swing.JFrame {
         txtMatKhau.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtMatKhau.setForeground(new java.awt.Color(255, 255, 255));
         txtMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMatKhauKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -200,12 +210,7 @@ public class DangNhap extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
-        try {
-            dangNhap();
-        } catch (Exception e) {
-            MsgBox.notify("Lỗi đăng nhập", this);
-            e.printStackTrace();
-        }
+        login();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void lblQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseClicked
@@ -220,6 +225,18 @@ public class DangNhap extends javax.swing.JFrame {
     private void lblQuenMatKhauMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuenMatKhauMouseExited
         lblQuenMatKhau.setForeground(Color.WHITE);
     }//GEN-LAST:event_lblQuenMatKhauMouseExited
+
+    private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            login();
+        }
+    }//GEN-LAST:event_txtMatKhauKeyPressed
+
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtMatKhau.requestFocus();
+        }
+    }//GEN-LAST:event_txtUsernameKeyPressed
 
     /**
      * @param args the command line arguments
@@ -250,21 +267,24 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-void dangNhap() {
-        String maNv = txtUsername.getText();
-        String matKhau = String.valueOf(txtMatKhau.getPassword());
-        NhanVien nv = dao.selectByID(maNv);
-        if (nv == null) {
-            MsgBox.notify("Sai tên đăng nhập", this);
-        } else if (!matKhau.equals(nv.getMatKhau())) {
-            MsgBox.notify("Sai mật khẩu", this);
-        } else if (txtUsername.equals("")) {
-            MsgBox.notify("Trống tên đăng nhập", this);
-        }else if(txtMatKhau.equals("")){
-            MsgBox.notify("Trống mật khẩu", this);
-        } else {
-            Auth.user = nv;
-            this.dispose();
+    
+    private void login() {
+        try {
+            String maNv = txtUsername.getText();
+            String matKhau = String.valueOf(txtMatKhau.getPassword());
+            NhanVien nv = dao.selectByID(maNv);
+            if (nv == null) {
+                MsgBox.notify("Sai tên đăng nhập", this);
+            } else if (!matKhau.equals(nv.getMatKhau())) {
+                MsgBox.notify("Sai mật khẩu", this);
+            } else {
+                Auth.user = nv;
+                new Home().setVisible(true);
+                this.dispose();
+            }
+        } catch (Exception e) {
+            MsgBox.notify("Lỗi đăng nhập", this);
+            e.printStackTrace();
         }
     }
 }
