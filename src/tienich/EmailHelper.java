@@ -24,8 +24,8 @@ public class EmailHelper extends Thread{
     private String content;
     private String title;
     public static int codeReset;
-    private final String EMAIL_ADDRESS = "edusys58@gmail.com";
-    private final String PASS_EMAIL = "nguyenvansuong";
+    private final String EMAIL_ADDRESS = "nhom5fafo@gmail.com";
+    private final String PASS_EMAIL = "12345678@a";
 
     private EmailHelper(String destination) {
         codeReset = (int) (Math.random()*899999)+100000;

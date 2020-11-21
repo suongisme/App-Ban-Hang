@@ -8,6 +8,8 @@ package giaodien;
 import java.awt.CardLayout;
 import javax.swing.JComponent;
 import javax.swing.UIManager;
+import tienich.Auth;
+import tienich.MsgBox;
 
 /**
  *
@@ -19,6 +21,7 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     CardLayout cardlayout;
+
     public Home() {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
@@ -535,22 +538,27 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
+        if (isAccess()) return;
         showForm(new QuanLySanPham());
     }//GEN-LAST:event_btnSanPhamActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
+        if (isAccess()) return;
         showForm(new QuanLyNhanVien());
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnLoaiSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoaiSanPhamActionPerformed
+        if (isAccess()) return;
         showForm(new QuanLyLoaiSanPham());
     }//GEN-LAST:event_btnLoaiSanPhamActionPerformed
 
     private void btnLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuongActionPerformed
+        
         showForm(new QuanLyLuong());
     }//GEN-LAST:event_btnLuongActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
+        if (isAccess()) return;
         showForm(new QuanLyHoaDon());
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
@@ -559,6 +567,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDoiMatKhauActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        if (isAccess()) return;
         showForm(new ThongKe());
     }//GEN-LAST:event_btnThongKeActionPerformed
 
@@ -573,7 +582,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         showForm(new ThanhToan());
-        
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     /**
@@ -632,23 +641,31 @@ public class Home extends javax.swing.JFrame {
         desktop.add(form);
         form.setVisible(true);
     }
-    
+
     // căn form con ra giữa
     private void alignSubForm(JComponent form) {
         form.setLocation(this.getWidthCenter(form), this.getHeightCenter(form));
     }
-    
+
     // lấy chiều ngang để căn form con ra giữa
     private int getWidthCenter(JComponent form) {
         int widthSuper = this.getWidth();
         int widthSub = form.getWidth();
-        return (widthSuper - widthSub) /2;
+        return (widthSuper - widthSub) / 2;
     }
-    
+
     // lất dài để căn form con ra giữa
     private int getHeightCenter(JComponent form) {
         int heightSuper = this.getHeight();
         int heightSub = form.getHeight();
-        return (heightSuper - heightSub) /2;
+        return (heightSuper - heightSub) / 2;
+    }
+    
+    private boolean isAccess() {
+        if (!Auth.isManger()) {
+            MsgBox.notify("Ban khong co quyen!", this);
+            return false;
+        }
+        return true;
     }
 }
