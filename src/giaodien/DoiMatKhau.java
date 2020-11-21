@@ -6,6 +6,8 @@
 package giaodien;
 
 import DAO.NhanVienDAO;
+import java.awt.event.KeyEvent;
+import javax.swing.JPasswordField;
 import tienich.Auth;
 import tienich.MsgBox;
 
@@ -18,10 +20,11 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
     /**
      * Creates new form DoiMatKhau
      */
-    NhanVienDAO dao = new NhanVienDAO();
+    NhanVienDAO nhanVienDAO = new NhanVienDAO();
     
     public DoiMatKhau() {
         initComponents();
+        txtUser.setText(Auth.user.getMaNhanVien());
     }
 
     /**
@@ -39,7 +42,7 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        rdoHienThi = new javax.swing.JCheckBox();
+        ckbHienThi = new javax.swing.JCheckBox();
         btnXacNhan = new javax.swing.JButton();
         txtPassCu = new javax.swing.JPasswordField();
         txtPassMoi2 = new javax.swing.JPasswordField();
@@ -52,6 +55,8 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 255));
         jLabel1.setText("UserName");
 
+        txtUser.setEditable(false);
+
         jLabel2.setForeground(new java.awt.Color(0, 0, 255));
         jLabel2.setText("Mật khẩu cũ");
 
@@ -61,7 +66,12 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 255));
         jLabel4.setText("Xác nhận mật khẩu mới");
 
-        rdoHienThi.setText("Hiển thị mật khẩu");
+        ckbHienThi.setText("Hiển thị mật khẩu");
+        ckbHienThi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbHienThiActionPerformed(evt);
+            }
+        });
 
         btnXacNhan.setBackground(new java.awt.Color(0, 0, 255));
         btnXacNhan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -70,6 +80,12 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
         btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXacNhanActionPerformed(evt);
+            }
+        });
+
+        txtPassMoi2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPassMoi2KeyPressed(evt);
             }
         });
 
@@ -86,7 +102,7 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
                     .addComponent(btnXacNhan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rdoHienThi))
+                        .addComponent(ckbHienThi))
                     .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +133,7 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassMoi2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rdoHienThi)
+                .addComponent(ckbHienThi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -158,31 +174,96 @@ public class DoiMatKhau extends javax.swing.JInternalFrame {
         String matKhau = new String(txtPassCu.getPassword());
         String matKhauMoi = new String(txtPassMoi.getPassword());
         String matKhauMoi2 = new String(txtPassMoi2.getPassword());
-        if (!maNv.equalsIgnoreCase(Auth.user.getMaNhanVien())) {
-            MsgBox.notify("Sai tên đăng nhập!", this);
-        } else if (!matKhau.equals(Auth.user.getMatKhau())) {
-            MsgBox.notify("Sai mật khẩu", this);
-        } else if (!matKhauMoi.equals(matKhauMoi2)) {
-            MsgBox.notify("Xác nhận mật khẩu mới không đúng!", this);
-        } else {
-            Auth.user.setMatKhau(matKhauMoi);
-            MsgBox.notify("Đổi mật khẩu thành công", this);
-        }
+       
+        if (isError(matKhau, matKhauMoi, matKhauMoi2)) 
+            return;
+        changePassword();
     }//GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void ckbHienThiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbHienThiActionPerformed
+        if (ckbHienThi.isSelected()) {
+            showPassword(txtPassCu,txtPassMoi,txtPassMoi2);
+        } else {
+            hidePassword(txtPassCu,txtPassMoi,txtPassMoi2);
+        }
+    }//GEN-LAST:event_ckbHienThiActionPerformed
+
+    private void txtPassMoi2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPassMoi2KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String maNv = txtUser.getText();
+            String matKhau = new String(txtPassCu.getPassword());
+            String matKhauMoi = new String(txtPassMoi.getPassword());
+            String matKhauMoi2 = new String(txtPassMoi2.getPassword());
+       
+            if (isError(matKhau, matKhauMoi, matKhauMoi2)) 
+                return;
+            changePassword();
+        }
+    }//GEN-LAST:event_txtPassMoi2KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXacNhan;
+    private javax.swing.JCheckBox ckbHienThi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JCheckBox rdoHienThi;
     private javax.swing.JPasswordField txtPassCu;
     private javax.swing.JPasswordField txtPassMoi;
     private javax.swing.JPasswordField txtPassMoi2;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isError(String matKhauCu,String matKhauMoi, String xacNhanMatKhau) {
+        if (isEmpty(matKhauCu,matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu không được trống", this);
+            return true;
+        }
+        
+        if (!isGreater8Char(matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu phải dài hơn 8 ký tự", this);
+            return true;
+        }
+        
+        if (!isMatch(matKhauMoi, xacNhanMatKhau)) {
+            MsgBox.notify("Mật khẩu mới và xác nhận mật khẩu không trùng nhau", this);
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean isEmpty(String matkhaucu,String matKhau, String xacNhanMatKhau) {
+        return (matKhau.isEmpty() || xacNhanMatKhau.isEmpty() || matkhaucu.isEmpty());
+    }
+    
+    private boolean isGreater8Char(String matKhau, String xacNhanMatKhau) {
+        return (matKhau.length() >= 8 && xacNhanMatKhau.length() >= 8);
+    }
+    
+    private boolean isMatch(String matKhauMoi, String xacNhanMatKhau) {
+        return matKhauMoi.equals(xacNhanMatKhau);
+    }
+    
+    private void changePassword() {
+        Auth.user.setMatKhau(txtPassMoi.getText());
+        try {
+            nhanVienDAO.update(Auth.user);
+            MsgBox.notify("Đổi mật khẩu thành công", this);
+        } catch (Exception e) {
+            MsgBox.notify("lỗi", this);
+        }
+    }
+    
+    private void showPassword(JPasswordField...pass) {
+        for (JPasswordField x : pass)
+            x.setEchoChar('\u0000');
+    }
+    
+     private void hidePassword(JPasswordField...pass) {
+        for (JPasswordField x : pass)
+            x.setEchoChar('\u25cf');
+    }
 }

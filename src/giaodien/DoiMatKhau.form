@@ -62,7 +62,7 @@
                       <Component id="btnXacNhan" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="rdoHienThi" min="-2" max="-2" attributes="0"/>
+                          <Component id="ckbHienThi" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtUser" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -99,7 +99,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtPassMoi2" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="rdoHienThi" min="-2" max="-2" attributes="0"/>
+                  <Component id="ckbHienThi" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnXacNhan" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -117,6 +117,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtUser">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -142,10 +145,13 @@
             <Property name="text" type="java.lang.String" value="X&#xe1;c nh&#x1ead;n m&#x1ead;t kh&#x1ea9;u m&#x1edb;i"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="rdoHienThi">
+        <Component class="javax.swing.JCheckBox" name="ckbHienThi">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hi&#x1ec3;n th&#x1ecb; m&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ckbHienThiActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnXacNhan">
           <Properties>
@@ -167,6 +173,9 @@
         <Component class="javax.swing.JPasswordField" name="txtPassCu">
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPassMoi2">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPassMoi2KeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPassMoi">
         </Component>
