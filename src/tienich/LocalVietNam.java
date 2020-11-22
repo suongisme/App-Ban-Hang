@@ -55,7 +55,7 @@ public class LocalVietNam {
             }
         }
 
-        return new StringBuilder(newMoney).reverse()+"đ";
+        return new StringBuilder(newMoney).reverse()+".000đ";
     }
 
     /**
@@ -68,29 +68,6 @@ public class LocalVietNam {
      */
     public static String getCurrency(Object money) throws FormatVietNamException {
         return getCurrency(money.toString());
-    }
-    
-    /**
-     * 
-     * @param money is String
-     * @return normal money
-     * 
-     * @Example input: 1.000.000đ
-     *          output: 1000000
-     */
-    public static int getNormalMoney(String money) {
-        char[] numberArray = money.toCharArray();
-        String newString = "";
-        for (int x : numberArray) {
-            if (x > 47 && x < 58) {
-                newString += (char) x;
-            }
-        }
-        return Integer.parseInt(newString);
-    }
-    
-    public static int getNormalMoney(Object money) {
-        return LocalVietNam.getNormalMoney(money.toString());
     }
 
     /**
@@ -113,7 +90,7 @@ public class LocalVietNam {
         try {
             Integer.parseInt(number);
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
     }
