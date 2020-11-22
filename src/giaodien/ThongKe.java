@@ -522,12 +522,12 @@ public class ThongKe extends javax.swing.JInternalFrame {
             comboBoxYear.addElement(year);
         }
     }
-
+   
     private void fillDoanhThuTable() {
         tableDoanhThu.setRowCount(0);
         int nam = (int) cbxDoanhThuNam.getSelectedItem();
         try {
-            
+            int tongTien = 0;
             List<Object[]> a = thongKeDAO.getDoanhThu(nam);
             for (Object[] x : a) {
                 tableDoanhThu.addRow(new Object[] {
@@ -536,8 +536,9 @@ public class ThongKe extends javax.swing.JInternalFrame {
                     LocalVietNam.getCurrency(x[2]),
                     LocalVietNam.getCurrency(x[3]),
                 });
+                tongTien += (int)x[3];
             }
-            lblTong.setText(getTongOf(tableDoanhThu));
+            lblTong.setText(LocalVietNam.getCurrency(tongTien));
         } catch (FormatVietNamException vn) {
             MsgBox.notify(vn.getMessage(), this);
         } catch (SQLException e) {
@@ -552,17 +553,19 @@ public class ThongKe extends javax.swing.JInternalFrame {
         int thang = Integer.parseInt(cbxThangLuongNhanVien.getSelectedItem().toString());
 
         try {
-        
+            int tongTien = 0;
             List<Object[]> a = thongKeDAO.getLuongNhanVien(thang, nam);
             for (Object[] x : a) {
+                int luongNhanVien = getLuongNhanVien(x[0], x[3]);
                 tableLuong.addRow(new Object[] {
                     x[0],x[1],
                     "Tháng "+x[2],
                     LocalVietNam.getTime(x[3]),
-                    LocalVietNam.getCurrency(getLuongNhanVien(x[0], x[3]))
+                    LocalVietNam.getCurrency(luongNhanVien)
                 });
+                tongTien += luongNhanVien;
             }
-            lblLuongTong.setText(getTongOf(tableLuong));
+            lblLuongTong.setText(LocalVietNam.getCurrency(tongTien));
         } catch (FormatVietNamException vn) {
             MsgBox.notify(vn.getMessage(), this);
         } catch (SQLException e) {
@@ -577,17 +580,18 @@ public class ThongKe extends javax.swing.JInternalFrame {
         int thang = Integer.parseInt(cbxBanChayThang.getSelectedItem().toString());
         try {
             List<Object[]> a = thongKeDAO.getMatHangBanChay(thang, nam, isForeigner);
-            a.forEach((x) -> {
+            
+            for (Object[] x : a) {
                 tableSanPham.addRow(new Object[]{
                     x[0], x[1], "Tháng "+x[2], x[3]
                 });
-            });
+            }
         } catch (SQLException e) {
             MsgBox.notify("Thống kê mặt hàng bạn chạy lỗi", this);
         }
     }
 
-    private String getLuongNhanVien(Object maNhanVien, Object tongGiolam) throws FormatVietNamException {
+    private Integer getLuongNhanVien(Object maNhanVien, Object tongGiolam) throws FormatVietNamException {
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
         NhanVien nv = nhanVienDAO.selectByID(maNhanVien.toString());
 
@@ -597,16 +601,6 @@ public class ThongKe extends javax.swing.JInternalFrame {
 
         double hsl = nv.getHeSoLuong()/60;
         double tgl = Double.parseDouble(tongGiolam.toString());
-        return (int)(hsl*tgl)+"";
-    }
-    
-    private String getTongOf(DefaultTableModel table) throws FormatVietNamException {
-        int tong = 0;
-        int column = table.getColumnCount();
-        int row = table.getRowCount();
-        for (int i=0; i<row; i++) {
-            tong += LocalVietNam.getNormalMoney(table.getValueAt(i, column-1));
-        }
-        return LocalVietNam.getCurrency(tong);
+        return (int)(hsl*tgl);
     }
 }
