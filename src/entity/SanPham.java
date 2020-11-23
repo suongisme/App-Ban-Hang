@@ -13,14 +13,14 @@ public class SanPham {
     private String maSanPham;
     private int maLoaiSanPham;
     private String tenSanPham;
-    private double donGia;
+    private int donGia;
     private String hinhAnh;
     private String moTa;
 
     public SanPham() {
     }
 
-    public SanPham(String maSanPham, int maLoaiSanPham, String tenSanPham, double donGia, String hinhAnh, String moTa) {
+    public SanPham(String maSanPham, int maLoaiSanPham, String tenSanPham, int donGia, String hinhAnh, String moTa) {
         this.maSanPham = maSanPham;
         this.maLoaiSanPham = maLoaiSanPham;
         this.tenSanPham = tenSanPham;
@@ -53,11 +53,11 @@ public class SanPham {
         this.tenSanPham = tenSanPham;
     }
 
-    public double getDonGia() {
+    public int getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(double donGia) {
+    public void setDonGia(int donGia) {
         this.donGia = donGia;
     }
 
@@ -76,6 +76,4 @@ public class SanPham {
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
-    
-    
 }

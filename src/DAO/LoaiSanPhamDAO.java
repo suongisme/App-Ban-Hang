@@ -62,18 +62,18 @@ public class LoaiSanPhamDAO implements DAO<LoaiSanPham, Integer>{
 
     @Override
     public List<LoaiSanPham> selectBySQL(String sql,Object...x) {
-        List<LoaiSanPham> luongList = new ArrayList<>();
+        List<LoaiSanPham> loaiSanPhamList = new ArrayList<>();
         try {
             ResultSet rs = JDBCHelper.queryResult(sql, x);
             while (rs.next()) {
                 LoaiSanPham lsp = new LoaiSanPham();
                 lsp.setMaLoaiSanPham(rs.getInt("maloaisanpham"));
-                lsp.setTenLoaiSanPham(rs.getString("tenloaisanpham"));
-                luongList.add(lsp);
+                lsp.setTenLoaiSanPham(rs.getString("tensanpham"));
+                loaiSanPhamList.add(lsp);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return luongList;
+        return loaiSanPhamList;
     }
 }

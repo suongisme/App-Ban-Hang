@@ -36,6 +36,12 @@ public class LoaiSanPham {
     public void setTenLoaiSanPham(String tenLoaiSanPham) {
         this.tenLoaiSanPham = tenLoaiSanPham;
     }
+
+    @Override
+    public String toString() {
+        return this.getTenLoaiSanPham();
+    }
+    
     
     
 }

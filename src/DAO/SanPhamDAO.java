@@ -88,7 +88,7 @@ public class SanPhamDAO implements DAO<SanPham, String>{
                 sp.setMaSanPham(rs.getString("masanpham"));
                 sp.setMaLoaiSanPham(rs.getInt("maloaisanpham"));
                 sp.setTenSanPham(rs.getString("tensanpham"));
-                sp.setDonGia(rs.getDouble("dongia"));
+                sp.setDonGia(rs.getInt("dongia"));
                 sp.setHinhAnh(rs.getString("hinhanh"));
                 sp.setMoTa(rs.getString("mota"));
                 sanPhamList.add(sp);
@@ -97,5 +97,11 @@ public class SanPhamDAO implements DAO<SanPham, String>{
             e.printStackTrace();
         }
         return sanPhamList;
+    }
+    
+    public List<SanPham> selectByTen(String tenSanPham, int maloai) {
+        String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ? AND maloaisanpham = ?";
+        
+        return this.selectBySQL(sql, "%"+tenSanPham+"%", maloai);
     }
 }

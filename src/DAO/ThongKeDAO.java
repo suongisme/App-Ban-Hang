@@ -10,40 +10,42 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tienich.JDBCHelper;
+import tienich.LocalVietNam;
 
 /**
  *
  * @author SuongNguyen
  */
 public class ThongKeDAO {
-    public static List<Object[]> doanhThu(int nam, int thang) throws SQLException {
-        String cols[] = {"thang","donlonnhat","donnhonhat","tongtien"};
-        String sqlpro = "{CALL pro_mathangbanchay(?,?,?)}";
+    
+    public List<Object[]> getDoanhThu(int nam) throws SQLException {
+        String cols[] = {"thang","hoadonnhonhat","hoadonlonnhat","tongtien"};
+        String sqlpro = "{CALL pro_doanhthu(?)}";
         
-        return getProcedure(sqlpro, cols, nam, thang);
+        return getProcedure(sqlpro, cols, nam);
     }
     
-    public static List<Object[]> matHangBanChay(int thang, int nam, boolean isForeigner) throws SQLException{
+    public List<Object[]> getMatHangBanChay(int thang, int nam, boolean isForeigner) throws SQLException{
         String cols[] = {"masanpham","tensanpham","thoigian","soluong"};
         String sqlpro = "{CALL pro_mathangbanchay(?,?,?)}";
         
         return getProcedure(sqlpro, cols, thang, nam, isForeigner);
     }
     
-    public static List<Object[]> luongNhanVien(int thang, int nam) throws SQLException{
+    public List<Object[]> getLuongNhanVien(int thang, int nam) throws SQLException{
         String cols[] = {"manhanvien","tennhanvien","thoigian","tonggiolam"};
         String sqlpro = "{CALL pro_luongnhanvien(?,?)}";
         
         return getProcedure(sqlpro, cols, thang, nam);
     }
     
-    private static List<Object[]> getProcedure(String sqlPro,String[] cols, Object...parameter) throws SQLException {
+    private List<Object[]> getProcedure(String sqlPro,String[] cols, Object...parameter) throws SQLException {
         List<Object[]> obList = new ArrayList<>();
         ResultSet rs = JDBCHelper.queryResult(sqlPro, parameter);
         while (rs.next()) {
             Object[] obArray = new Object[cols.length];
             for (int i = 0; i < obArray.length; i++) {
-                obArray[i] = cols[i];
+                obArray[i] = rs.getObject(cols[i]);
             }
             obList.add(obArray);
         }
