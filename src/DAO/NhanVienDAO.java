@@ -9,7 +9,7 @@ import entity.NhanVien;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 import tienich.JDBCHelper;
 
 /**
@@ -76,7 +76,7 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
 
     @Override
     public NhanVien selectByID(String id) {
-        List<NhanVien> nhanVienList = selectBySQL(SQL_SELECT_BY_ID, id);
+        ArrayList<NhanVien> nhanVienList = selectBySQL(SQL_SELECT_BY_ID, id);
         if (nhanVienList.isEmpty()) {
             return null;
         }
@@ -84,20 +84,20 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
     }
 
     @Override
-    public List<NhanVien> selectAll() {
+    public ArrayList<NhanVien> selectAll() {
         return this.selectBySQL(SQL_SELECT);
     }
     
     public NhanVien selectByEmail(String email) {
         String sql = "SELECT * FROM nhanvien WHERE email = ?";
-        List<NhanVien> nhanVienList = this.selectBySQL(sql, email);
+        ArrayList<NhanVien> nhanVienList = this.selectBySQL(sql, email);
         
         return nhanVienList.isEmpty() ? null : nhanVienList.get(0);
     }
 
     @Override
-    public List<NhanVien> selectBySQL(String sql,Object...x) {
-        List<NhanVien> nhanVienList = new ArrayList<>();
+    public ArrayList<NhanVien> selectBySQL(String sql,Object...x) {
+        ArrayList<NhanVien> nhanVienList = new ArrayList<>();
         try {
             ResultSet rs = JDBCHelper.queryResult(sql, x);
             while (rs.next()) {
