@@ -12,7 +12,7 @@ import java.util.Date;
  * @author SuongNguyen
  */
 public class NhanVien {
-    private String maNhanVien;
+    public String maNhanVien;
     private String tenNhanVien;
     private String loaiNhanVien;
     private boolean gioiTinh;
@@ -138,9 +138,6 @@ public class NhanVien {
 
     public void setHinh(String hinh) {
         this.hinh = hinh;
-    }
-    
-    
-    
+    } 
     
 }
