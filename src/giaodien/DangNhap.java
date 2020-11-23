@@ -72,6 +72,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(59, 175, 218));
         txtUsername.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsername.setText("tp01");
         txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -117,6 +118,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtMatKhau.setBackground(new java.awt.Color(59, 175, 218));
         txtMatKhau.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtMatKhau.setForeground(new java.awt.Color(255, 255, 255));
+        txtMatKhau.setText("12345678");
         txtMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
