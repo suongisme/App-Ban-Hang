@@ -15,14 +15,14 @@ public class Luong {
     private int maLuong;
     private String maNhanVien;
     private Date ngayDiLam;
-    private float gioDen;
-    private float gioVe;
+    private String gioDen;
+    private String gioVe;
     private String ghiChu;
 
     public Luong() {
     }
 
-    public Luong(int maLuong, String maNhanVien, Date ngayDiLam, float gioDen, float gioVe, String ghiChu) {
+    public Luong(int maLuong, String maNhanVien, Date ngayDiLam, String gioDen, String gioVe, String ghiChu) {
         this.maLuong = maLuong;
         this.maNhanVien = maNhanVien;
         this.ngayDiLam = ngayDiLam;
@@ -55,19 +55,19 @@ public class Luong {
         this.ngayDiLam = ngayDiLam;
     }
 
-    public float getGioDen() {
+    public String getGioDen() {
         return gioDen;
     }
 
-    public void setGioDen(float gioDen) {
+    public void setGioDen(String gioDen) {
         this.gioDen = gioDen;
     }
 
-    public float getGioVe() {
+    public String getGioVe() {
         return gioVe;
     }
 
-    public void setGioVe(float gioVe) {
+    public void setGioVe(String gioVe) {
         this.gioVe = gioVe;
     }
 
@@ -78,8 +78,4 @@ public class Luong {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-
-    
-    
-    
 }
