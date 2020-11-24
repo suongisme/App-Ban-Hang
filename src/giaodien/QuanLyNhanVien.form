@@ -89,7 +89,7 @@
                   <Component id="btnDanhSachNhanVien" min="-2" pref="64" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="lbTime" min="-2" pref="31" max="-2" attributes="0"/>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace pref="29" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -602,23 +602,9 @@
                       </Border>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="6">
-                        <Column editable="false" title="M&#xe3; " type="java.lang.Object">
-                          <Data value="uONG"/>
-                          <Data value="1"/>
-                          <Data value="1&#xc1;DF"/>
-                          <Data value="1FAS"/>
-                          <Data value="D"/>
-                          <Data value="FASDFA"/>
-                        </Column>
-                        <Column editable="false" title="T&#xea;n" type="java.lang.Object">
-                          <Data value="S&#xda;OAS"/>
-                          <Data value="SDAF"/>
-                          <Data value="&#xc1;D"/>
-                          <Data value="SDF"/>
-                          <Data value="SDFA"/>
-                          <Data value="SDFA"/>
-                        </Column>
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="false" title="M&#xe3; " type="java.lang.Object"/>
+                        <Column editable="false" title="T&#xea;n" type="java.lang.Object"/>
                         <Column editable="false" title="Ch&#x1ee9;c v&#x1ee5;" type="java.lang.Object"/>
                         <Column editable="false" title="Email" type="java.lang.Object"/>
                         <Column editable="false" title="H&#x1ec7; s&#x1ed1; l&#x1b0;&#x1a1;ng" type="java.lang.Object"/>

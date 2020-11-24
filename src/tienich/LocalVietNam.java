@@ -15,16 +15,17 @@ import java.util.Date;
  */
 public class LocalVietNam {
 
-    private static SimpleDateFormat vietNamFormatDate = new SimpleDateFormat("dd-MM-yyyy");
+    private static SimpleDateFormat vietNamFormatDate = new SimpleDateFormat();
 
     /**
      *
      * @return format Date in VietNam
      * @Example today is November 22, 2020. VN'format is 22-11-2020
      */
-    public static String getDate() {
+    public static String getDate(Date date) {
         vietNamFormatDate.setLenient(false);
-        return vietNamFormatDate.format(new Date());
+        vietNamFormatDate.applyPattern("dd-MM-yyyy");
+        return vietNamFormatDate.format(date);
     }
 
     /**

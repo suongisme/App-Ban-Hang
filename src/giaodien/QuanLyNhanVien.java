@@ -152,7 +152,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pnlScreenMain.setLayout(new java.awt.CardLayout());
@@ -384,12 +384,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         tbl_DanhSachNV.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tbl_DanhSachNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"uONG", "SÚOAS", null, null, null, null},
-                {"1", "SDAF", null, null, null, null},
-                {"1ÁDF", "ÁD", null, null, null, null},
-                {"1FAS", "SDF", null, null, null, null},
-                {"D", "SDFA", null, null, null, null},
-                {"FASDFA", "SDFA", null, null, null, null}
+
             },
             new String [] {
                 "Mã ", "Tên", "Chức vụ", "Email", "Hệ số lương", "Mật khẩu"

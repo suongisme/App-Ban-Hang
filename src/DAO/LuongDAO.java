@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import tienich.DateHelper;
 import tienich.JDBCHelper;
 
 /**
@@ -20,16 +21,16 @@ import tienich.JDBCHelper;
  */
 public class LuongDAO implements DAO<Luong, Integer>{
 
-    private final String SQL_INSERT_LUONG = "INSERT INTO luong(manhanvien,ngaydilam,gioden,giove,ghichu) VALUES(?,?,?,?,?)";
+    private final String SQL_INSERT_LUONG = "INSERT INTO luong(manhanvien,ngaydilam,gioden,giora,ghichu) VALUES(?,?,?,?,?)";
     private final String SQL_SELECT = "SELECT * FROM luong";
     
     @Override
     public void insert(Luong entity) {
         try {
             JDBCHelper.update(SQL_INSERT_LUONG, entity.getMaNhanVien(),
-                                                entity.getNgayDiLam(),
-                                                entity.getGioDen(),
-                                                entity.getGioVe(),
+                                                DateHelper.convertDateToSqlDate(entity.getNgayDiLam()),
+                                                DateHelper.getTimeSql(entity.getGioDen()),
+                                                DateHelper.getTimeSql(entity.getGioVe()),
                                                 entity.getGhiChu());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +69,8 @@ public class LuongDAO implements DAO<Luong, Integer>{
                 lg.setMaLuong(rs.getInt("maluong"));
                 lg.setMaNhanVien(rs.getString("manhanvien"));
                 lg.setNgayDiLam(rs.getDate("ngaydilam"));
-                lg.setGioDen(rs.getFloat("gioden"));
-                lg.setGioVe(rs.getFloat("giove"));
+                lg.setGioDen(rs.getString("gioden"));
+                lg.setGioVe(rs.getString("giora"));
                 lg.setGhiChu(rs.getString("ghichu"));
                 luongList.add(lg);
             }
@@ -78,14 +79,9 @@ public class LuongDAO implements DAO<Luong, Integer>{
         }
         return luongList;
     }
-    
-    public List<Luong> getLuongByDate(int year, int month, int date) throws SQLException {
-        String sql = "SELECT * FROM luong where ngaydilam = ?";
-
-        Calendar a = Calendar.getInstance();
-        a.set(year, month-1, date);
-        Date dt = a.getTime();
-        
-        return this.selectBySQL(sql, dt);
+   
+    public List<Luong> selectByName(String name) {
+        String sql = "SELECT * FROM luong WHERE ngaydilam = ? AND maNhanVien in (SELECT maNhanVien FROM nhanvien WHERE tennhanvien LIKE ?)";
+        return this.selectBySQL(sql, new java.sql.Date(new Date().getTime()) ,"%"+name+"%");
     }
 }
