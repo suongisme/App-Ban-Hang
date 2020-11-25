@@ -99,9 +99,15 @@ public class SanPhamDAO implements DAO<SanPham, String>{
         return sanPhamList;
     }
     
-    public List<SanPham> selectByTen(String tenSanPham, int maloai) {
+    public List<SanPham> selectByTen(String tenSanPham, Integer maloai) {
         String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ? AND maloaisanpham = ?";
         
         return this.selectBySQL(sql, "%"+tenSanPham+"%", maloai);
+    }
+    
+    public List<SanPham> selectByTen(String tenSanPham) {
+        String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ?";
+        
+        return this.selectBySQL(sql, "%"+tenSanPham+"%");
     }
 }
