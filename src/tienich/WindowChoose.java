@@ -14,27 +14,27 @@ import javax.swing.JFileChooser;
  */
 public class WindowChoose extends JFileChooser {
 
-    private static String path;
+    public static String path;
     private static JFileChooser file = new JFileChooser();
     private static Dimension size = new Dimension(700, 500);
 
-    public static String openSave() {
+    public static boolean openSave() {
         file.setPreferredSize(size);
         int a = file.showOpenDialog(null);
-        if (a != JFileChooser.APPROVE_OPTION) {
-            return null;
+        if (a == JFileChooser.APPROVE_OPTION) {
+            path = file.getSelectedFile().getAbsolutePath();
+            return true;
         }
-        path = file.getSelectedFile().getAbsolutePath();
-        return path;
+        return false;
     }
 
-    public static String openChoose() {
+    public static boolean openChoose() {
         file.setPreferredSize(size);
         int a = file.showOpenDialog(null);
-        if (a != JFileChooser.APPROVE_OPTION) {
-            return null;
+        if (a == JFileChooser.APPROVE_OPTION) {
+            path = file.getSelectedFile().getAbsolutePath();
+            return true;
         }
-        path = file.getSelectedFile().getAbsolutePath();
-        return path;
+        return false;
     }
 }
