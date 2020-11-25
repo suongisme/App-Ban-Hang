@@ -14,22 +14,34 @@ import javax.swing.JLabel;
  * @author SuongNguyen
  */
 public class OclockHelper extends Thread {
-    private final JLabel lblOclock;
-    private SimpleDateFormat simpleDate = new SimpleDateFormat("EEE dd-MMM-yyyy hh:mm:ss");
-    private OclockHelper(JLabel lblOclock) {
-        this.lblOclock = lblOclock;
-        start();
+
+    private static JLabel lblOclock;
+    private static SimpleDateFormat simpleDate = new SimpleDateFormat("EEE dd-MMM-yyyy HH:mm:ss");
+    private static Thread oclockThread;
+
+    private static void createThreadOclock() {
+        oclockThread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    lblOclock.setText(simpleDate.format(new Date()));
+                }
+            }
+
+        };
+        oclockThread.start();
     }
-    
-    public static void startOclock(JLabel lblOclock) {
-        OclockHelper oclockHelper = new OclockHelper(lblOclock);
-    }
-    
-    @Override
-    public void run() {
-        while (true) {
-            lblOclock.setText(simpleDate.format(new Date()));
+
+    public static void startOclock(JLabel ocl) {
+        if (ocl == null) {
+            lblOclock = new JLabel();
+        } else {
+            lblOclock = ocl;
+        }
+        
+        if (oclockThread == null) {
+            createThreadOclock();
         }
     }
-    
+
 }
