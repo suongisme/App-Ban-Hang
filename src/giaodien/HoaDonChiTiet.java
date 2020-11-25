@@ -5,6 +5,16 @@
  */
 package giaodien;
 
+import DAO.HoaDonDAO;
+import DAO.NhanVienDAO;
+import DAO.ThongKeDAO;
+import entity.HoaDon;
+import entity.NhanVien;
+import exception.FormatVietNamException;
+import javax.swing.table.DefaultTableModel;
+import tienich.LocalVietNam;
+import tienich.MsgBox;
+
 /**
  *
  * @author SuongNguyen
@@ -14,8 +24,11 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
     /**
      * Creates new form HoaDonChiTiet
      */
-    public HoaDonChiTiet() {
+    public HoaDonChiTiet(int maHoaDon) {
         initComponents();
+        init();
+        fillTable(maHoaDon);
+        setForm(maHoaDon);
     }
 
     /**
@@ -28,7 +41,7 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         mahoadon = new javax.swing.JLabel();
-        lbMaHoaDon = new javax.swing.JLabel();
+        lblMaHoaDon = new javax.swing.JLabel();
         lbKhachHang = new javax.swing.JLabel();
         khachhang = new javax.swing.JLabel();
         lbNgayIn = new javax.swing.JLabel();
@@ -47,8 +60,8 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
         mahoadon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         mahoadon.setText("Mã hoá đơn:");
 
-        lbMaHoaDon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbMaHoaDon.setText("HD001");
+        lblMaHoaDon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblMaHoaDon.setText("HD001");
 
         lbKhachHang.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lbKhachHang.setText("Nước ngoài");
@@ -85,6 +98,14 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblSanPham);
+        if (tblSanPham.getColumnModel().getColumnCount() > 0) {
+            tblSanPham.getColumnModel().getColumn(0).setResizable(false);
+            tblSanPham.getColumnModel().getColumn(0).setPreferredWidth(250);
+            tblSanPham.getColumnModel().getColumn(1).setResizable(false);
+            tblSanPham.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tblSanPham.getColumnModel().getColumn(2).setResizable(false);
+            tblSanPham.getColumnModel().getColumn(2).setPreferredWidth(100);
+        }
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel8.setText("Tổng: ");
@@ -127,7 +148,7 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
                             .addComponent(lbThuNgan, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                             .addComponent(lbNgayIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbMaHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblMaHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblChungNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -141,7 +162,7 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mahoadon)
-                            .addComponent(lbMaHoaDon))
+                            .addComponent(lblMaHoaDon))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(khachhang)
@@ -174,14 +195,72 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel khachhang;
     private javax.swing.JLabel lbKhachHang;
-    private javax.swing.JLabel lbMaHoaDon;
     private javax.swing.JLabel lbNgayIn;
     private javax.swing.JLabel lbThuNgan;
     private javax.swing.JLabel lblChungNhan;
+    private javax.swing.JLabel lblMaHoaDon;
     private javax.swing.JLabel lblTong;
     private javax.swing.JLabel mahoadon;
     private javax.swing.JLabel ngayin;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JLabel thungan;
     // End of variables declaration//GEN-END:variables
+
+    private ThongKeDAO thongKeDAO;
+    private HoaDonDAO hoaDonDAO;
+    private NhanVienDAO nhanVienDAO;
+    DefaultTableModel tableSanPham;
+
+    private void init() {
+        thongKeDAO = new ThongKeDAO();
+        hoaDonDAO = new HoaDonDAO();
+        nhanVienDAO = new NhanVienDAO();
+        
+        
+        tableSanPham = (DefaultTableModel) tblSanPham.getModel();
+    }
+
+    private void fillTable(int maSanPham) {
+        tableSanPham.setRowCount(0);
+        try {
+            for (Object[] x : thongKeDAO.getHoaDonChiTiet(maSanPham)) {
+                int soLuong = Integer.parseInt(x[1].toString());
+                int tien = Integer.parseInt(x[2].toString());
+                tableSanPham.addRow(new Object[] {
+                    x[0],soLuong, LocalVietNam.getCurrency(soLuong*tien)
+                });
+            }
+        } catch (FormatVietNamException vn) {
+            vn.printStackTrace();
+            MsgBox.notify(vn.getMessage(), this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        lblTong.setText(getTongTien());
+    }
+
+    private void setForm(int maHoaDon) {
+        HoaDon hd = hoaDonDAO.selectByID(maHoaDon);
+        NhanVien nv = nhanVienDAO.selectByID(hd.getMaNhanVien());
+        
+        lblMaHoaDon.setText(hd.getMaHoaDon()+"");
+        lbNgayIn.setText(LocalVietNam.getDate(hd.getNgayXuatHoaDon()));
+        lbThuNgan.setText(nv.getTenNhanVien());
+        lbKhachHang.setText(hd.isLoaiKhachHang() ? "Nước ngoài" : "Trong Nước");
+    }
+    
+     private String getTongTien() {
+        int tongTien = 0;
+        for (int i = 0; i < tblSanPham.getRowCount(); i++) {
+            String cost = (String) tblSanPham.getValueAt(i, 2);
+            int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
+            tongTien += price;
+        }
+        try {
+            return LocalVietNam.getCurrency(tongTien);
+        } catch (FormatVietNamException e) {
+            return "error";
+        }
+
+    }
 }
