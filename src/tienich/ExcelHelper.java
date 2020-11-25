@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -32,7 +31,7 @@ public class ExcelHelper {
         for (Row row : sh) {
             Object[] obArray = new Object[6];
             for (int i=0; i<6; i++) {
-                obArray[i] = row.getCell(i);
+                obArray[i] = row.getCell(i).getStringCellValue();
             }
             obList.add(obArray);
         }
