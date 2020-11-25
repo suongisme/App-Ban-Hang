@@ -11,6 +11,7 @@ import entity.Luong;
 import entity.NhanVien;
 import exception.FormatVietNamException;
 import java.awt.CardLayout;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -319,6 +320,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         insertLuong();
         fillChiTietLuong();
         cardlayout.show(pnlScreenMain, "card3");
+        btnDanhSachNhanVien.requestFocus();
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
@@ -326,8 +328,9 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnTimKiem1ActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        String path = WindowChoose.openChoose();
-        importExcelFile(path, 0);
+        if (WindowChoose.openChoose()) {
+            importExcelFile(WindowChoose.path, 0);
+        }
     }//GEN-LAST:event_btnImportActionPerformed
 
 
@@ -356,9 +359,13 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
     
     NhanVienDAO nhanVienDAO;
     LuongDAO luongDAO;
+    
+    SimpleDateFormat time;
     private void initialization() {
         tableChamCong = (DefaultTableModel) tblChamCong.getModel();
         tableChiTiet = (DefaultTableModel) tblChiTiet.getModel();
+        
+        time = new SimpleDateFormat("HH:mm");
         
         nhanVienDAO = new NhanVienDAO();
         luongDAO = new LuongDAO();
@@ -385,7 +392,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             float heSoLuong = nv.getHeSoLuong();
             
             tableChiTiet.addRow(new Object[] {
-                nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getNgaySinh(),
+                nv.getMaNhanVien(), nv.getTenNhanVien(), LocalVietNam.getDate(nv.getNgaySinh()),
                 gioDen, gioVe, getLuongNhanVien(gioDen, gioVe, heSoLuong),
                 x.getGhiChu()
             });
@@ -409,9 +416,16 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         int rowInTalbeChamCong = tableChamCong.getRowCount();
         
         for (int i=0; i<rowInTalbeChamCong; i++) {
+            String gioDen = String.valueOf(tblChamCong.getValueAt(i, 3));
+            String gioVe = String.valueOf(tblChamCong.getValueAt(i, 4));
+            if (!isTime(gioDen) || !isTime(gioVe)) {
+                fillChamCong();
+                break;
+            }
             try {
                 luongDAO.insert(getLuong(i));
             } catch (Exception e) {
+                e.printStackTrace();
                 MsgBox.notify(e.getMessage(), this);
             }
         }
@@ -432,6 +446,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             MsgBox.notify("Vui lòng chọn file excel", this);
             return;
         }
+        
         tableChamCong.setRowCount(0);
         try {
             List<Object[]> cellExcelList = ExcelHelper.readExcelFile(pathFile, sheet);
@@ -443,6 +458,33 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    // format HH:mm
+    private boolean isFormatTime(String t) {
+        try {
+            time.parse(t);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    private boolean isTime(String t) {
+        if (!isFormatTime(t)) {
+            MsgBox.notify("Không đúng định dạng thời gian (HH:mm)", this);
+            return false;
+        }
+        
+        String[] timeArray = t.split(":");
+        int hour = Integer.parseInt(timeArray[0]);
+        int minute = Integer.parseInt(timeArray[1]);
+        
+        if (hour > 24 || hour < 0 || minute > 60 || minute < 0) {
+            MsgBox.notify("Thời gian sai", this);
+            return false;
+        }
+        return true;
     }
     
     private boolean isExcelFile(String path) {
