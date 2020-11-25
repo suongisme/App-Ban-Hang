@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import tienich.JDBCHelper;
+import tienich.OclockHelper;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Welcome extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        OclockHelper.startOclock(null);
     }
 
     /**
