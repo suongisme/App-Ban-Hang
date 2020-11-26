@@ -11,8 +11,10 @@ import javax.swing.table.DefaultTableModel;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import tienich.Auth;
+import tienich.DateHelper;
 import tienich.ImageHelper;
 
 /**
@@ -46,6 +48,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlScreenMain = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         lblAnh = new javax.swing.JLabel();
@@ -174,8 +177,10 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         });
         jPanel4.add(btnNew);
 
+        buttonGroup1.add(rdoNam);
         rdoNam.setText("Nam");
 
+        buttonGroup1.add(rdoNu);
         rdoNu.setText("Nữ");
 
         txtHeSoLuong.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
@@ -209,7 +214,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-
                                 .addComponent(txtHeSoLuong)
                                 .addGap(0, 0, 0)
                                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,7 +239,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                     .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
-
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,12 +246,10 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(jLabel2))
                         .addGap(7, 7, 7)
-
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtMaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                             .addComponent(txtHeSoLuong)
@@ -293,7 +294,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
-
 
         pnlScreenMain.add(jPanel5, "card3");
 
@@ -423,7 +423,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -525,6 +525,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboLoaiNV;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -587,7 +588,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     }
 
     void Insert() {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = getForm();
         try {
             if (checkInsert() == false) {
                 return;
@@ -653,7 +654,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     }
 
     NhanVien getForm() {
-        NhanVien nv = listNv.get(row);
+        NhanVien nv = new NhanVien();
         nv.setMaNhanVien(txtMaNhanVien.getText());
         nv.setTenNhanVien(txtTenNhanVien.getText());
         nv.setLoaiNhanVien((String) cboLoaiNV.getSelectedItem());
@@ -662,7 +663,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         nv.setSdt(txtSDT.getText());
         nv.setEmail(txtEmail.getText());
         nv.setHeSoLuong(Float.parseFloat(txtHeSoLuong.getText()));
-
+        nv.setMatKhau(txtMatKhau.getText());
+        nv.setHinh("null");
+        nv.setNgaySinh(DateHelper.convertDateToSqlDate(new Date()));
         return nv;
     }
 
