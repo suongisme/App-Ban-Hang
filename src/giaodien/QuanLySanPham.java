@@ -313,11 +313,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
             .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
-=======
-            .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
->>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 

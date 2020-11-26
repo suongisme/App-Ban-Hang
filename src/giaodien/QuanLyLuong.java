@@ -139,11 +139,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         });
 
         btnImport.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-<<<<<<< HEAD
-        btnImport.setText("Tìm kiếm");
-=======
         btnImport.setText("Import");
->>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
         btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImportActionPerformed(evt);
@@ -297,13 +293,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
             .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
-=======
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
-            .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
->>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
         );
 
         pack();
@@ -317,10 +308,6 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         cardlayout.show(pnlScreenMain, "card3");
     }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
 
-<<<<<<< HEAD
-    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        // TODO add your handling code here:
-=======
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         fillChamCong();
     }//GEN-LAST:event_txtTimKiemKeyReleased
@@ -344,7 +331,6 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         if (WindowChoose.openChoose()) {
             importExcelFile(WindowChoose.path, 0);
         }
->>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
     }//GEN-LAST:event_btnImportActionPerformed
 
 

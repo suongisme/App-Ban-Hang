@@ -5,11 +5,10 @@
  */
 package giaodien;
 
+import DAO.HoaDonChiTietDAO;
 import DAO.HoaDonDAO;
 
 import entity.HoaDon;
-import entity.NhanVien;
-import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,13 +29,17 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     HoaDonDAO hoadonDAO = new HoaDonDAO();
 //    ArrayList<NhanVien> listNv = new ArrayList<>();
 //    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    HoaDonChiTietDAO hoaDonChiTiet = new HoaDonChiTietDAO();
+    DefaultTableModel table;
 
-    public ThanhToan() {
+    public ThanhToan(DefaultTableModel tb) {
         initComponents();
 //        tftien = 
-
+        table = tb;
         this.lbTongTien.setText(Home.tongtienTT);
         tftien = txtTongTien.getText();
+
+        System.out.println(table.getValueAt(0, 0));
     }
 
     /**
@@ -78,7 +81,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         lbTien = new javax.swing.JLabel();
         lbTienTraLai = new javax.swing.JLabel();
         cbxKhongLayHD = new javax.swing.JCheckBox();
-        cbxKhachNuocNgoai = new javax.swing.JCheckBox();
+        ckbLoaiKhach = new javax.swing.JCheckBox();
         btnInHD = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -331,9 +334,9 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         cbxKhongLayHD.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         cbxKhongLayHD.setText("Không lấy hoá đơn");
 
-        cbxKhachNuocNgoai.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        cbxKhachNuocNgoai.setText("Khách nước ngoài");
-        cbxKhachNuocNgoai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        ckbLoaiKhach.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        ckbLoaiKhach.setText("Khách nước ngoài");
+        ckbLoaiKhach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         btnInHD.setBackground(new java.awt.Color(102, 255, 51));
         btnInHD.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -383,7 +386,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                                 .addComponent(btnInHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbxKhachNuocNgoai, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ckbLoaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxKhongLayHD, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -416,7 +419,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbxKhongLayHD)
                 .addGap(18, 18, 18)
-                .addComponent(cbxKhachNuocNgoai)
+                .addComponent(ckbLoaiKhach)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -528,7 +531,8 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblThoatMouseClicked
 
     private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
-        insert();
+        insertHoaDon();
+        insertChiTietHD();
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void txtTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongTienActionPerformed
@@ -621,8 +625,8 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNamTram;
     private javax.swing.JButton btnTienMat;
     private javax.swing.JButton btnVisa;
-    private javax.swing.JCheckBox cbxKhachNuocNgoai;
     private javax.swing.JCheckBox cbxKhongLayHD;
+    private javax.swing.JCheckBox ckbLoaiKhach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -645,7 +649,6 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void tt() {
-
         String x = String.valueOf(tien);
         lbTien.setText(x + "00");
         txtTongTien.setText(x);
@@ -654,34 +657,51 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }
 
     private void tralai() {
-
-
         String iv = Home.tongtienTT.substring(0, Home.tongtienTT.length() - 1);
         Double gg = Double.parseDouble(iv);
         Double tienthuaaa = tien - gg;
-        if(tienthuaaa<0){
+        if (tienthuaaa < 0) {
             MsgBox.notify("Chưa đủ tiền", this);
         }
         lbTienTraLai.setText(String.valueOf(tienthuaaa) + "00");
-        
     }
 
-    void insert() {
-        String tennv = Auth.user.getTenNhanVien();
+    void insertHoaDon() {
         String manv = Auth.user.getMaNhanVien();
         Date ngayxuatHD = new Date();
-        System.out.println(ngayxuatHD);
-        HoaDon hoadon = new HoaDon(10, manv, loaiKH(), ngayxuatHD);
-        System.out.println("a");
-        hoadonDAO.inserts(hoadon);
-    }
 
-    private boolean loaiKH() {
-        if (cbxKhachNuocNgoai.isSelected()) {
-            return true;
-        } else {
-            return false;
+        HoaDon hoadon = new HoaDon();
+        hoadon.setMaNhanVien(manv);
+        hoadon.setNgayXuatHoaDon(ngayxuatHD);
+        hoadon.setLoaiKhachHang(ckbLoaiKhach.isSelected());
+
+        try {
+            hoadonDAO.inserts(hoadon);
+            MsgBox.notify("In hóa đơn thành công", this);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    private void insertChiTietHD() {
+        HoaDon hd = hoadonDAO.selectLastHoaDon();
+        entity.HoaDonChiTiet hdct = new entity.HoaDonChiTiet();
+        hdct.setMaHoaDon(hd.getMaHoaDon());
+
+        int rows = table.getRowCount();
+
+        for (int i = 0; i < rows; i++) {
+            int amount = Integer.parseInt(table.getValueAt(i, 2).toString());
+            for (int j = 0; j < amount; j++) {
+                String maSp = table.getValueAt(i, 0).toString();
+                hdct.setMaSanPham(maSp);
+                try {
+                    hoaDonChiTiet.insert(hdct);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    MsgBox.notify(e.getMessage(), this);
+                }
+            }
+        }
+    }
 }

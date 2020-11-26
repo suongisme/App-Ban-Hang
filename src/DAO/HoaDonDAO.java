@@ -12,35 +12,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import tienich.DateHelper;
 import tienich.JDBCHelper;
 
 /**
  *
  * @author SuongNguyen
  */
-public class HoaDonDAO implements DAO<HoaDon, Integer>{
+public class HoaDonDAO implements DAO<HoaDon, Integer> {
 
     private final String SQL_INSERT_HOADON = "INSERT INTO hoadon(manhanvien,loaikhachhang,ngayxuathd) VALUES(?,?,?)";
     private final String SQL_SELECT = "SELECT * FROM hoadon";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM hoadon WHERE mahoadon = ?";
-    public void inserts( HoaDon hd ) {
-        String sql = "INSERT INTO hoadon(manhanvien,loaikhachhang,ngayxuathd) VALUES(?,?,?)";
-       
-            JDBCHelper.executeUpdate(sql,
-                    hd.getMaNhanVien(),
-                    hd.isLoaiKhachHang(),
-                    hd.getNgayXuatHoaDon()
-            );
-       
-        
+
+    public void inserts(HoaDon hd) {
+        JDBCHelper.executeUpdate(SQL_INSERT_HOADON,
+                hd.getMaNhanVien(),
+                hd.isLoaiKhachHang(),
+                DateHelper.convertDateToSqlDate(hd.getNgayXuatHoaDon())
+        );
+
     }
-    
+
     @Override
     public void insert(HoaDon entity) {
         try {
-            JDBCHelper.update(SQL_INSERT_HOADON, entity.getMaNhanVien(),entity.isLoaiKhachHang(),entity.getNgayXuatHoaDon());
+            JDBCHelper.update(SQL_INSERT_HOADON, entity.getMaNhanVien(), entity.isLoaiKhachHang(), entity.getNgayXuatHoaDon());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Thêm thất bại");
@@ -48,7 +45,7 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
     }
 
     @Override
-    public void delete(Integer id) { 
+    public void delete(Integer id) {
         // không hỗ trợ
     }
 
@@ -60,8 +57,9 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
     @Override
     public HoaDon selectByID(Integer id) {
         List<HoaDon> hoaDonList = this.selectBySQL(SQL_SELECT_BY_ID, id);
-        if (hoaDonList.isEmpty())
+        if (hoaDonList.isEmpty()) {
             return null;
+        }
         return hoaDonList.get(0);
     }
 
@@ -71,7 +69,7 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
     }
 
     @Override
-    public List<HoaDon> selectBySQL(String sql,Object...x) {
+    public List<HoaDon> selectBySQL(String sql, Object... x) {
         List<HoaDon> luongList = new ArrayList<>();
         try {
             ResultSet rs = JDBCHelper.queryResult(sql, x);
@@ -88,23 +86,32 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
         }
         return luongList;
     }
-    
+
     public List<HoaDon> getLuongByDate(int year, int month, int date) throws SQLException {
         String sql = "SELECT * FROM hoadon where ngayxuathd = ?";
 
         Calendar a = Calendar.getInstance();
-        a.set(year, month-1, date);
+        a.set(year, month - 1, date);
         Date dt = a.getTime();
-        
+
         return this.selectBySQL(sql, dt);
     }
+
     public List<HoaDon> getHoaDonByDate(int year, int month, int date) throws SQLException {
         String sql = "SELECT * FROM hoadon where ngayxuathd = ?";
 
         Calendar a = Calendar.getInstance();
-        a.set(year, month-1, date);
+        a.set(year, month - 1, date);
         Date dt = a.getTime();
-        
+
         return this.selectBySQL(sql, dt);
     }
+    
+    public HoaDon selectLastHoaDon() {
+        List<HoaDon> hoaDonList = this.selectBySQL(SQL_SELECT);
+        if (hoaDonList.isEmpty()) {
+            return null;
+        }
+        return hoaDonList.get(hoaDonList.size()-1);
+    } 
 }

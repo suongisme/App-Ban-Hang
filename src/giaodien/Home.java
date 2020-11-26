@@ -636,7 +636,7 @@ public class Home extends javax.swing.JFrame {
             MsgBox.notify("Vui lòng chọn sản phẩm trước.", this);
             return;
         }
-        showForm(new ThanhToan());
+        showForm(new ThanhToan(tableThanhToan));
         
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
