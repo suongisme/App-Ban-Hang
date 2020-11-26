@@ -407,11 +407,11 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tên", "Số lượng", "Giá"
+                "", "Tên", "Số lượng", "Giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -429,9 +429,12 @@ public class Home extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDatHang);
         if (tblDatHang.getColumnModel().getColumnCount() > 0) {
-            tblDatHang.getColumnModel().getColumn(0).setMaxWidth(200);
-            tblDatHang.getColumnModel().getColumn(1).setMaxWidth(80);
-            tblDatHang.getColumnModel().getColumn(2).setMaxWidth(150);
+            tblDatHang.getColumnModel().getColumn(0).setMinWidth(0);
+            tblDatHang.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tblDatHang.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblDatHang.getColumnModel().getColumn(1).setMaxWidth(200);
+            tblDatHang.getColumnModel().getColumn(2).setMaxWidth(80);
+            tblDatHang.getColumnModel().getColumn(3).setMaxWidth(150);
         }
 
         btnThanhToan.setBackground(new java.awt.Color(102, 255, 51));
@@ -645,7 +648,7 @@ public class Home extends javax.swing.JFrame {
 
     private void tblDatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatHangMouseClicked
         int rowSelect = tblDatHang.getSelectedRow();
-        int amount = (int) tblDatHang.getValueAt(rowSelect, 1);
+        int amount = (int) tblDatHang.getValueAt(rowSelect, 2);
         if (amount == 1) {
             tableThanhToan.removeRow(rowSelect);
             deleteCEllInArray(rowSelect);
@@ -653,7 +656,7 @@ public class Home extends javax.swing.JFrame {
             i--;
             return;
         }
-        tblDatHang.setValueAt(--amount, rowSelect, 1);
+        tblDatHang.setValueAt(--amount, rowSelect, 2);
         decreaseCostInTable(rowSelect);
         lblTongTien.setText(getTongTien());
     }//GEN-LAST:event_tblDatHangMouseClicked
@@ -851,7 +854,7 @@ public class Home extends javax.swing.JFrame {
     private int i; // dung de dieu khien allCostArray
 
     private void fillDatHang(SanPham sp) {
-        if (isExisInTable(sp.getTenSanPham())) {
+        if (isExisInTable(sp.getMaSanPham())) {
             increaseAmountInTable(index);
             increaseCostInTable(index, sp.getDonGia());
             lblTongTien.setText(getTongTien());
@@ -859,6 +862,7 @@ public class Home extends javax.swing.JFrame {
         }
         try {
             tableThanhToan.addRow(new Object[]{
+                sp.getMaSanPham(),
                 sp.getTenSanPham(),
                 1, // amount
                 LocalVietNam.getCurrency(sp.getDonGia())
@@ -871,12 +875,12 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
-    private boolean isExisInTable(String name) {
+    private boolean isExisInTable(String maSanPham) {
         int row = tableThanhToan.getRowCount();
 
         for (int i = 0; i < row; i++) {
             String nameInTable = tableThanhToan.getValueAt(i, 0).toString();
-            if (name.equalsIgnoreCase(nameInTable)) {
+            if (maSanPham.equalsIgnoreCase(nameInTable)) {
                 index = i;
                 return true;
             }
@@ -885,36 +889,36 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void increaseAmountInTable(int row) {
-        int amount = (int) tblDatHang.getValueAt(row, 1);
-        tblDatHang.setValueAt(++amount, row, 1);
+        int amount = (int) tblDatHang.getValueAt(row, 2);
+        tblDatHang.setValueAt(++amount, row, 2);
     }
 
     private void increaseCostInTable(int row, int originalCost) {
-        String cost = (String) tblDatHang.getValueAt(row, 2);
+        String cost = (String) tblDatHang.getValueAt(row, 3);
         int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
         try {
-            tblDatHang.setValueAt(LocalVietNam.getCurrency(price + originalCost + ""), row, 2);
+            tblDatHang.setValueAt(LocalVietNam.getCurrency(price + originalCost + ""), row, 3);
         } catch (FormatVietNamException e) {
             e.printStackTrace();
-            tblDatHang.setValueAt("error", row, 2);
+            tblDatHang.setValueAt("error", row, 3);
         }
     }
 
     private void decreaseCostInTable(int row) {
-        String costs = (String) tblDatHang.getValueAt(row, 2);
+        String costs = (String) tblDatHang.getValueAt(row, 3);
         int price = Integer.parseInt(costs.substring(0, costs.indexOf(".")));
         try {
-            tblDatHang.setValueAt(LocalVietNam.getCurrency(price - allCostArray[row]), row, 2);
+            tblDatHang.setValueAt(LocalVietNam.getCurrency(price - allCostArray[row]), row, 3);
         } catch (FormatVietNamException vn) {
             vn.printStackTrace();
-            tblDatHang.setValueAt("error", row, 2);
+            tblDatHang.setValueAt("error", row, 3);
         }
     }
 
     private String getTongTien() {
         int tongTien = 0;
         for (int i = 0; i < tblDatHang.getRowCount(); i++) {
-            String cost = (String) tblDatHang.getValueAt(i, 2);
+            String cost = (String) tblDatHang.getValueAt(i, 3);
             int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
             tongTien += price;
         }

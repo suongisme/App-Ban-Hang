@@ -68,13 +68,13 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"", null, null},
-                {"", null, null},
-                {"", null, null},
+                {"9", null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null}
             },
             new String [] {
-                "Mã Hoá Đơn", "Thời gian", "Tổng tiền"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         tblHoaDon.setRowHeight(30);
@@ -142,7 +142,9 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
-        HoaDonChiTiet hdct = new HoaDonChiTiet();
+        int selectRow = tblHoaDon.getSelectedRow();
+        int maSanPham =  Integer.parseInt(tblHoaDon.getValueAt(selectRow, 0).toString());
+        HoaDonChiTiet hdct = new HoaDonChiTiet(maSanPham);
         Home.desktop.add(hdct);
         hdct.setVisible(true);
     }//GEN-LAST:event_tblHoaDonMouseClicked

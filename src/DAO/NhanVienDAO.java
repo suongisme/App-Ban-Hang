@@ -9,6 +9,7 @@ import entity.NhanVien;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 //import java.util.List;
 import tienich.JDBCHelper;
 
@@ -119,5 +120,10 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
             e.printStackTrace();
         }
         return nhanVienList;
+    }
+    
+    public List<NhanVien> selectByName(String name) {
+        String sql = "SELECT * FROM nhanvien WHERE tennhanvien LIKE ?";
+        return this.selectBySQL(sql, "%"+name+"%");
     }
 }

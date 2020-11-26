@@ -79,7 +79,7 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
                 HoaDon hd = new HoaDon();
                 hd.setMaHoaDon(rs.getInt("mahoadon"));
                 hd.setMaNhanVien(rs.getString("manhanvien"));
-                hd.setLoaiKhachHang(rs.getBoolean("loaikhachang"));
+                hd.setLoaiKhachHang(rs.getBoolean("loaikhachhang"));
                 hd.setNgayXuatHoaDon(rs.getDate("ngayxuathd"));
                 luongList.add(hd);
             }
