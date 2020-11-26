@@ -44,7 +44,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         lblAnhUser.setIcon(ImageHelper.getImage(Auth.user.getHinh(), 184, 177));
         OclockHelper.startOclock(lblTIme);
         init();
-        OclockHelper.startOclock(lblTime);
+        OclockHelper.startOclock(lblTIme);
     }
 
     /**
@@ -58,10 +58,9 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
 
         pnlMenun = new javax.swing.JPanel();
         lblTIme = new javax.swing.JLabel();
-        lblAnhUser = new javax.swing.JLabel();
-
         btnCapNhat = new javax.swing.JButton();
         btnDanhSachNhanVien = new javax.swing.JButton();
+        lblAnhUser = new javax.swing.JLabel();
         lblTenUser = new javax.swing.JLabel();
         pnlScreenMain = new javax.swing.JPanel();
         pnlChiTiet = new javax.swing.JPanel();
@@ -94,15 +93,11 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         pnlMenun.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 255)));
         pnlMenun.setPreferredSize(new java.awt.Dimension(263, 474));
 
-
         lblTIme.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTIme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTIme.setText("Mon, November 06, 2020 00:00:00");
 
-
-        lblAnhUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAnhUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
+        btnCapNhat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,12 +105,16 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             }
         });
 
+        btnDanhSachNhanVien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDanhSachNhanVien.setText("Danh sách sản phẩm");
         btnDanhSachNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDanhSachNhanVienActionPerformed(evt);
             }
         });
+
+        lblAnhUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnhUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblTenUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTenUser.setText("Tên nhân viên");
@@ -124,34 +123,30 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         pnlMenun.setLayout(pnlMenunLayout);
         pnlMenunLayout.setHorizontalGroup(
             pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addComponent(btnCapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
+            .addComponent(lblTIme, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlMenunLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(38, 38, 38)
                 .addGroup(pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblAnhUser, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                     .addComponent(lblTenUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         pnlMenunLayout.setVerticalGroup(
             pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenunLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(lblAnhUser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTenUser)
-                .addGap(27, 27, 27)
+                .addGap(37, 37, 37)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
-                .addComponent(lblTIme, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-
+                .addGap(31, 31, 31)
+                .addComponent(lblTIme, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlScreenMain.setLayout(new java.awt.CardLayout());
@@ -298,7 +293,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -336,13 +331,13 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDanhSachLayout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlDanhSachLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(371, Short.MAX_VALUE)))
+                    .addContainerGap(402, Short.MAX_VALUE)))
         );
 
         pnlScreenMain.add(pnlDanhSach, "card2");
@@ -359,21 +354,12 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
-        // TODO add your handling code here:card3
-        cardlayout.show(pnlScreenMain, "card3");
-    }//GEN-LAST:event_btnCapNhatActionPerformed
-
-    private void btnDanhSachNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDanhSachNhanVienActionPerformed
-        cardlayout.show(pnlScreenMain, "card2");
-    }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         insert();
@@ -403,6 +389,14 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         fillToBoard();
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        cardlayout.show(pnlScreenMain, "card3");
+    }//GEN-LAST:event_btnCapNhatActionPerformed
+
+    private void btnDanhSachNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDanhSachNhanVienActionPerformed
+        cardlayout.show(pnlScreenMain, "card2");
+    }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
@@ -421,12 +415,10 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-
     private javax.swing.JLabel lblAnhUser;
     private javax.swing.JLabel lblHinhAnh;
     private javax.swing.JLabel lblTIme;
     private javax.swing.JLabel lblTenUser;
-
     private javax.swing.JPanel pnlChiTiet;
     private javax.swing.JPanel pnlDanhSach;
     private javax.swing.JPanel pnlMenun;

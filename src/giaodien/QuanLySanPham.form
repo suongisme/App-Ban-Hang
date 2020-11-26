@@ -39,7 +39,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlMenun" alignment="0" pref="433" max="32767" attributes="0"/>
+          <Component id="pnlMenun" alignment="0" pref="456" max="32767" attributes="0"/>
           <Component id="pnlScreenMain" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -62,44 +62,39 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-
               <Component id="btnCapNhat" alignment="1" max="32767" attributes="0"/>
               <Component id="btnDanhSachNhanVien" alignment="0" max="32767" attributes="0"/>
-              <Component id="lblTime" alignment="0" max="32767" attributes="0"/>
+              <Component id="lblTIme" alignment="1" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="lblAnhUser" pref="184" max="32767" attributes="0"/>
-                      <Component id="lblTenUser" max="32767" attributes="0"/>
+                      <Component id="lblAnhUser" alignment="0" pref="184" max="32767" attributes="0"/>
+                      <Component id="lblTenUser" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="39" max="32767" attributes="0"/>
               </Group>
-              <Component id="btnCapNhat" alignment="0" max="32767" attributes="0"/>
-              <Component id="btnDanhSachNhanVien" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Component id="lblAnhUser" min="-2" pref="177" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblTenUser" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="btnCapNhat" min="-2" pref="62" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnDanhSachNhanVien" min="-2" pref="64" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="lblTIme" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-
-                  <Component id="lblTIme" min="-2" pref="42" max="-2" attributes="0"/>
-
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-
         <Component class="javax.swing.JLabel" name="lblTIme">
-
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -107,6 +102,28 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Mon, November 06, 2020 00:00:00"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCapNhat">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnDanhSachNhanVien">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch s&#x1ea3;n ph&#x1ea9;m"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDanhSachNhanVienActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAnhUser">
           <Properties>
@@ -117,22 +134,6 @@
               </Border>
             </Property>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnCapNhat">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnDanhSachNhanVien">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch s&#x1ea3;n ph&#x1ea9;m"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDanhSachNhanVienActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTenUser">
           <Properties>
@@ -241,7 +242,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jScrollPane2" alignment="0" pref="139" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="164" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -441,14 +442,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="342" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="373" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtTimKiem" min="-2" pref="43" max="-2" attributes="0"/>
-                          <EmptySpace pref="371" max="32767" attributes="0"/>
+                          <EmptySpace pref="402" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
