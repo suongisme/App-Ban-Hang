@@ -30,6 +30,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private int row;
 
     public QuanLyNhanVien() {
+        initComponents();
         this.fillTable();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
         lblTenNhanVien.setText(Auth.user.getTenNhanVien());
