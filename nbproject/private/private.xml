@@ -2,6 +2,27 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+<<<<<<< HEAD
+            <file>file:/F:/APP/App-Ban-Hang/src/giaodien/QuanLyNhanVien.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/giaodien/Welcome.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/DAO/LuongDAO.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/giaodien/ThanhToan.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/DAO/SanPhamDAO.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/tienich/LocalVietNam.java</file>
+            <file>file:/F:/APP/App-Ban-Hang/src/giaodien/QuanLySanPham.java</file>
+=======
+            <file>file:/D:/DA1/Application/AppBanHang/src/tienich/OclockHelper.java</file>
+            <file>file:/D:/DA1/Application/AppBanHang/src/giaodien/NewJFrame.java</file>
+            <file>file:/D:/DA1/Application/AppBanHang/src/giaodien/Welcome.java</file>
+            <file>file:/D:/DA1/Application/AppBanHang/src/giaodien/NewClass.java</file>
+            <file>file:/D:/DA1/Application/AppBanHang/src/giaodien/NewClass1.java</file>
+            <file>file:/D:/DA1/Application/AppBanHang/src/giaodien/QuanLyLuong.java</file>
+>>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
+        </group>
+>>>>>>> 7109e3cd590b7541698fcfcc1f9e98d4b531f08e
     </open-files>
 </project-private>

@@ -11,7 +11,7 @@ package entity;
  */
 public class SanPham {
     private String maSanPham;
-    private int maLoaiSanPham;
+    private String maLoaiSanPham;
     private String tenSanPham;
     private int donGia;
     private String hinhAnh;
@@ -20,7 +20,7 @@ public class SanPham {
     public SanPham() {
     }
 
-    public SanPham(String maSanPham, int maLoaiSanPham, String tenSanPham, int donGia, String hinhAnh, String moTa) {
+    public SanPham(String maSanPham, String maLoaiSanPham, String tenSanPham, int donGia, String hinhAnh, String moTa) {
         this.maSanPham = maSanPham;
         this.maLoaiSanPham = maLoaiSanPham;
         this.tenSanPham = tenSanPham;
@@ -37,11 +37,11 @@ public class SanPham {
         this.maSanPham = maSanPham;
     }
 
-    public int getMaLoaiSanPham() {
+    public String getMaLoaiSanPham() {
         return maLoaiSanPham;
     }
 
-    public void setMaLoaiSanPham(int maLoaiSanPham) {
+    public void setMaLoaiSanPham(String maLoaiSanPham) {
         this.maLoaiSanPham = maLoaiSanPham;
     }
 

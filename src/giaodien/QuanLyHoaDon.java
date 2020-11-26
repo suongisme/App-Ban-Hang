@@ -5,17 +5,31 @@
  */
 package giaodien;
 
+import DAO.HoaDonDAO;
+import DAO.NhanVienDAO;
+
+import entity.HoaDon;
+import entity.NhanVien;
+
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import tienich.MsgBox;
+
 /**
  *
  * @author SuongNguyen
  */
 public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
+    ArrayList<HoaDon> listHD;
+    HoaDonDAO hoadonDAO = new HoaDonDAO();
+    NhanVienDAO nvDao = new NhanVienDAO();
     /**
      * Creates new form QuanLyHoaDon
      */
     public QuanLyHoaDon() {
         initComponents();
+        this.fillTable();
     }
 
     /**
@@ -56,15 +70,20 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"9", null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3"
+                "Mã Hóa Đơn", "Tên nhân viên", "Khách"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblHoaDon.setRowHeight(30);
         tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -72,6 +91,11 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblHoaDon);
+        if (tblHoaDon.getColumnModel().getColumnCount() > 0) {
+            tblHoaDon.getColumnModel().getColumn(0).setResizable(false);
+            tblHoaDon.getColumnModel().getColumn(1).setResizable(false);
+            tblHoaDon.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,7 +155,7 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         int selectRow = tblHoaDon.getSelectedRow();
-        int maSanPham =  Integer.parseInt(tblHoaDon.getValueAt(selectRow, 0).toString());
+        int maSanPham = Integer.parseInt(tblHoaDon.getValueAt(selectRow, 0).toString());
         HoaDonChiTiet hdct = new HoaDonChiTiet(maSanPham);
         Home.desktop.add(hdct);
         hdct.setVisible(true);
@@ -149,4 +173,23 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtThang;
     // End of variables declaration//GEN-END:variables
+public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+        try {
+            listHD = (ArrayList<HoaDon>) hoadonDAO.selectAll();
+            for (HoaDon hd : listHD) {
+                NhanVien nv = nvDao.selectByID(hd.getMaNhanVien());
+                Object[] row = {
+                    hd.getMaHoaDon(),
+                    nv.getTenNhanVien(),
+                    hd.isLoaiKhachHang() ? "Nước ngoài" : "Trong nước",
+                    hd.getNgayXuatHoaDon()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.notify("Lỗi FillTable", this);
+        }
+    }
 }

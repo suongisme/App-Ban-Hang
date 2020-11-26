@@ -5,6 +5,15 @@
  */
 package giaodien;
 
+import DAO.HoaDonChiTietDAO;
+import DAO.HoaDonDAO;
+
+import entity.HoaDon;
+
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
+import tienich.Auth;
 import tienich.MsgBox;
 
 /**
@@ -13,11 +22,24 @@ import tienich.MsgBox;
  */
 public class ThanhToan extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ThanhToan
-     */
-    public ThanhToan() {
+//    private String tongtienTT;
+    Double tien;
+    String tftien;
+    ArrayList<HoaDon> listHD = new ArrayList<>();
+    HoaDonDAO hoadonDAO = new HoaDonDAO();
+//    ArrayList<NhanVien> listNv = new ArrayList<>();
+//    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    HoaDonChiTietDAO hoaDonChiTiet = new HoaDonChiTietDAO();
+    DefaultTableModel table;
+
+    public ThanhToan(DefaultTableModel tb) {
         initComponents();
+//        tftien = 
+        table = tb;
+        this.lbTongTien.setText(Home.tongtienTT);
+        tftien = txtTongTien.getText();
+
+        System.out.println(table.getValueAt(0, 0));
     }
 
     /**
@@ -59,7 +81,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         lbTien = new javax.swing.JLabel();
         lbTienTraLai = new javax.swing.JLabel();
         cbxKhongLayHD = new javax.swing.JCheckBox();
-        cbxKhachNuocNgoai = new javax.swing.JCheckBox();
+        ckbLoaiKhach = new javax.swing.JCheckBox();
         btnInHD = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -71,9 +93,40 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         txtTongTien.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         txtTongTien.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTongTien.setText("0");
+        txtTongTien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTongTienMouseClicked(evt);
+            }
+        });
+        txtTongTien.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtTongTienInputMethodTextChanged(evt);
+            }
+        });
+        txtTongTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTongTienActionPerformed(evt);
+            }
+        });
+        txtTongTien.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtTongTienPropertyChange(evt);
+            }
+        });
         txtTongTien.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTongTienKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTongTienKeyReleased(evt);
+            }
+        });
+        txtTongTien.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
+            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
+                txtTongTienVetoableChange(evt);
             }
         });
 
@@ -84,34 +137,74 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         btnNamTram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNamTram.setText("500.000đ");
+        btnNamTram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNamTramActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnNamTram);
 
         btnHaiTram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnHaiTram.setText("200.000đ");
+        btnHaiTram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHaiTramActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnHaiTram);
 
         btnMotTram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMotTram.setText("100.000đ");
+        btnMotTram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMotTramActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnMotTram);
 
         btnNamChuc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNamChuc.setText("50.000đ");
+        btnNamChuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNamChucActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnNamChuc);
 
         btnHaiChuc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnHaiChuc.setText("20.000đ");
+        btnHaiChuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHaiChucActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnHaiChuc);
 
         btnMuoi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMuoi.setText("10.000đ");
+        btnMuoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuoiActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnMuoi);
 
         btnNam.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNam.setText("5000đ");
+        btnNam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNamActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnNam);
 
         btnHai.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnHai.setText("2000đ");
+        btnHai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHaiActionPerformed(evt);
+            }
+        });
         pnlMenhGia.add(btnHai);
 
         btnMot.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -220,7 +313,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         lbTongTien.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbTongTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTongTien.setText("100.000đ");
+        lbTongTien.setText("0");
         lbTongTien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         lbHinhThuc.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -230,25 +323,30 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         lbTien.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTien.setText("200.000đ");
+        lbTien.setText("0");
         lbTien.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         lbTienTraLai.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbTienTraLai.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTienTraLai.setText("100.000đ");
+        lbTienTraLai.setText("0");
         lbTienTraLai.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         cbxKhongLayHD.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         cbxKhongLayHD.setText("Không lấy hoá đơn");
 
-        cbxKhachNuocNgoai.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        cbxKhachNuocNgoai.setText("Khách nước ngoài");
-        cbxKhachNuocNgoai.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        ckbLoaiKhach.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        ckbLoaiKhach.setText("Khách nước ngoài");
+        ckbLoaiKhach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         btnInHD.setBackground(new java.awt.Color(102, 255, 51));
         btnInHD.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnInHD.setForeground(new java.awt.Color(255, 255, 255));
         btnInHD.setText("IN HOÁ ĐƠN");
+        btnInHD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInHDActionPerformed(evt);
+            }
+        });
 
         btnHuy.setBackground(new java.awt.Color(255, 0, 51));
         btnHuy.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -264,33 +362,33 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbTien, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbHinhThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTienTraLai, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(lbTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
-                        .addContainerGap())))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxKhachNuocNgoai, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxKhongLayHD, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbTien, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbHinhThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbTienTraLai, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnInHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ckbLoaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxKhongLayHD, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
 
@@ -321,7 +419,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbxKhongLayHD)
                 .addGap(18, 18, 18)
-                .addComponent(cbxKhachNuocNgoai)
+                .addComponent(ckbLoaiKhach)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -407,19 +505,21 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTongTienKeyReleased
 
     private void btnMotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotActionPerformed
-        // TODO add your handling code here:
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 1;
+        tt();
     }//GEN-LAST:event_btnMotActionPerformed
 
     private void btnATMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnATMActionPerformed
-        MsgBox.notify("Không hỗ trợ",this);
+        MsgBox.notify("Không hỗ trợ", this);
     }//GEN-LAST:event_btnATMActionPerformed
 
     private void btnVisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisaActionPerformed
-        MsgBox.notify("Không hỗ trợ",this);
+        MsgBox.notify("Không hỗ trợ", this);
     }//GEN-LAST:event_btnVisaActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
-        MsgBox.notify("Không hỗ trợ",this);
+        MsgBox.notify("Không hỗ trợ", this);
     }//GEN-LAST:event_btnMasterCardActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -429,6 +529,84 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private void lblThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThoatMouseClicked
         this.dispose();
     }//GEN-LAST:event_lblThoatMouseClicked
+
+    private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
+        insertHoaDon();
+        insertChiTietHD();
+    }//GEN-LAST:event_btnInHDActionPerformed
+
+    private void txtTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongTienActionPerformed
+
+    }//GEN-LAST:event_txtTongTienActionPerformed
+
+    private void btnNamTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamTramActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 500;
+        tt();
+    }//GEN-LAST:event_btnNamTramActionPerformed
+
+    private void btnHaiTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiTramActionPerformed
+
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 200;
+        tt();
+    }//GEN-LAST:event_btnHaiTramActionPerformed
+
+    private void btnMotTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotTramActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 100;
+        tt();
+    }//GEN-LAST:event_btnMotTramActionPerformed
+
+    private void btnNamChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamChucActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 50;
+        tt();
+    }//GEN-LAST:event_btnNamChucActionPerformed
+
+    private void btnHaiChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiChucActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 20;
+        tt();
+    }//GEN-LAST:event_btnHaiChucActionPerformed
+
+    private void btnMuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuoiActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 10;
+        tt();
+    }//GEN-LAST:event_btnMuoiActionPerformed
+
+    private void btnNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 5;
+        tt();
+    }//GEN-LAST:event_btnNamActionPerformed
+
+    private void btnHaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiActionPerformed
+        tien = Double.parseDouble(txtTongTien.getText());
+        tien = tien + 2;
+        tt();
+    }//GEN-LAST:event_btnHaiActionPerformed
+
+    private void txtTongTienPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtTongTienPropertyChange
+
+    }//GEN-LAST:event_txtTongTienPropertyChange
+
+    private void txtTongTienVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_txtTongTienVetoableChange
+
+    }//GEN-LAST:event_txtTongTienVetoableChange
+
+    private void txtTongTienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTongTienMouseClicked
+
+    }//GEN-LAST:event_txtTongTienMouseClicked
+
+    private void txtTongTienInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtTongTienInputMethodTextChanged
+
+    }//GEN-LAST:event_txtTongTienInputMethodTextChanged
+
+    private void txtTongTienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTongTienKeyPressed
+
+    }//GEN-LAST:event_txtTongTienKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -447,8 +625,8 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNamTram;
     private javax.swing.JButton btnTienMat;
     private javax.swing.JButton btnVisa;
-    private javax.swing.JCheckBox cbxKhachNuocNgoai;
     private javax.swing.JCheckBox cbxKhongLayHD;
+    private javax.swing.JCheckBox ckbLoaiKhach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -469,4 +647,61 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlPhuongThucThanhToan;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
+
+    private void tt() {
+        String x = String.valueOf(tien);
+        lbTien.setText(x + "00");
+        txtTongTien.setText(x);
+        tralai();
+
+    }
+
+    private void tralai() {
+        String iv = Home.tongtienTT.substring(0, Home.tongtienTT.length() - 1);
+        Double gg = Double.parseDouble(iv);
+        Double tienthuaaa = tien - gg;
+        if (tienthuaaa < 0) {
+            MsgBox.notify("Chưa đủ tiền", this);
+        }
+        lbTienTraLai.setText(String.valueOf(tienthuaaa) + "00");
+    }
+
+    void insertHoaDon() {
+        String manv = Auth.user.getMaNhanVien();
+        Date ngayxuatHD = new Date();
+
+        HoaDon hoadon = new HoaDon();
+        hoadon.setMaNhanVien(manv);
+        hoadon.setNgayXuatHoaDon(ngayxuatHD);
+        hoadon.setLoaiKhachHang(ckbLoaiKhach.isSelected());
+
+        try {
+            hoadonDAO.inserts(hoadon);
+            MsgBox.notify("In hóa đơn thành công", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertChiTietHD() {
+        HoaDon hd = hoadonDAO.selectLastHoaDon();
+        entity.HoaDonChiTiet hdct = new entity.HoaDonChiTiet();
+        hdct.setMaHoaDon(hd.getMaHoaDon());
+
+        int rows = table.getRowCount();
+
+        for (int i = 0; i < rows; i++) {
+            int amount = Integer.parseInt(table.getValueAt(i, 2).toString());
+            for (int j = 0; j < amount; j++) {
+                String maSp = table.getValueAt(i, 0).toString();
+                hdct.setMaSanPham(maSp);
+                try {
+                    hoaDonChiTiet.insert(hdct);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    MsgBox.notify(e.getMessage(), this);
+                }
+            }
+        }
+    }
 }

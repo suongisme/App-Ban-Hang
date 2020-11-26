@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import tienich.JDBCHelper;
 
 /**
@@ -18,15 +19,15 @@ import tienich.JDBCHelper;
  */
 public class LoaiSanPhamDAO implements DAO<LoaiSanPham, Integer>{
 
-    private final String SQL_INSERT_LOAISANPHAM = "INSERT INTO hoadon(tenloaisanpham) VALUES(?)";
+    private final String SQL_INSERT_LOAISANPHAM = "INSERT INTO loaisanpham(TenSanPham) VALUES(?)";
     private final String SQL_DELETE_LOAISANPHAM = "DELETE FROM LoaiSanPham WHERE maloaisanpham = ?";
     private final String SQL_SELECT = "SELECT * FROM LoaiSanPham";
-    private final String SQL_SELECT_BY_ID = "SELECT * FROM LoaiSanPham WHERE mahoadon = ?";
+    private final String SQL_SELECT_BY_ID = "SELECT * FROM LoaiSanPham WHERE maloaisanphm = ?";
     
     @Override
     public void insert(LoaiSanPham entity) {
         try {
-            JDBCHelper.update(SQL_INSERT_LOAISANPHAM, entity.getTenLoaiSanPham());
+            JDBCHelper.update(SQL_INSERT_LOAISANPHAM,entity.getTenLoaiSanPham());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Thêm thất bại");
@@ -67,8 +68,8 @@ public class LoaiSanPhamDAO implements DAO<LoaiSanPham, Integer>{
             ResultSet rs = JDBCHelper.queryResult(sql, x);
             while (rs.next()) {
                 LoaiSanPham lsp = new LoaiSanPham();
-                lsp.setMaLoaiSanPham(rs.getInt("maloaisanpham"));
-                lsp.setTenLoaiSanPham(rs.getString("tensanpham"));
+                lsp.setMaLoaiSanPham(rs.getInt("MaLoaiSanPham"));
+                lsp.setTenLoaiSanPham(rs.getString("TenSanPham"));
                 loaiSanPhamList.add(lsp);
             }
         } catch (Exception e) {

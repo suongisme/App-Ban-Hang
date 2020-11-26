@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -26,6 +27,8 @@ public class HoaDon {
         this.loaiKhachHang = loaiKhachHang;
         this.ngayXuatHoaDon = ngayXuatHoaDon;
     }
+
+
 
     public int getMaHoaDon() {
         return maHoaDon;

@@ -21,10 +21,16 @@ import tienich.JDBCHelper;
 public class HoaDonChiTietDAO implements DAO<HoaDonChiTiet, Integer>{
 
     private final String SQL_SELECT_BY_MAHOADON = "SELECT * FROM hoadonchitiet WHERE mahoadon = ?";
-    
+    private final String SQL_INSERT_HOADONCHITIET = "INSERT INTO chitiethd(mahoadon, masanpham) VALUES (?,?)";
+            
     @Override
     public void insert(HoaDonChiTiet entity) {
-       // không hỗ trợ
+       try {
+            JDBCHelper.update(SQL_INSERT_HOADONCHITIET, entity.getMaHoaDon(), entity.getMaSanPham());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Thêm thất bại");
+        }
     }
 
     @Override
