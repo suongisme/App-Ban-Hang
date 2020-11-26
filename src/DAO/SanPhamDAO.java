@@ -19,7 +19,7 @@ import tienich.JDBCHelper;
 public class SanPhamDAO implements DAO<SanPham, String>{
 
     private final String SQL_INSERT_SANPHAM = "INSERT INTO sanpham(masanpham, maloaisanpham, tensanpham, dongia, hinhanh, mota) VALUES(?,?,?,?,?,?)";
-    private final String SQL_UPDATE_SANPHAM = "UPDATE sanpham SET maloaisanpham = ?, tensanpham = ?, dongia = ?, hinhanh = ?, mota WHERE masanpham = ?";
+    private final String SQL_UPDATE_SANPHAM = "UPDATE sanpham SET maloaisanpham = ?, tensanpham = ?, dongia = ?, hinhanh = ?, mota =? WHERE masanpham = ?";
     private final String SQL_DELETE_SANPHAM = "DELETE FROM sanpham where masanpham = ?";
     private final String SQL_SELECT = "SELECT * FROM sanpham";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM sanpham WHERE masanpham = ?";
@@ -86,7 +86,7 @@ public class SanPhamDAO implements DAO<SanPham, String>{
             while (rs.next()) {
                 SanPham sp = new SanPham();
                 sp.setMaSanPham(rs.getString("masanpham"));
-                sp.setMaLoaiSanPham(rs.getString("maloaisanpham"));
+                sp.setMaLoaiSanPham(rs.getInt("maloaisanpham"));
                 sp.setTenSanPham(rs.getString("tensanpham"));
                 sp.setDonGia(rs.getInt("dongia"));
                 sp.setHinhAnh(rs.getString("hinhanh"));

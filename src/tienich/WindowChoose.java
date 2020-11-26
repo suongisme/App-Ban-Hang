@@ -15,6 +15,7 @@ import javax.swing.JFileChooser;
 public class WindowChoose extends JFileChooser {
 
     public static String path;
+    public static String nameFile;
     private static JFileChooser file = new JFileChooser();
     private static Dimension size = new Dimension(700, 500);
 
@@ -23,6 +24,7 @@ public class WindowChoose extends JFileChooser {
         int a = file.showOpenDialog(null);
         if (a == JFileChooser.APPROVE_OPTION) {
             path = file.getSelectedFile().getAbsolutePath();
+            nameFile = file.getSelectedFile().getName();
             return true;
         }
         return false;
@@ -33,6 +35,7 @@ public class WindowChoose extends JFileChooser {
         int a = file.showOpenDialog(null);
         if (a == JFileChooser.APPROVE_OPTION) {
             path = file.getSelectedFile().getAbsolutePath();
+            nameFile = file.getSelectedFile().getName();
             return true;
         }
         return false;

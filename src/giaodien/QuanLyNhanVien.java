@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import tienich.Auth;
 import tienich.DateHelper;
 import tienich.ImageHelper;
+import tienich.WindowChoose;
 
 /**
  *
@@ -98,6 +99,11 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
 
         lblAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnhMouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Mã nhân viên");
 
@@ -211,7 +217,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                                 .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                 .addComponent(txtHeSoLuong)
@@ -236,7 +242,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                             .addComponent(cboLoaiNV, javax.swing.GroupLayout.Alignment.LEADING, 0, 604, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                     .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
@@ -266,7 +272,8 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel9)))
-                    .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -290,9 +297,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pnlScreenMain.add(jPanel5, "card3");
@@ -516,6 +523,14 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         cardlayout.show(pnlScreenMain, "card2");
     }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
 
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        if (WindowChoose.openChoose()) {
+            String nameFile = WindowChoose.nameFile;
+            lblAnh.setIcon(ImageHelper.getImage(nameFile, 143, 174));
+            lblAnh.setToolTipText(nameFile);
+        }
+    }//GEN-LAST:event_lblAnhMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
@@ -664,7 +679,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         nv.setEmail(txtEmail.getText());
         nv.setHeSoLuong(Float.parseFloat(txtHeSoLuong.getText()));
         nv.setMatKhau(txtMatKhau.getText());
-        nv.setHinh("null");
+        nv.setHinh(lblAnh.getToolTipText());
         nv.setNgaySinh(DateHelper.convertDateToSqlDate(new Date()));
         return nv;
     }
