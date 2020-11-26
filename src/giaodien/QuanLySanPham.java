@@ -603,10 +603,13 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             isEmpty(txtMaSanPham.getText()) ||
             isEmpty(txtTenSanPham.getText()) ||
             isEmpty(txtMoTa.getText()) ||
-            isEmpty(txtDonGia.getText()) ||
-            isEmpty(lblHinhAnh.getToolTipText())
+            isEmpty(txtDonGia.getText())
         ) {
             MsgBox.notify("Nhập đủ thông tin", this);
+            return true;
+        }
+        if (lblHinhAnh.getToolTipText() == null) {
+            MsgBox.notify("Chưa chọn ảnh", this);
             return true;
         }
         if (!isNumber(txtDonGia.getText())) {
