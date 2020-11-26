@@ -40,6 +40,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         lblAnhUser.setIcon(ImageHelper.getImage(Auth.user.getHinh(), 184, 177));
         OclockHelper.startOclock(lblTIme);
         init();
+        //
     }
 
     /**
