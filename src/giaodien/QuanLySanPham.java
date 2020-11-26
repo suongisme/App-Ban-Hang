@@ -20,7 +20,9 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import tienich.Auth;
 import tienich.ImageHelper;
+
 import tienich.MsgBox;
 import tienich.OclockHelper;
 import tienich.WindowChoose;
@@ -38,6 +40,9 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     public QuanLySanPham() {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
+        lblTenUser.setText(Auth.user.getTenNhanVien());
+        lblAnhUser.setIcon(ImageHelper.getImage(Auth.user.getHinh(), 184, 177));
+        OclockHelper.startOclock(lblTIme);
         init();
         OclockHelper.startOclock(lblTime);
     }
@@ -52,10 +57,12 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         pnlMenun = new javax.swing.JPanel();
-        lblTime = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblTIme = new javax.swing.JLabel();
+        lblAnhUser = new javax.swing.JLabel();
+
         btnCapNhat = new javax.swing.JButton();
         btnDanhSachNhanVien = new javax.swing.JButton();
+        lblTenUser = new javax.swing.JLabel();
         pnlScreenMain = new javax.swing.JPanel();
         pnlChiTiet = new javax.swing.JPanel();
         lblHinhAnh = new javax.swing.JLabel();
@@ -87,13 +94,14 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         pnlMenun.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 255)));
         pnlMenun.setPreferredSize(new java.awt.Dimension(263, 474));
 
-        lblTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTime.setText("Mon, November 06, 2020 00:00:00");
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("IMG");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblTIme.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTIme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTIme.setText("Mon, November 06, 2020 00:00:00");
+
+
+        lblAnhUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnhUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
@@ -109,28 +117,41 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             }
         });
 
+        lblTenUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTenUser.setText("Tên nhân viên");
+
         javax.swing.GroupLayout pnlMenunLayout = new javax.swing.GroupLayout(pnlMenun);
         pnlMenun.setLayout(pnlMenunLayout);
         pnlMenunLayout.setHorizontalGroup(
             pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+
             .addComponent(btnCapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
             .addGroup(pnlMenunLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblAnhUser, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(lblTenUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlMenunLayout.setVerticalGroup(
             pnlMenunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenunLayout.createSequentialGroup()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addComponent(lblAnhUser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTenUser)
+                .addGap(27, 27, 27)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+
+                .addComponent(lblTIme, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+
         );
 
         pnlScreenMain.setLayout(new java.awt.CardLayout());
@@ -395,14 +416,17 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+
+    private javax.swing.JLabel lblAnhUser;
     private javax.swing.JLabel lblHinhAnh;
-    private javax.swing.JLabel lblTime;
+    private javax.swing.JLabel lblTIme;
+    private javax.swing.JLabel lblTenUser;
+
     private javax.swing.JPanel pnlChiTiet;
     private javax.swing.JPanel pnlDanhSach;
     private javax.swing.JPanel pnlMenun;
