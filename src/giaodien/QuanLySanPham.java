@@ -37,6 +37,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
      * Creates new form QuanLySanPham
      */
     CardLayout cardlayout;
+
     public QuanLySanPham() {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
@@ -378,10 +379,16 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void lblHinhAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhAnhMouseClicked
-        if (WindowChoose.openChoose()) {
-            String nameFile = WindowChoose.nameFile;
-            lblHinhAnh.setToolTipText(nameFile);
-            lblHinhAnh.setIcon(ImageHelper.getImage(nameFile, 273, 186));
+        try {
+            if (WindowChoose.openChoose()) {
+                String nameFile = WindowChoose.nameFile;
+                ImageHelper.copy(WindowChoose.path);
+                lblHinhAnh.setToolTipText(nameFile);
+                lblHinhAnh.setIcon(ImageHelper.getImage(nameFile, 273, 186));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MsgBox.notify("Chọn ảnh lỗi", this);
         }
     }//GEN-LAST:event_lblHinhAnhMouseClicked
 
@@ -433,39 +440,39 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
 
     private SanPhamDAO sanPhamDAO;
     private LoaiSanPhamDAO loaiSanPhamDAO;
-    
+
     DefaultComboBoxModel<LoaiSanPham> comboBoxLoai;
-    
+
     private void init() {
         sanPhamDAO = new SanPhamDAO();
         loaiSanPhamDAO = new LoaiSanPhamDAO();
-        
+
         comboBoxLoai = (DefaultComboBoxModel) cbxLoai.getModel();
-        
+
         fillLoaiSanPham();
         fillToBoard();
     }
-    
+
     private void fillLoaiSanPham() {
         comboBoxLoai.removeAllElements();
-        loaiSanPhamDAO.selectAll().forEach( (x) ->{
+        loaiSanPhamDAO.selectAll().forEach((x) -> {
             comboBoxLoai.addElement(x);
         });
     }
-    
+
     private void fillToBoard() {
         deleteBoard(pnlSanPham);
         List<SanPham> sanPhamList = sanPhamDAO.selectByTen(txtTimKiem.getText());
         deleteBoard(pnlSanPham);
         double row = (double) sanPhamList.size() / 4;
-        int heightBoard = (int) (Math.ceil(row) * 176 + (row*25)); // chieu dai cua bang chua san pham
+        int heightBoard = (int) (Math.ceil(row) * 176 + (row * 25)); // chieu dai cua bang chua san pham
         pnlSanPham.setPreferredSize(new Dimension(787, heightBoard)); // SET kich thuoc cho bang san pham
 
         sanPhamList.forEach((x) -> {
             createBoard(x);
         });
     }
-    
+
     private void createBoard(SanPham sp) {
         JPanel board = new JPanel(null);
         Dimension size = new Dimension(176, 170);
@@ -520,29 +527,31 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
 
         return lblcost;
     }
-    
+
     private void deleteBoard(JPanel sanPhamBoard) {
         sanPhamBoard.removeAll();
         sanPhamBoard.revalidate();
         sanPhamBoard.repaint();
     }
-    
+
     private void setForm(SanPham sanPham) {
         txtMaSanPham.setText(sanPham.getMaSanPham());
         txtTenSanPham.setText(sanPham.getTenSanPham());
-        txtDonGia.setText(sanPham.getDonGia()+"");
+        txtDonGia.setText(sanPham.getDonGia() + "");
         txtMoTa.setText(sanPham.getMoTa());
         lblHinhAnh.setIcon(ImageHelper.getImage(sanPham.getHinhAnh(), 273, 186));
         lblHinhAnh.setToolTipText(sanPham.getHinhAnh());
     }
-    
+
     private void insert() {
-        if (isError()) return;
+        if (isError()) {
+            return;
+        }
         if (isExist(txtMaSanPham.getText())) {
             MsgBox.notify("Mã sản phẩm đã tồn tại", this);
             return;
         }
-        
+
         try {
             SanPham sp = getForm();
             sanPhamDAO.insert(sp);
@@ -553,9 +562,11 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
-    
+
     private void update() {
-        if (isError()) return;
+        if (isError()) {
+            return;
+        }
         try {
             SanPham sp = getForm();
             sanPhamDAO.update(sp);
@@ -567,19 +578,21 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.notify(e.getMessage(), this);
         }
     }
-    
+
     private void delete() {
+        if (!MsgBox.confirm("Bạn có muốn xóa " + txtTenSanPham.getText() + " không?", this)) return;
         try {
             sanPhamDAO.delete(txtMaSanPham.getText());
+            ImageHelper.delete(lblHinhAnh.getToolTipText());
             MsgBox.notify("XÓa thành công", this);
             fillToBoard();
             clearForm();
         } catch (Exception e) {
             MsgBox.notify(e.getMessage(), this);
         }
-            
+
     }
-    
+
     private SanPham getForm() {
         SanPham sp = new SanPham();
         sp.setDonGia(Integer.parseInt(txtDonGia.getText()));
@@ -590,21 +603,19 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         sp.setTenSanPham(txtTenSanPham.getText());
         return sp;
     }
-    
+
     private void clearForm() {
         btnThem.setEnabled(true);
         txtMaSanPham.setEditable(true);
         SanPham a = new SanPham();
         setForm(a);
     }
-    
+
     private boolean isError() {
-        if (
-            isEmpty(txtMaSanPham.getText()) ||
-            isEmpty(txtTenSanPham.getText()) ||
-            isEmpty(txtMoTa.getText()) ||
-            isEmpty(txtDonGia.getText())
-        ) {
+        if (isEmpty(txtMaSanPham.getText())
+                || isEmpty(txtTenSanPham.getText())
+                || isEmpty(txtMoTa.getText())
+                || isEmpty(txtDonGia.getText())) {
             MsgBox.notify("Nhập đủ thông tin", this);
             return true;
         }
@@ -616,19 +627,19 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.notify("Don gia phai la so", this);
             return true;
         }
-        
+
         return false;
-            
+
     }
-    
+
     private boolean isExist(String maSp) {
         return sanPhamDAO.selectByID(maSp) != null;
     }
-    
+
     private boolean isEmpty(String text) {
         return text.isEmpty();
     }
-    
+
     private boolean isNumber(String text) {
         try {
             Integer.parseInt(text);
