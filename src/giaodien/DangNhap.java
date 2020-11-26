@@ -72,7 +72,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(59, 175, 218));
         txtUsername.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsername.setText("tp01");
+        txtUsername.setText("NV06");
         txtUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -120,6 +120,11 @@ public class DangNhap extends javax.swing.JFrame {
         txtMatKhau.setForeground(new java.awt.Color(255, 255, 255));
         txtMatKhau.setText("12345678");
         txtMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(255, 255, 255)));
+        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatKhauActionPerformed(evt);
+            }
+        });
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMatKhauKeyPressed(evt);
@@ -239,6 +244,10 @@ public class DangNhap extends javax.swing.JFrame {
             txtMatKhau.requestFocus();
         }
     }//GEN-LAST:event_txtUsernameKeyPressed
+
+    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMatKhauActionPerformed
 
     /**
      * @param args the command line arguments
