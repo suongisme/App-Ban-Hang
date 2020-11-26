@@ -538,6 +538,11 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     
     private void insert() {
         if (isError()) return;
+        if (isExist(txtMaSanPham.getText())) {
+            MsgBox.notify("Mã sản phẩm đã tồn tại", this);
+            return;
+        }
+        
         try {
             SanPham sp = getForm();
             sanPhamDAO.insert(sp);
@@ -545,7 +550,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             fillToBoard();
             clearForm();
         } catch (Exception e) {
-        
+            e.printStackTrace();
         }
     }
     
@@ -608,8 +613,13 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             MsgBox.notify("Don gia phai la so", this);
             return true;
         }
+        
         return false;
             
+    }
+    
+    private boolean isExist(String maSp) {
+        return sanPhamDAO.selectByID(maSp) != null;
     }
     
     private boolean isEmpty(String text) {
