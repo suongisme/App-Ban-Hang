@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import tienich.Auth;
 import tienich.DateHelper;
 import tienich.ImageHelper;
+import tienich.OclockHelper;
 
 /**
  *
@@ -37,6 +38,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
         lblTenNhanVien.setText(Auth.user.getTenNhanVien());
         lblUser.setIcon(ImageHelper.getImage(Auth.user.getHinh(), 175, 142));
+        OclockHelper.startOclock(lblTimE);
     }
 
     /**
@@ -85,7 +87,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_DanhSachNV = new javax.swing.JTable();
         pnlMenu = new javax.swing.JPanel();
-        lbTime = new javax.swing.JLabel();
+        lblTimE = new javax.swing.JLabel();
         btnCapNhat = new javax.swing.JButton();
         btnDanhSachNhanVien = new javax.swing.JButton();
         lblUser = new javax.swing.JLabel();
@@ -370,9 +372,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         pnlMenu.setPreferredSize(new java.awt.Dimension(263, 474));
         pnlMenu.setRequestFocusEnabled(false);
 
-        lbTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lbTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTime.setText("Mon, November 06, 2020 00:00:00");
+        lblTimE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTimE.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTimE.setText("Mon, November 06, 2020 00:00:00");
 
         btnCapNhat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCapNhat.setText("Cập nhật");
@@ -402,7 +404,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbTime, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTimE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -422,8 +424,8 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
-                .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(lblTimE, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -542,9 +544,9 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbTime;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JLabel lblTenNhanVien;
+    private javax.swing.JLabel lblTimE;
     private javax.swing.JLabel lblUser;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnlScreenMain;

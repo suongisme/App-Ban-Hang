@@ -541,7 +541,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="btnCapNhat" alignment="1" max="32767" attributes="0"/>
               <Component id="btnDanhSachNhanVien" alignment="0" max="32767" attributes="0"/>
-              <Component id="lbTime" alignment="1" max="32767" attributes="0"/>
+              <Component id="lblTimE" alignment="1" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -564,14 +564,14 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnDanhSachNhanVien" min="-2" pref="64" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="lbTime" min="-2" pref="31" max="-2" attributes="0"/>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <Component id="lblTimE" min="-2" pref="31" max="-2" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="lbTime">
+        <Component class="javax.swing.JLabel" name="lblTimE">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
