@@ -99,11 +99,7 @@ public class SanPhamDAO implements DAO<SanPham, String>{
         return sanPhamList;
     }
     
-<<<<<<< HEAD
-    public List<SanPham> selectByTen(String tenSanPham, String maloai) {
-=======
     public List<SanPham> selectByTen(String tenSanPham, Integer maloai) {
->>>>>>> 175bcf9530e4e8f4a1c3801b51b06bd22488c327
         String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ? AND maloaisanpham = ?";
         
         return this.selectBySQL(sql, "%"+tenSanPham+"%", maloai);
@@ -113,5 +109,10 @@ public class SanPhamDAO implements DAO<SanPham, String>{
         String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ?";
         
         return this.selectBySQL(sql, "%"+tenSanPham+"%");
+    }
+    
+    public List<SanPham> selectByMaLoai(int maLoaiSanPham) {
+        String sql = "SELECT * FROM sanpham WHERE maloaisanpham = ?";
+        return this.selectBySQL(sql, maLoaiSanPham);
     }
 }

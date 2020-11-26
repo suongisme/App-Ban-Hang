@@ -20,10 +20,10 @@ import java.util.logging.Logger;
 public class JDBCHelper {
 
     private static Connection con;
-    private static final String USER = "sa";
-    private static final String PASSWORD = "123";
+    private static final String USER = "admin";
+    private static final String PASSWORD = "123@123";
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String CONNECT = "jdbc:sqlserver://localhost:1433;databasename=DungDB";
+    private static final String CONNECT = "jdbc:sqlserver://localhost:1433;databasename=AppBanHang";
 
     public static void openConnection() throws SQLException, ClassNotFoundException {
         Class.forName(DRIVER);
