@@ -31,7 +31,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlMenu" alignment="0" pref="689" max="32767" attributes="0"/>
+          <Component id="pnlMenu" alignment="0" pref="693" max="32767" attributes="0"/>
           <Component id="pnlScreenMain" alignment="0" pref="681" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -201,6 +201,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCapNhat">
               <Properties>

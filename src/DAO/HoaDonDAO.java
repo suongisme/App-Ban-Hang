@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tienich.JDBCHelper;
 
 /**
@@ -23,6 +25,17 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
     private final String SQL_INSERT_HOADON = "INSERT INTO hoadon(manhanvien,loaikhachhang,ngayxuathd) VALUES(?,?,?)";
     private final String SQL_SELECT = "SELECT * FROM hoadon";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM hoadon WHERE mahoadon = ?";
+    public void inserts( HoaDon hd ) {
+        String sql = "INSERT INTO hoadon(manhanvien,loaikhachhang,ngayxuathd) VALUES(?,?,?)";
+       
+            JDBCHelper.executeUpdate(sql,
+                    hd.getMaNhanVien(),
+                    hd.isLoaiKhachHang(),
+                    hd.getNgayXuatHoaDon()
+            );
+       
+        
+    }
     
     @Override
     public void insert(HoaDon entity) {
@@ -77,6 +90,15 @@ public class HoaDonDAO implements DAO<HoaDon, Integer>{
     }
     
     public List<HoaDon> getLuongByDate(int year, int month, int date) throws SQLException {
+        String sql = "SELECT * FROM hoadon where ngayxuathd = ?";
+
+        Calendar a = Calendar.getInstance();
+        a.set(year, month-1, date);
+        Date dt = a.getTime();
+        
+        return this.selectBySQL(sql, dt);
+    }
+    public List<HoaDon> getHoaDonByDate(int year, int month, int date) throws SQLException {
         String sql = "SELECT * FROM hoadon where ngayxuathd = ?";
 
         Calendar a = Calendar.getInstance();

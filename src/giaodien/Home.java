@@ -44,6 +44,8 @@ public class Home extends javax.swing.JFrame {
      */
     CardLayout cardlayout;
 
+    public static String tongtienTT;
+
     public Home() {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
@@ -451,7 +453,7 @@ public class Home extends javax.swing.JFrame {
 
         lblTongTien.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblTongTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongTien.setText("0đ");
+        lblTongTien.setText("0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -626,11 +628,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        tongtienTT = lblTongTien.getText();
         if (tableThanhToan.getRowCount() == 0) {
             MsgBox.notify("Vui lòng chọn sản phẩm trước.", this);
             return;
         }
         showForm(new ThanhToan());
+        
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void cbxLoaiSanPham2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLoaiSanPham2ItemStateChanged
@@ -921,12 +925,12 @@ public class Home extends javax.swing.JFrame {
         }
 
     }
-    
+
     // delete a cell in allCostArray
     private void deleteCEllInArray(int index) {
-        for (int j = 0; j < allCostArray.length-1; j++) {
+        for (int j = 0; j < allCostArray.length - 1; j++) {
             if (j >= index) {
-                allCostArray[j] = allCostArray[j+1];
+                allCostArray[j] = allCostArray[j + 1];
             }
         }
     }

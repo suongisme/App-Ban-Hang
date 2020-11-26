@@ -5,15 +5,18 @@
  */
 package giaodien;
 
+import DAO.LoaiSanPhamDAO;
+import entity.LoaiSanPham;
+import java.util.ArrayList;
+
 /**
  *
  * @author SuongNguyen
  */
 public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form QuanLyLoaiSanPham
-     */
+    ArrayList<LoaiSanPham> listLSP = new ArrayList<>();
+    LoaiSanPhamDAO loaiSPDAO = new LoaiSanPhamDAO();
     public QuanLyLoaiSanPham() {
         initComponents();
     }
@@ -40,7 +43,7 @@ public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
         jLabel1.setText("Loại");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("Tên loại");
+        jLabel2.setText("Mã loại");
 
         cbxLoai.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbxLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ ăn", "Đồ uống" }));
@@ -50,6 +53,11 @@ public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
         jButton1.setText("Xóa");
 
         jButton2.setText("Thêm");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,11 +73,12 @@ public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTenLoai)
-                            .addComponent(cbxLoai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbxLoai, 0, 263, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -95,6 +104,10 @@ public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+insert();        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxLoai;
@@ -104,4 +117,11 @@ public class QuanLyLoaiSanPham extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtTenLoai;
     // End of variables declaration//GEN-END:variables
+
+    private void insert() {
+        String tenmaloaisp = txtTenLoai.getText();
+        String tenloai = (String) cbxLoai.getSelectedItem();
+        LoaiSanPham lsp = new LoaiSanPham(tenmaloaisp, tenloai);
+        loaiSPDAO.insert(lsp);
+    }
 }

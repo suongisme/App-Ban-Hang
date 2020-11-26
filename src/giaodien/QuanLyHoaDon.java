@@ -5,17 +5,29 @@
  */
 package giaodien;
 
+import DAO.HoaDonDAO;
+
+import entity.HoaDon;
+
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import tienich.MsgBox;
+
 /**
  *
  * @author SuongNguyen
  */
 public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
+    ArrayList<HoaDon> listHD = new ArrayList<>();
+    HoaDonDAO hoadonDAO = new HoaDonDAO();
+
     /**
      * Creates new form QuanLyHoaDon
      */
     public QuanLyHoaDon() {
         initComponents();
+        this.fillTable();
     }
 
     /**
@@ -147,4 +159,17 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtThang;
     // End of variables declaration//GEN-END:variables
+public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+        model.setRowCount(0);
+        try {
+            listHD = (ArrayList<HoaDon>) hoadonDAO.selectAll();
+            for (HoaDon hd : listHD) {
+                Object[] row = {hd.getMaHoaDon(), hd.getMaNhanVien(), String.valueOf(hd.isLoaiKhachHang()), hd.getNgayXuatHoaDon()};
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.notify("Lỗi FillTable", this);
+        }
+    }
 }

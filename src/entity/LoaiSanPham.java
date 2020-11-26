@@ -10,22 +10,22 @@ package entity;
  * @author SuongNguyen
  */
 public class LoaiSanPham {
-    private int maLoaiSanPham;
+    private String maLoaiSanPham;
     private String tenLoaiSanPham;
 
     public LoaiSanPham() {
     }
 
-    public LoaiSanPham(int maLoaiSanPham, String tenLoaiSanPham) {
+    public LoaiSanPham(String maLoaiSanPham, String tenLoaiSanPham) {
         this.maLoaiSanPham = maLoaiSanPham;
         this.tenLoaiSanPham = tenLoaiSanPham;
     }
 
-    public int getMaLoaiSanPham() {
+    public String getMaLoaiSanPham() {
         return maLoaiSanPham;
     }
 
-    public void setMaLoaiSanPham(int maLoaiSanPham) {
+    public void setMaLoaiSanPham(String maLoaiSanPham) {
         this.maLoaiSanPham = maLoaiSanPham;
     }
 

@@ -86,7 +86,7 @@ public class SanPhamDAO implements DAO<SanPham, String>{
             while (rs.next()) {
                 SanPham sp = new SanPham();
                 sp.setMaSanPham(rs.getString("masanpham"));
-                sp.setMaLoaiSanPham(rs.getInt("maloaisanpham"));
+                sp.setMaLoaiSanPham(rs.getString("maloaisanpham"));
                 sp.setTenSanPham(rs.getString("tensanpham"));
                 sp.setDonGia(rs.getInt("dongia"));
                 sp.setHinhAnh(rs.getString("hinhanh"));
@@ -99,7 +99,7 @@ public class SanPhamDAO implements DAO<SanPham, String>{
         return sanPhamList;
     }
     
-    public List<SanPham> selectByTen(String tenSanPham, int maloai) {
+    public List<SanPham> selectByTen(String tenSanPham, String maloai) {
         String sql = "SELECT * FROM sanpham WHERE tensanpham LIKE ? AND maloaisanpham = ?";
         
         return this.selectBySQL(sql, "%"+tenSanPham+"%", maloai);

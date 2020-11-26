@@ -23,19 +23,20 @@ public class Welcome extends javax.swing.JFrame {
     public Welcome() {
         initComponents();
         setLocationRelativeTo(null);
-        
+
         Timer a = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 int value = pgbLoading.getValue();
                 pgbLoading.setValue(++value);
-                if(value == pgbLoading.getMaximum()){
+                if (value == pgbLoading.getMaximum()) {
                     dispose();
                     new DangNhap().setVisible(true);
-                } 
+                }
             }
-        });a.start();
-        
+        });
+        a.start();
+
         try {
             JDBCHelper.openConnection();
         } catch (Exception e) {
@@ -85,7 +86,7 @@ public class Welcome extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-         try {
+        try {
             UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
         } catch (Exception e) {
             e.printStackTrace();
