@@ -637,7 +637,7 @@ public class Home extends javax.swing.JFrame {
             return;
         }
         showForm(new ThanhToan(tableThanhToan));
-        
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void cbxLoaiSanPham2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLoaiSanPham2ItemStateChanged
@@ -647,23 +647,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxLoaiSanPham2ItemStateChanged
 
     private void tblDatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatHangMouseClicked
-        int rowSelect = tblDatHang.getSelectedRow();
-        int amount = (int) tblDatHang.getValueAt(rowSelect, 2);
-        if (amount == 1) {
-            tableThanhToan.removeRow(rowSelect);
-            deleteCEllInArray(rowSelect);
-            lblTongTien.setText(getTongTien());
-            i--;
-            return;
-        }
-        tblDatHang.setValueAt(--amount, rowSelect, 2);
-        decreaseCostInTable(rowSelect);
+        int selectRow = tblDatHang.getSelectedRow();
+
+        decreaseCostInTable(selectRow);
+        decreaseAmount(selectRow);
         lblTongTien.setText(getTongTien());
     }//GEN-LAST:event_tblDatHangMouseClicked
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         tableThanhToan.setRowCount(0);
-        i = 0;
         lblTongTien.setText("0.000đ");
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
@@ -672,22 +664,6 @@ public class Home extends javax.swing.JFrame {
         List<SanPham> snList = sanPhamDAO.selectByTen(txtTimKiem.getText(), a.getMaLoaiSanPham());
         fillToBoard(snList);
     }//GEN-LAST:event_txtTimKiemKeyReleased
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel SanPhamBoard;
@@ -730,8 +706,6 @@ public class Home extends javax.swing.JFrame {
     private LoaiSanPhamDAO loaiSanPhamDAO;
     private SanPhamDAO sanPhamDAO;
 
-    private int[] allCostArray; // chua gia tien cua san pham
-
     private void initialization() {
         tableThanhToan = (DefaultTableModel) tblDatHang.getModel();
         comboboxLoai = (DefaultComboBoxModel) cbxLoaiSanPham2.getModel();
@@ -740,10 +714,6 @@ public class Home extends javax.swing.JFrame {
         sanPhamDAO = new SanPhamDAO();
 
         fillLoai();
-
-        List<SanPham> sanPhamList = sanPhamDAO.selectAll();
-
-        allCostArray = new int[sanPhamList.size()];
     }
 
     public void showForm(JComponent form) {
@@ -851,15 +821,14 @@ public class Home extends javax.swing.JFrame {
     }
 
     private int index; // kiem tra san pham dang ton tai o dong nao
-    private int i; // dung de dieu khien allCostArray
-
     private void fillDatHang(SanPham sp) {
         if (isExisInTable(sp.getMaSanPham())) {
             increaseAmountInTable(index);
-            increaseCostInTable(index, sp.getDonGia());
+            increaseCostInTable(index);
             lblTongTien.setText(getTongTien());
             return;
         }
+
         try {
             tableThanhToan.addRow(new Object[]{
                 sp.getMaSanPham(),
@@ -867,8 +836,6 @@ public class Home extends javax.swing.JFrame {
                 1, // amount
                 LocalVietNam.getCurrency(sp.getDonGia())
             });
-            allCostArray[i] = sp.getDonGia();
-            i++;
             lblTongTien.setText(getTongTien());
         } catch (FormatVietNamException vn) {
             MsgBox.notify(vn.getMessage(), this);
@@ -893,22 +860,37 @@ public class Home extends javax.swing.JFrame {
         tblDatHang.setValueAt(++amount, row, 2);
     }
 
-    private void increaseCostInTable(int row, int originalCost) {
-        String cost = (String) tblDatHang.getValueAt(row, 3);
-        int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
+    private void increaseCostInTable(int row) {
+        String maSp = (String) tableThanhToan.getValueAt(row, 0);
+        SanPham sp = sanPhamDAO.selectByID(maSp);
+        
+        int amount = (int) tableThanhToan.getValueAt(row, 2);
         try {
-            tblDatHang.setValueAt(LocalVietNam.getCurrency(price + originalCost + ""), row, 3);
+            tblDatHang.setValueAt(LocalVietNam.getCurrency(sp.getDonGia() * amount), row, 3);
         } catch (FormatVietNamException e) {
             e.printStackTrace();
             tblDatHang.setValueAt("error", row, 3);
         }
     }
 
+    private void decreaseAmount(int row) {
+        int amount = (int) tableThanhToan.getValueAt(row, 2);
+        if (amount == 1) {
+            tableThanhToan.removeRow(row);
+            return;
+        }
+
+        tableThanhToan.setValueAt(--amount, row, 2);
+    }
+
     private void decreaseCostInTable(int row) {
+        String maSp = (String) tableThanhToan.getValueAt(row, 0);
+        SanPham sp = sanPhamDAO.selectByID(maSp);
+
         String costs = (String) tblDatHang.getValueAt(row, 3);
         int price = Integer.parseInt(costs.substring(0, costs.indexOf(".")));
         try {
-            tblDatHang.setValueAt(LocalVietNam.getCurrency(price - allCostArray[row]), row, 3);
+            tblDatHang.setValueAt(LocalVietNam.getCurrency(price - sp.getDonGia()), row, 3);
         } catch (FormatVietNamException vn) {
             vn.printStackTrace();
             tblDatHang.setValueAt("error", row, 3);
@@ -928,15 +910,6 @@ public class Home extends javax.swing.JFrame {
             return "error";
         }
 
-    }
-
-    // delete a cell in allCostArray
-    private void deleteCEllInArray(int index) {
-        for (int j = 0; j < allCostArray.length - 1; j++) {
-            if (j >= index) {
-                allCostArray[j] = allCostArray[j + 1];
-            }
-        }
     }
 
     private void deleteBoard(JPanel sanPhamBoard) {
