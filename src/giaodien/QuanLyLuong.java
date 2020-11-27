@@ -450,7 +450,6 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         tableChamCong.setRowCount(0);
         try {
             List<Object[]> cellExcelList = ExcelHelper.readExcelFile(pathFile, sheet);
-            
             for (Object[] x : cellExcelList) {
                 tableChamCong.addRow(x);
             }
