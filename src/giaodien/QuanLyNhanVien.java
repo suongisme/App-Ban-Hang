@@ -10,6 +10,7 @@ import java.awt.CardLayout;
 import javax.swing.table.DefaultTableModel;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -578,6 +579,15 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
+    public void datee() {
+        SimpleDateFormat formater = new SimpleDateFormat();
+        try {
+            formater.applyPattern("yyyy-MM-dd");
+            Date date = formater.parse(txtNgaySinh.getText());
+        } catch (Exception e) {
+            MsgBox.notify("Không đúng định dạng ngày tháng", this);
+        }
+    }
 
     public void fillTable() {
         DefaultTableModel model = (DefaultTableModel) tbl_DanhSachNV.getModel();
@@ -601,54 +611,6 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
             MsgBox.notify("Lỗi FillTable", this);
-        }
-    }
-
-    void Insert() {
-        NhanVien nv = getForm();
-        try {
-            if (checkInsert() == false) {
-                return;
-            } else {
-                nhanVienDAO.insert(nv);
-                this.fillTable();
-                MsgBox.notify("Thêm nhân viên thành công", this);
-                this.clearForm();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            MsgBox.notify("Lỗi thêm nhân viên", this);
-        }
-    }
-
-    void Update() {
-        NhanVien nv = getForm();
-        try {
-            if (checkUpdate() == false) {
-                return;
-            } else {
-                nhanVienDAO.update(nv);
-                this.fillTable();
-                MsgBox.notify("Sửa nhân viên thành công", this);
-            }
-        } catch (Exception e) {
-            MsgBox.notify("Lỗi sửa nhân viên", this);
-        }
-    }
-
-    void delete() {
-        String maNv = txtMaNhanVien.getText();
-        if (maNv.equals(Auth.user.getMaNhanVien())) {
-            MsgBox.notify("Bạn không được xóa chính bạn", this);
-        } else if (MsgBox.confirm("Bạn muốn xóa nhân viên này?", this)) {
-            try {
-                nhanVienDAO.delete(maNv);
-                this.fillTable();
-                MsgBox.notify("Xóa nhân viên thành công", this);
-                this.clearForm();
-            } catch (Exception e) {
-                MsgBox.notify("Lỗi xóa nhân viên", this);
-            }
         }
     }
 
@@ -697,107 +659,116 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         this.setForm(nv);
     }
 
-    public boolean checkInsert() {
-        if (txtMaNhanVien.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập Mã nhân viên", this);
-            txtMaNhanVien.requestFocus();
-            return false;
-        } else if (txtTenNhanVien.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập tên nhân viên", this);
-            txtTenNhanVien.requestFocus();
-            return false;
-        } else if (txtNgaySinh.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập ngày sinh nhân viên", this);
-            txtNgaySinh.requestFocus();
-            return false;
-        } else if (txtDiaChi.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập địa chỉ nhân viên", this);
-            txtDiaChi.requestFocus();
-            return false;
-        } else if (txtSDT.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập sdt nhân viên", this);
-            txtSDT.requestFocus();
-            return false;
-        } else if (txtEmail.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập email nhân viên", this);
-            txtEmail.requestFocus();
-            return false;
-        } else if (txtMatKhau.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập mật khẩu nhân viên", this);
-            txtMatKhau.requestFocus();
-            return false;
-        } else if (txtHeSoLuong.getText().equals("")) {
-            MsgBox.notify("Bạn chưa nhập lương nhân viên", this);
-            txtHeSoLuong.requestFocus();
-            return false;
+    void Insert() {
+        if (isError()) {
+            return;
         }
         String maNv = txtMaNhanVien.getText();
         for (NhanVien x : listNv) {
             if (x.getMaNhanVien().equalsIgnoreCase(maNv)) {
                 MsgBox.notify("Mã nhân viên đã tồn tại", this);
-                return false;
+                return;
             }
         }
-        String checkEmail = "\\w+@\\w+(\\.\\w+){1,2}";
-        if (!txtEmail.getText().matches(checkEmail)) {
-            JOptionPane.showMessageDialog(this, "vui lòng nhập đúng định dạng email");
-            txtEmail.requestFocus();
-            return false;
-        }
         try {
-            int sdt = Integer.parseInt(txtSDT.getText());
+            NhanVien nv = getForm();
+            nhanVienDAO.insert(nv);
+            this.fillTable();
+            MsgBox.notify("Thêm nhân viên thành công", this);
+            this.clearForm();
         } catch (Exception e) {
-            MsgBox.notify("Nhập sdt phải là số", this);
-            txtSDT.requestFocus();
-            return false;
+            e.printStackTrace();
+            MsgBox.notify("Lỗi thêm nhân viên", this);
         }
-        return true;
     }
 
-    public boolean checkUpdate() {
-        if (txtMaNhanVien.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập Mã nhân viên");
-            txtMaNhanVien.requestFocus();
-            return false;
-        } else if (txtTenNhanVien.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên nhân viên");
-            txtTenNhanVien.requestFocus();
-            return false;
-        } else if (txtNgaySinh.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập ngày sinh nhân viên");
-            txtNgaySinh.requestFocus();
-            return false;
-        } else if (txtDiaChi.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập địa chỉ nhân viên");
-            txtDiaChi.requestFocus();
-            return false;
-        } else if (txtSDT.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập sdt nhân viên");
-            txtSDT.requestFocus();
-            return false;
-        } else if (txtEmail.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập email nhân viên");
-            txtEmail.requestFocus();
-            return false;
-        } else if (txtHeSoLuong.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa nhập lương nhân viên");
-            txtHeSoLuong.requestFocus();
-            return false;
+    void Update() {
+//        String maNv = txtMaNhanVien.getText();
+//        for (NhanVien x : listNv) {
+//            if (x.getMaNhanVien().equals(maNv)) {
+//                MsgBox.notify("Mã nhân viên này không tồn tại", this);
+//                return;
+//            }
+//        }
+        if (isError()) {
+            return;
+        }        
+        try {
+            NhanVien nv = getForm();
+            nhanVienDAO.update(nv);
+            this.fillTable();
+            MsgBox.notify("Sửa nhân viên thành công", this);
+        } catch (Exception e) {
+            MsgBox.notify("Lỗi sửa nhân viên", this);
         }
+    }
 
+    void delete() {
+        String maNv = txtMaNhanVien.getText();
+        if (maNv.equals(Auth.user.getMaNhanVien())) {
+            MsgBox.notify("Bạn không được xóa chính bạn", this);
+        } else if (MsgBox.confirm("Bạn muốn xóa nhân viên này?", this)) {
+            try {
+                nhanVienDAO.delete(maNv);
+                this.fillTable();
+                MsgBox.notify("Xóa nhân viên thành công", this);
+                this.clearForm();
+            } catch (Exception e) {
+                MsgBox.notify("Lỗi xóa nhân viên", this);
+            }
+        }
+    }
+
+    private boolean isError() {
+        if (isEmpty(txtMaNhanVien.getText())
+                || isEmpty(txtTenNhanVien.getText())
+                || isEmpty(txtDiaChi.getText())
+                || isEmpty(txtHeSoLuong.getText())
+                || isEmpty(txtSDT.getText())
+                || isEmpty(txtNgaySinh.getText())) {
+            MsgBox.notify("Chưa nhập đủ thông tin", this);
+            return true;
+        }
+        if (lblAnh.getToolTipText() == null) {
+            MsgBox.notify("Chưa chọn ảnh", this);
+            return true;
+        }
+        if (!isNumber(txtHeSoLuong.getText())) {
+            MsgBox.notify("Hệ số lương phải là số", this);
+            return true;
+        }
+        if (!isNumber(txtSDT.getText())) {
+            MsgBox.notify("SĐT phải là số", this);
+            return true;
+        }
         String checkEmail = "\\w+@\\w+(\\.\\w+){1,2}";
         if (!txtEmail.getText().matches(checkEmail)) {
             JOptionPane.showMessageDialog(this, "vui lòng nhập đúng định dạng email");
             txtEmail.requestFocus();
-            return false;
+            return true;
         }
+        if (Auth.user.getLoaiNhanVien().equalsIgnoreCase("Quản lý")
+                || Auth.user.getLoaiNhanVien().equalsIgnoreCase("Thu ngân")) {
+            if (txtMatKhau.getText().equals("")) {
+                MsgBox.notify("Bạn chưa nhập mật khẩu nhân viên", this);
+                txtMatKhau.requestFocus();
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private boolean isEmpty(String text) {
+        return text.isEmpty();
+    }
+
+    private boolean isNumber(String text) {
         try {
-            int sdt = Integer.parseInt(txtSDT.getText());
+            Integer.parseInt(text);
+            return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Nhập sdt phải là số");
-            txtSDT.requestFocus();
             return false;
         }
-        return true;
     }
 }
