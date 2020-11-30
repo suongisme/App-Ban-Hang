@@ -39,7 +39,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlMenun" alignment="0" pref="460" max="32767" attributes="0"/>
+          <Component id="pnlMenun" alignment="0" pref="462" max="32767" attributes="0"/>
           <Component id="pnlScreenMain" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -463,6 +463,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimKiemActionPerformed"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
               </Events>
             </Component>

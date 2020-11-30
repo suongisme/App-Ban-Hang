@@ -580,13 +580,17 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
     public void datee() {
-        SimpleDateFormat formater = new SimpleDateFormat();
-        try {
-            formater.applyPattern("yyyy-MM-dd");
-            Date date = formater.parse(txtNgaySinh.getText());
-        } catch (Exception e) {
-            MsgBox.notify("Không đúng định dạng ngày tháng", this);
-        }
+//        SimpleDateFormat formater = new SimpleDateFormat();
+//        try {
+//            formater.applyPattern("yyyy-MM-dd");
+//            Date date = formater.parse(txtNgaySinh.getText());
+//            if(txtNgaySinh.getText().equals(date)){
+//                MsgBox.notify("Không đúng định dạng ngày sinh", this);
+//                return true;
+//            }
+//        } catch (Exception e) {
+//            MsgBox.notify("Không đúng định dạng ngày tháng", this);
+//        }
     }
 
     public void fillTable() {
@@ -692,7 +696,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
 //        }
         if (isError()) {
             return;
-        }        
+        }
         try {
             NhanVien nv = getForm();
             nhanVienDAO.update(nv);
@@ -747,16 +751,13 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             txtEmail.requestFocus();
             return true;
         }
-        if (Auth.user.getLoaiNhanVien().equalsIgnoreCase("Quản lý")
-                || Auth.user.getLoaiNhanVien().equalsIgnoreCase("Thu ngân")) {
-            if (txtMatKhau.getText().equals("")) {
-                MsgBox.notify("Bạn chưa nhập mật khẩu nhân viên", this);
-                txtMatKhau.requestFocus();
-                return true;
-            }
+        String checkSDT = "^[03]{2}\\d{8}$";
+        if (!txtSDT.getText().matches(checkSDT)) {
+            JOptionPane.showMessageDialog(this, "vui lòng nhập đúng định dạng SĐT");
+            txtEmail.requestFocus();
+            return true;
         }
         return false;
-
     }
 
     private boolean isEmpty(String text) {
