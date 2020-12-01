@@ -112,7 +112,7 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
                 nv.setSdt(rs.getString("sdt"));
                 nv.setEmail(rs.getString("email"));
                 nv.setMatKhau(rs.getString("matkhau"));
-                nv.setHeSoLuong((float)rs.getDouble("hesoluong"));
+                nv.setHeSoLuong(rs.getInt("hesoluong"));
                 nv.setHinh(rs.getString("hinh"));
                 nhanVienList.add(nv);
             }

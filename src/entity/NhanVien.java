@@ -21,7 +21,7 @@ public class NhanVien {
     private String sdt;
     private String email;
     private String matKhau;
-    private float heSoLuong;
+    private int heSoLuong;
     private String hinh;
 
     public NhanVien() {
@@ -36,7 +36,7 @@ public class NhanVien {
                     String sdt, 
                     String email, 
                     String matKhau, 
-                    float heSoLuong, 
+                    int heSoLuong, 
                     String hinh) 
     {
         this.maNhanVien = maNhanVien;
@@ -124,11 +124,11 @@ public class NhanVien {
         this.matKhau = matKhau;
     }
 
-    public float getHeSoLuong() {
+    public int getHeSoLuong() {
         return heSoLuong;
     }
 
-    public void setHeSoLuong(float heSoLuong) {
+    public void setHeSoLuong(int heSoLuong) {
         this.heSoLuong = heSoLuong;
     }
 
