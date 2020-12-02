@@ -67,6 +67,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         btnCapNhat = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChamCong = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         pblChiTiet = new javax.swing.JPanel();
         txtTimKiem1 = new javax.swing.JTextField();
         btnTimKiem1 = new javax.swing.JButton();
@@ -189,6 +191,18 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             tblChamCong.getColumnModel().getColumn(5).setMaxWidth(300);
         }
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setText("*Lưu ý: giờ đến & giờ về có định dạng HH:mm");
+
         javax.swing.GroupLayout pnlChamCongLayout = new javax.swing.GroupLayout(pnlChamCong);
         pnlChamCong.setLayout(pnlChamCongLayout);
         pnlChamCongLayout.setHorizontalGroup(
@@ -200,17 +214,27 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
                     .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, 908, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChamCongLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        pnlChamCongLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnImport, jButton1});
+
         pnlChamCongLayout.setVerticalGroup(
             pnlChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChamCongLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnImport)
+                .addGroup(pnlChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnImport)
+                    .addGroup(pnlChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -293,8 +317,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
-            .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+            .addComponent(pnlScreenMain, javax.swing.GroupLayout.PREFERRED_SIZE, 681, Short.MAX_VALUE)
         );
 
         pack();
@@ -333,6 +357,10 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnImportActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        fillChamCong();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
@@ -340,6 +368,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDanhSachNhanVien;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnTimKiem1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblProfile;
@@ -408,7 +438,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             return LocalVietNam.getCurrency((int)(hour * heSoLuong / 60));
         } catch (FormatVietNamException ex) {
             MsgBox.notify(ex.getMessage(), this);
-            return "error";
+            return ex.getMessage();
         }
     }
     
@@ -418,12 +448,19 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         for (int i=0; i<rowInTalbeChamCong; i++) {
             String gioDen = String.valueOf(tblChamCong.getValueAt(i, 3));
             String gioVe = String.valueOf(tblChamCong.getValueAt(i, 4));
-            if (!isTime(gioDen) || !isTime(gioVe)) {
-                fillChamCong();
-                break;
+            
+            if (isEmpty(gioDen) && isEmpty(gioVe)) {
+                continue;
             }
+            
+            if (isErrorTime(gioDen, gioVe, i)) {
+                continue;
+            }
+            
             try {
                 luongDAO.insert(getLuong(i));
+                tableChamCong.setValueAt("", i, 3);
+                tableChamCong.setValueAt("", i, 4);
             } catch (Exception e) {
                 e.printStackTrace();
                 MsgBox.notify(e.getMessage(), this);
@@ -459,6 +496,46 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         }
     }
     
+    private boolean isErrorTime(String gioDen, String gioVe, int row) {
+        
+        if (isEmpty(gioDen)) {
+            tableChamCong.setValueAt("???", row, 3);
+            return true;
+        }
+        
+        if (isEmpty(gioVe)) {
+            tableChamCong.setValueAt("???", row, 4);
+            return true;
+        }
+        
+        if (!isFormatTime(gioDen)) {
+            tableChamCong.setValueAt(gioDen + " Not format", row, 3);
+            return true;
+        }
+        
+        if (!isFormatTime(gioVe)) {
+            tableChamCong.setValueAt(gioVe + " Not format", row, 4);
+            return true;
+        }
+        
+        if (!isTime(gioDen)) {
+            tableChamCong.setValueAt(gioDen + " Not time", row, 3);
+            return true;
+        }
+        
+        if (!isTime(gioVe)) {
+            tableChamCong.setValueAt(gioVe + " Not time", row, 4);
+            return true;
+        }
+        
+        if (!isOutGreaterIn(gioDen, gioVe)) {
+            tableChamCong.setValueAt(">> "+gioVe + " <<", row, 4);
+            return true;
+        }
+        
+        return false;
+    }
+    
     // format HH:mm
     private boolean isFormatTime(String t) {
         try {
@@ -469,21 +546,26 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         }
     }
     
+    // -1 < hour < 25 and -1 < minute < 61
     private boolean isTime(String t) {
-        if (!isFormatTime(t)) {
-            MsgBox.notify("Không đúng định dạng thời gian (HH:mm)", this);
-            return false;
-        }
-        
+
         String[] timeArray = t.split(":");
         int hour = Integer.parseInt(timeArray[0]);
         int minute = Integer.parseInt(timeArray[1]);
         
         if (hour > 24 || hour < 0 || minute > 60 || minute < 0) {
-            MsgBox.notify("Thời gian sai", this);
             return false;
         }
+        
         return true;
+    }
+    
+    private boolean isOutGreaterIn(String in, String out) {
+        return (DateHelper.getMilliseconds(out) - DateHelper.getMilliseconds(in)) > 0;
+    }
+    
+    private boolean isEmpty(String time) {
+        return "null".equals(time);
     }
     
     private boolean isExcelFile(String path) {
