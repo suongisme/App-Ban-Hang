@@ -783,5 +783,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         }
         return false;
     }
-
+ void ngu(){
+     
+ }
 }
