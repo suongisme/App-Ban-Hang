@@ -922,16 +922,20 @@ public class Home extends javax.swing.JFrame {
 
     private String getTongTien() {
         int tongTien = 0;
-        for (int i = 0; i < tblDatHang.getRowCount(); i++) {
-            String cost = (String) tblDatHang.getValueAt(i, 3);
-            int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
-            tongTien += price;
+        
+        for (int i=0; i<tableThanhToan.getRowCount(); i++) {
+            String  maSp = (String) tableThanhToan.getValueAt(i, 0);
+            int amount = Integer.parseInt(tableThanhToan.getValueAt(i, 2).toString());
+            SanPham sp = sanPhamDAO.selectByID(maSp);
+            tongTien += (amount * sp.getDonGia());
         }
+        
         try {
             return LocalVietNam.getCurrency(tongTien);
-        } catch (FormatVietNamException e) {
-            return "error";
+        } catch (Exception e) {
+            return e.getMessage();
         }
+        
 
     }
 
