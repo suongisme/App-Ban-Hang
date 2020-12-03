@@ -591,7 +591,7 @@ public class ThongKe extends javax.swing.JInternalFrame {
         }
     }
 
-    private Integer getLuongNhanVien(Object maNhanVien, Object tongGiolam) throws FormatVietNamException {
+    private Integer getLuongNhanVien(Object maNhanVien, Object tongGiolam) {
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
         NhanVien nv = nhanVienDAO.selectByID(maNhanVien.toString());
 
@@ -599,7 +599,7 @@ public class ThongKe extends javax.swing.JInternalFrame {
             return null;
         }
 
-        double hsl = nv.getHeSoLuong()/60;
+        double hsl = (double) nv.getHeSoLuong()/60;
         double tgl = Double.parseDouble(tongGiolam.toString());
         return (int)(hsl*tgl);
     }

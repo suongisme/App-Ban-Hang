@@ -220,23 +220,26 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
         tableSanPham = (DefaultTableModel) tblSanPham.getModel();
     }
 
-    private void fillTable(int maSanPham) {
+    private void fillTable(int maHoaDon) {
         tableSanPham.setRowCount(0);
+        int tongTien = 0;
         try {
-            for (Object[] x : thongKeDAO.getHoaDonChiTiet(maSanPham)) {
+            for (Object[] x : thongKeDAO.getHoaDonChiTiet(maHoaDon)) {
                 int soLuong = Integer.parseInt(x[1].toString());
                 int tien = Integer.parseInt(x[2].toString());
+                tongTien += (soLuong * tien);
                 tableSanPham.addRow(new Object[] {
                     x[0],soLuong, LocalVietNam.getCurrency(soLuong*tien)
                 });
             }
+            lblTong.setText(LocalVietNam.getCurrency(tongTien));
         } catch (FormatVietNamException vn) {
             vn.printStackTrace();
             MsgBox.notify(vn.getMessage(), this);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        lblTong.setText(getTongTien());
+        
     }
 
     private void setForm(int maHoaDon) {
@@ -247,20 +250,5 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
         lbNgayIn.setText(LocalVietNam.getDate(hd.getNgayXuatHoaDon()));
         lbThuNgan.setText(nv.getTenNhanVien());
         lbKhachHang.setText(hd.isLoaiKhachHang() ? "Nước ngoài" : "Trong Nước");
-    }
-    
-     private String getTongTien() {
-        int tongTien = 0;
-        for (int i = 0; i < tblSanPham.getRowCount(); i++) {
-            String cost = (String) tblSanPham.getValueAt(i, 2);
-            int price = Integer.parseInt(cost.substring(0, cost.indexOf(".")));
-            tongTien += price;
-        }
-        try {
-            return LocalVietNam.getCurrency(tongTien);
-        } catch (FormatVietNamException e) {
-            return "error";
-        }
-
     }
 }
