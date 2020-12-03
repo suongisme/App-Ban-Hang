@@ -11,14 +11,14 @@ import javax.swing.table.DefaultTableModel;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import tienich.Auth;
-import tienich.DateHelper;
 import tienich.ImageHelper;
 import tienich.OclockHelper;
 import tienich.WindowChoose;
+import java.util.ArrayList;
+import java.util.Date;
+import tienich.DateHelper;
+import tienich.LocalVietNam;
 
 /**
  *
@@ -29,6 +29,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     /**
      * Creates new form QuanLyNhanVien
      */
+    ArrayList<NhanVien> listNv = new ArrayList<>();
     NhanVienDAO nhanVienDAO = new NhanVienDAO();
     DefaultTableModel model;
     CardLayout cardlayout;
@@ -598,13 +599,10 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         txtMaNhanVien.setText(nv.getMaNhanVien());
         cboLoaiNV.setSelectedItem(nv.getLoaiNhanVien());
         txtTenNhanVien.setText(nv.getTenNhanVien());
-        if (nv.isGioiTinh()) {
-            rdoNam.setSelected(true);
-        } else {
-            rdoNu.setSelected(true);
-        }
+        rdoNam.setSelected(nv.isGioiTinh());
+        rdoNu.setSelected(!nv.isGioiTinh());
         txtDiaChi.setText(nv.getDiaChi());
-        txtNgaySinh.setText(nv.getNgaySinh() + "");
+        txtNgaySinh.setText(LocalVietNam.getDate(nv.getNgaySinh()));
         txtSDT.setText(nv.getSdt());
         txtEmail.setText(nv.getEmail());
         txtHeSoLuong.setText(nv.getHeSoLuong() + "");
@@ -625,7 +623,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         nv.setHeSoLuong(Integer.parseInt(txtHeSoLuong.getText()));
         nv.setMatKhau(txtMatKhau.getText());
         nv.setHinh(lblAnh.getToolTipText());
-        nv.setNgaySinh(DateHelper.convertDateToSqlDate(new Date()));
+        nv.setNgaySinh(date);
         return nv;
     }
 
@@ -735,13 +733,20 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
             txtEmail.requestFocus();
             return true;
         }
+        String email = txtEmail.getText();
+        for (NhanVien x : listNv) {
+            if (x.getEmail().equalsIgnoreCase(email)) {
+                MsgBox.notify("Email này đã có người sử dụng", this);
+                return true;
+            }
+        }
         return false;
     }
-
+    Date date;
     public boolean isDate() {
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            formater.parse(txtNgaySinh.getText());
+            date = DateHelper.convertDateToSqlDate(formater.parse(txtNgaySinh.getText()));
             return true;
         } catch (Exception e) {
             MsgBox.notify("Không đúng định dạng ngày tháng", this);
@@ -778,4 +783,5 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         }
         return false;
     }
+
 }

@@ -25,6 +25,7 @@ public class NhanVien {
     private String hinh;
 
     public NhanVien() {
+        ngaySinh = new Date();
     }
 
     public NhanVien(String maNhanVien, 
