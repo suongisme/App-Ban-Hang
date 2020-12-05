@@ -278,7 +278,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-    
+
     private void login() {
         try {
             String maNv = txtUsername.getText();
@@ -289,6 +289,11 @@ public class DangNhap extends javax.swing.JFrame {
             } else if (!matKhau.equals(nv.getMatKhau())) {
                 MsgBox.notify("Sai mật khẩu", this);
             } else {
+                if (!nv.isTrangThai()) {
+                    MsgBox.notify("Tài khoản đang bị vô hiệu hóa", this);
+                    return;
+                }
+
                 Auth.user = nv;
                 new Home().setVisible(true);
                 this.dispose();
