@@ -23,6 +23,7 @@ public class NhanVien {
     private String matKhau;
     private int heSoLuong;
     private String hinh;
+    private boolean trangThai;
 
     public NhanVien() {
         ngaySinh = new Date();
@@ -38,7 +39,8 @@ public class NhanVien {
                     String email, 
                     String matKhau, 
                     int heSoLuong, 
-                    String hinh) 
+                    String hinh,
+                    boolean trangThai) 
     {
         this.maNhanVien = maNhanVien;
         this.tenNhanVien = tenNhanVien;
@@ -51,6 +53,7 @@ public class NhanVien {
         this.matKhau = matKhau;
         this.heSoLuong = heSoLuong;
         this.hinh = hinh;
+        this.trangThai = trangThai;
     }
 
     public String getMaNhanVien() {
@@ -140,5 +143,13 @@ public class NhanVien {
     public void setHinh(String hinh) {
         this.hinh = hinh;
     } 
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        this.trangThai = trangThai;
+    }
     
 }

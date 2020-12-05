@@ -19,8 +19,8 @@ import tienich.JDBCHelper;
  */
 public class NhanVienDAO implements DAO<NhanVien, String>{
 
-    private final String SQL_INSERT_NHANVIEN = "INSERT INTO nhanvien(manhanvien,tennhanvien,loainhanvien,gioitinh,ngaysinh,diachi,sdt,email,matkhau,hesoluong,hinh)VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-    private final String SQL_UPDATE_NHANVIEN = "UPDATE nhanvien SET tennhanvien = ?, loainhanvien = ?, gioitinh = ?, ngaysinh = ?, diachi = ?, sdt = ?, email = ?, matkhau = ?, hesoluong = ?, hinh = ? WHERE manhanvien = ?";
+    private final String SQL_INSERT_NHANVIEN = "INSERT INTO nhanvien(manhanvien,tennhanvien,loainhanvien,gioitinh,ngaysinh,diachi,sdt,email,matkhau,hesoluong,hinh,trangthai)VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private final String SQL_UPDATE_NHANVIEN = "UPDATE nhanvien SET tennhanvien = ?, loainhanvien = ?, gioitinh = ?, ngaysinh = ?, diachi = ?, sdt = ?, email = ?, matkhau = ?, hesoluong = ?, hinh = ?, trangthai = ? WHERE manhanvien = ?";
     private final String SQL_DELETE_NHANVIEN = "DELETE FROM nhanvien where manhanvien = ?";
     private final String SQL_SELECT = "SELECT * FROM nhanvien";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM nhanvien WHERE manhanvien = ?";
@@ -38,7 +38,8 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
                                                     entity.getEmail(),
                                                     entity.getMatKhau(),
                                                     entity.getHeSoLuong(),
-                                                    entity.getHinh());
+                                                    entity.getHinh(),
+                                                    entity.isTrangThai());
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Thêm thất bại");
@@ -68,6 +69,7 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
                                                     entity.getMatKhau(),
                                                     entity.getHeSoLuong(),
                                                     entity.getHinh(),
+                                                    entity.isTrangThai(),
                                                     entity.getMaNhanVien());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,6 +97,13 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
         
         return nhanVienList.isEmpty() ? null : nhanVienList.get(0);
     }
+    
+    public NhanVien selectByPhone(String phone) {
+        String sql = "SELECT * FROM nhanvien WHERE sdt = ?";
+        ArrayList<NhanVien> nhanVienList = this.selectBySQL(sql, phone);
+        
+        return nhanVienList.isEmpty() ? null : nhanVienList.get(0);
+    }
 
     @Override
     public ArrayList<NhanVien> selectBySQL(String sql,Object...x) {
@@ -114,6 +123,7 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
                 nv.setMatKhau(rs.getString("matkhau"));
                 nv.setHeSoLuong(rs.getInt("hesoluong"));
                 nv.setHinh(rs.getString("hinh"));
+                nv.setTrangThai(rs.getBoolean("trangthai"));
                 nhanVienList.add(nv);
             }
         } catch (Exception e) {
