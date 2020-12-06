@@ -14,18 +14,15 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import tienich.Auth;
@@ -332,6 +329,7 @@ public class Home extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(59, 175, 218));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anh/reload.png"))); // NOI18N
+        jButton1.setRequestFocusEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -656,12 +654,6 @@ public class Home extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
-    private void cbxLoaiSanPham2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLoaiSanPham2ItemStateChanged
-        LoaiSanPham a = ((LoaiSanPham) comboboxLoai.getSelectedItem());
-        List<SanPham> snList = sanPhamDAO.selectByTen(txtTimKiem.getText(), a.getMaLoaiSanPham());
-        fillToBoard(snList);
-    }//GEN-LAST:event_cbxLoaiSanPham2ItemStateChanged
-
     private void tblDatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatHangMouseClicked
         int selectRow = tblDatHang.getSelectedRow();
 
@@ -683,10 +675,15 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         fillLoai();
-        LoaiSanPham a = ((LoaiSanPham) comboboxLoai.getSelectedItem());
-        List<SanPham> snList = sanPhamDAO.selectByTen(txtTimKiem.getText(), a.getMaLoaiSanPham());
-        fillToBoard(snList);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cbxLoaiSanPham2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLoaiSanPham2ItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            LoaiSanPham lsp = (LoaiSanPham) comboboxLoai.getSelectedItem();
+            List sanPhamList = sanPhamDAO.selectByTen(txtTimKiem.getText(), lsp.getMaLoaiSanPham());
+            fillToBoard(sanPhamList);
+        }
+    }//GEN-LAST:event_cbxLoaiSanPham2ItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel SanPhamBoard;
@@ -784,15 +781,15 @@ public class Home extends javax.swing.JFrame {
         deleteBoard(SanPhamBoard);
 
         double row = (double) sanPhamList.size() / 3;
-        int heightBoard = (int) (Math.ceil(row) * 200 + 100); // chieu dai cua bang chua san pham
+        int heightBoard = (int) (Math.ceil(row) * 200 + Math.ceil(row)*20); // chieu dai cua bang chua san pham
         SanPhamBoard.setPreferredSize(new Dimension(677, heightBoard)); // SET kich thuoc cho bang san pham
 
         sanPhamList.forEach((x) -> {
-            createBoard(x);
+            createMiniBoard(x);
         });
     }
 
-    private void createBoard(SanPham sp) {
+    private void createMiniBoard(SanPham sp) {
         JPanel board = new JPanel(null);
         Dimension size = new Dimension(206, 200);
         board.setPreferredSize(size);
@@ -845,6 +842,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     private int index; // kiem tra san pham dang ton tai o dong nao
+
     private void fillDatHang(SanPham sp) {
         if (isExisInTable(sp.getMaSanPham())) {
             increaseAmountInTable(index);
@@ -887,7 +885,7 @@ public class Home extends javax.swing.JFrame {
     private void increaseCostInTable(int row) {
         String maSp = (String) tableThanhToan.getValueAt(row, 0);
         SanPham sp = sanPhamDAO.selectByID(maSp);
-        
+
         int amount = (int) tableThanhToan.getValueAt(row, 2);
         try {
             tblDatHang.setValueAt(LocalVietNam.getCurrency(sp.getDonGia() * amount), row, 3);
@@ -923,20 +921,19 @@ public class Home extends javax.swing.JFrame {
 
     private String getTongTien() {
         int tongTien = 0;
-        
-        for (int i=0; i<tableThanhToan.getRowCount(); i++) {
-            String  maSp = (String) tableThanhToan.getValueAt(i, 0);
+
+        for (int i = 0; i < tableThanhToan.getRowCount(); i++) {
+            String maSp = (String) tableThanhToan.getValueAt(i, 0);
             int amount = Integer.parseInt(tableThanhToan.getValueAt(i, 2).toString());
             SanPham sp = sanPhamDAO.selectByID(maSp);
             tongTien += (amount * sp.getDonGia());
         }
-        
+
         try {
             return LocalVietNam.getCurrency(tongTien);
         } catch (Exception e) {
             return e.getMessage();
         }
-        
 
     }
 
