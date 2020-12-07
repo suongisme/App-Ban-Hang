@@ -746,13 +746,17 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
         }
 
         if (!txtEmail.getText().equalsIgnoreCase(emailRecently)) {
-            MsgBox.notify("Email đã được sử dung", this);
-            return;
+            if (isExistEmail(txtEmail.getText())) {
+                MsgBox.notify("Email này đã đăng ký",this);
+                return;
+            }
         }
 
         if (!txtSDT.getText().equalsIgnoreCase(phoneRecently)) {
-            MsgBox.notify("Số điện thoại đã được sử dung", this);
-            return;
+            if (isExistPhone(txtSDT.getText())) {
+                MsgBox.notify("Số điện thoại này đã đăng ký",this);
+                return;
+            }
         }
 
         try {
