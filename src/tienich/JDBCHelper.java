@@ -23,7 +23,7 @@ public class JDBCHelper {
     private static final String USER = "sa";
     private static final String PASSWORD = "123";
     private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static final String CONNECT = "jdbc:sqlserver://localhost:1433;databasename=SQLAPPP";
+    private static final String CONNECT = "jdbc:sqlserver://localhost:1433;databasename=AppBanHang";
 
     public static void openConnection() throws SQLException, ClassNotFoundException {
         Class.forName(DRIVER);
@@ -54,39 +54,5 @@ public class JDBCHelper {
 
     public static ResultSet queryResult(String sql, Object... parameter) throws SQLException {
         return getPrepareStatement(sql, parameter).executeQuery();
-    }
-
-    public static void main(String[] args) {
-        try {
-            JDBCHelper.openConnection();
-        } catch (Exception x) {
-            x.printStackTrace();
-        }
-        
-    }
-    public static void executeUpdate(String sql, Object... args) {
-        try {
-            PreparedStatement stmt = prepareStatement(sql, args);
-            try {
-                stmt.executeUpdate();
-            } finally {
-                stmt.getConnection().close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public static PreparedStatement prepareStatement(String sql, Object... args) throws SQLException {
-        Connection connection = DriverManager.getConnection(CONNECT, USER, PASSWORD);
-        PreparedStatement pstmt = null;
-        if (sql.trim().startsWith("{")) {
-            pstmt = connection.prepareCall(sql);
-        } else {
-            pstmt = connection.prepareStatement(sql);
-        }
-        for (int i = 0; i < args.length; i++) {
-            pstmt.setObject(i + 1, args[i]);
-        }
-        return pstmt;
     }
 }

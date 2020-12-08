@@ -41,11 +41,7 @@ public class LocalVietNam {
         if (!isNunmber(money)) {
             throw new FormatVietNamException("Tiền phải là số");
         }
-
-        if (isLowerZero(money)) {
-            throw new FormatVietNamException("Tiền phải lớn hơn 0");
-        }
-
+        
         StringBuilder duplicateMoney = new StringBuilder(money);
         duplicateMoney.reverse();
         String newMoney = "";

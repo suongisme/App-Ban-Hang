@@ -24,6 +24,7 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
     ArrayList<HoaDon> listHD;
     HoaDonDAO hoadonDAO = new HoaDonDAO();
     NhanVienDAO nvDao = new NhanVienDAO();
+
     /**
      * Creates new form QuanLyHoaDon
      */
@@ -63,10 +64,28 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
         lblNgay.setText("Ngày");
 
         txtNam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtNam.setText("2020");
+        txtNam.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNamKeyReleased(evt);
+            }
+        });
 
         txtThang.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtThang.setText("12");
+        txtThang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtThangKeyReleased(evt);
+            }
+        });
 
         txtNgay.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtNgay.setText("1");
+        txtNgay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNgayKeyReleased(evt);
+            }
+        });
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -161,6 +180,18 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
         hdct.setVisible(true);
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
+    private void txtThangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtThangKeyReleased
+        fillTable();
+    }//GEN-LAST:event_txtThangKeyReleased
+
+    private void txtNgayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNgayKeyReleased
+        fillTable();
+    }//GEN-LAST:event_txtNgayKeyReleased
+
+    private void txtNamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamKeyReleased
+        fillTable();
+    }//GEN-LAST:event_txtNamKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -173,11 +204,20 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNgay;
     private javax.swing.JTextField txtThang;
     // End of variables declaration//GEN-END:variables
-public void fillTable() {
+
+    public void fillTable() {
+        if (isEmpty(txtNam.getText()) || isEmpty(txtThang.getText()) || isEmpty(txtNgay.getText())) {
+            return;
+        }
+        
+        int nam = Integer.parseInt(txtNam.getText());
+        int thang = Integer.parseInt(txtThang.getText());
+        int ngay = Integer.parseInt(txtNgay.getText());
+        
         DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
         try {
-            listHD = (ArrayList<HoaDon>) hoadonDAO.selectAll();
+            listHD = (ArrayList<HoaDon>) hoadonDAO.getHoaDonByDate(nam, thang, ngay);
             for (HoaDon hd : listHD) {
                 NhanVien nv = nvDao.selectByID(hd.getMaNhanVien());
                 Object[] row = {
@@ -191,5 +231,9 @@ public void fillTable() {
         } catch (Exception e) {
             MsgBox.notify("Lỗi FillTable", this);
         }
+    }
+
+    private boolean isEmpty(String time) {
+        return time.isEmpty();
     }
 }
