@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import tienich.Auth;
+import tienich.LocalVietNam;
 import tienich.MsgBox;
 
 /**
@@ -25,18 +26,14 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     ArrayList<HoaDon> listHD = new ArrayList<>();
     HoaDonDAO hoadonDAO = new HoaDonDAO();
     int tienkhachdua = 0;
-    Home home = new Home();
 
     HoaDonChiTietDAO hoaDonChiTiet = new HoaDonChiTietDAO();
     DefaultTableModel table;
 
     public ThanhToan(DefaultTableModel tb) {
         initComponents();
-
         table = tb;
         this.lbTongTien.setText(Home.tongtienTT);
-
-//        System.out.println(table.getValueAt(0, 0));
     }
 
     /**
@@ -89,43 +86,14 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Nhập số tiền khách đưa  -->  chọn hình thức thanh toán");
 
+        txtTongTien.setEditable(false);
         txtTongTien.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         txtTongTien.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTongTien.setText("0");
         txtTongTien.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 0, new java.awt.Color(153, 153, 153)));
-        txtTongTien.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtTongTienMouseClicked(evt);
-            }
-        });
-        txtTongTien.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                txtTongTienInputMethodTextChanged(evt);
-            }
-        });
-        txtTongTien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTongTienActionPerformed(evt);
-            }
-        });
-        txtTongTien.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txtTongTienPropertyChange(evt);
-            }
-        });
         txtTongTien.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtTongTienKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTongTienKeyReleased(evt);
-            }
-        });
-        txtTongTien.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                txtTongTienVetoableChange(evt);
             }
         });
 
@@ -260,6 +228,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         });
         pnlPhuongThucThanhToan.add(btnMasterCard);
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField1.setText(".000đ");
         jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(153, 153, 153)));
@@ -519,10 +488,9 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
         filltext();
+        checktralai(); // sua lai
         insertHoaDon();
         insertChiTietHD();
-        checktralai();
-        home.inhoadon();
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
@@ -545,80 +513,57 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
     private void btnHaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 2;
         filltext();
     }//GEN-LAST:event_btnHaiActionPerformed
 
     private void btnNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 5;
         filltext();
     }//GEN-LAST:event_btnNamActionPerformed
 
     private void btnMuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuoiActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 10;
         filltext();
     }//GEN-LAST:event_btnMuoiActionPerformed
 
     private void btnHaiChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiChucActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 20;
         filltext();
     }//GEN-LAST:event_btnHaiChucActionPerformed
 
     private void btnNamChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamChucActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 50;
         filltext();
     }//GEN-LAST:event_btnNamChucActionPerformed
 
     private void btnMotTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotTramActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 100;
         filltext();
     }//GEN-LAST:event_btnMotTramActionPerformed
 
     private void btnHaiTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiTramActionPerformed
 
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 200;
         filltext();
     }//GEN-LAST:event_btnHaiTramActionPerformed
 
     private void btnNamTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamTramActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tienkhachdua = tienkhachdua + 500;
         filltext();
     }//GEN-LAST:event_btnNamTramActionPerformed
 
-    private void txtTongTienVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_txtTongTienVetoableChange
-
-    }//GEN-LAST:event_txtTongTienVetoableChange
-
     private void txtTongTienKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTongTienKeyReleased
-
+        tienkhachdua = thanhtoan_tienkhachdua();
+        filltext();
     }//GEN-LAST:event_txtTongTienKeyReleased
-
-    private void txtTongTienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTongTienKeyPressed
-
-    }//GEN-LAST:event_txtTongTienKeyPressed
-
-    private void txtTongTienPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtTongTienPropertyChange
-
-    }//GEN-LAST:event_txtTongTienPropertyChange
-
-    private void txtTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongTienActionPerformed
-
-    }//GEN-LAST:event_txtTongTienActionPerformed
-
-    private void txtTongTienInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtTongTienInputMethodTextChanged
-
-    }//GEN-LAST:event_txtTongTienInputMethodTextChanged
-
-    private void txtTongTienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTongTienMouseClicked
-
-    }//GEN-LAST:event_txtTongTienMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -671,7 +616,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         hoadon.setLoaiKhachHang(ckbLoaiKhach.isSelected());
 
         try {
-            hoadonDAO.inserts(hoadon);
+            hoadonDAO.insert(hoadon);
             MsgBox.notify("In hóa đơn thành công", this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -716,15 +661,19 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }
 
     private int tientralai() {
-        int tongtien = Integer.parseInt(lbTongTien.getText().substring(0, lbTongTien.getText().length() - 5));
+        int tongtien = Integer.parseInt(lbTongTien.getText().substring(0, lbTongTien.getText().length() - 5).replace(".", ""));
         int tientralai = thanhtoan_tienkhachdua() - tongtien;
         return tientralai;
     }
 
     private void filltext() {
-        txtTongTien.setText(String.valueOf(tienkhachdua));
-        lbTien.setText(String.valueOf(tienkhachdua) + ".000đ");
-        lbTienTraLai.setText(String.valueOf(tientralai()) + ".000đ");
+        try {
+            txtTongTien.setText(String.valueOf(tienkhachdua));
+            lbTien.setText(LocalVietNam.getCurrency(String.valueOf(tienkhachdua)));
+            lbTienTraLai.setText(LocalVietNam.getCurrency(String.valueOf(tientralai())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean checktralai() {
