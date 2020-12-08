@@ -22,24 +22,21 @@ import tienich.MsgBox;
  */
 public class ThanhToan extends javax.swing.JInternalFrame {
 
-//    private String tongtienTT;
-    Double tien;
-    String tftien;
     ArrayList<HoaDon> listHD = new ArrayList<>();
     HoaDonDAO hoadonDAO = new HoaDonDAO();
-//    ArrayList<NhanVien> listNv = new ArrayList<>();
-//    NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    int tienkhachdua = 0;
+    Home home = new Home();
+
     HoaDonChiTietDAO hoaDonChiTiet = new HoaDonChiTietDAO();
     DefaultTableModel table;
 
     public ThanhToan(DefaultTableModel tb) {
         initComponents();
-//        tftien = 
+
         table = tb;
         this.lbTongTien.setText(Home.tongtienTT);
-        tftien = txtTongTien.getText();
 
-        System.out.println(table.getValueAt(0, 0));
+//        System.out.println(table.getValueAt(0, 0));
     }
 
     /**
@@ -520,8 +517,12 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblThoatMouseClicked
 
     private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
+        tienkhachdua = thanhtoan_tienkhachdua();
+        filltext();
         insertHoaDon();
         insertChiTietHD();
+        checktralai();
+        home.inhoadon();
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
@@ -537,58 +538,58 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnATMActionPerformed
 
     private void btnMotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 1;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnMotActionPerformed
 
     private void btnHaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 2;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnHaiActionPerformed
 
     private void btnNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 5;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnNamActionPerformed
 
     private void btnMuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuoiActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 10;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnMuoiActionPerformed
 
     private void btnHaiChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiChucActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 20;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnHaiChucActionPerformed
 
     private void btnNamChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamChucActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 50;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnNamChucActionPerformed
 
     private void btnMotTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotTramActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 100;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnMotTramActionPerformed
 
     private void btnHaiTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiTramActionPerformed
 
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 200;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnHaiTramActionPerformed
 
     private void btnNamTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamTramActionPerformed
-        tien = Double.parseDouble(txtTongTien.getText());
-        tien = tien + 500;
-        tt();
+        tienkhachdua = thanhtoan_tienkhachdua();
+        tienkhachdua = tienkhachdua + 1;
+        filltext();
     }//GEN-LAST:event_btnNamTramActionPerformed
 
     private void txtTongTienVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_txtTongTienVetoableChange
@@ -660,24 +661,6 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 
-    private void tt() {
-        String x = String.valueOf(tien);
-        lbTien.setText(x + "00");
-        txtTongTien.setText(x);
-        tralai();
-
-    }
-
-    private void tralai() {
-        String iv = Home.tongtienTT.substring(0, Home.tongtienTT.length() - 1);
-        Double gg = Double.parseDouble(iv);
-        Double tienthuaaa = tien - gg;
-        if (tienthuaaa < 0) {
-            MsgBox.notify("Chưa đủ tiền", this);
-        }
-        lbTienTraLai.setText(String.valueOf(tienthuaaa) + "00");
-    }
-
     void insertHoaDon() {
         String manv = Auth.user.getMaNhanVien();
         Date ngayxuatHD = new Date();
@@ -715,5 +698,40 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                 }
             }
         }
+    }
+
+    private int thanhtoan_tienkhachdua() {
+        String tongtientext = txtTongTien.getText();
+        int tongtien = 0;
+        if (tongtientext.length() == 0) {
+            tongtien = 0;
+        } else {
+            try {
+                tongtien = Integer.parseInt(tongtientext);
+            } catch (Exception e) {
+                MsgBox.notify("Tiền phải là số", this);
+            }
+        }
+        return tongtien;
+    }
+
+    private int tientralai() {
+        int tongtien = Integer.parseInt(lbTongTien.getText().substring(0, lbTongTien.getText().length() - 5));
+        int tientralai = thanhtoan_tienkhachdua() - tongtien;
+        return tientralai;
+    }
+
+    private void filltext() {
+        txtTongTien.setText(String.valueOf(tienkhachdua));
+        lbTien.setText(String.valueOf(tienkhachdua) + ".000đ");
+        lbTienTraLai.setText(String.valueOf(tientralai()) + ".000đ");
+    }
+
+    private boolean checktralai() {
+        if (tientralai() < 0) {
+            MsgBox.notify("chưa đủ tiền", this);
+            return false;
+        }
+        return true;
     }
 }

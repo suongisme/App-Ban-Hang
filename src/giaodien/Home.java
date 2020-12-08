@@ -18,13 +18,23 @@ import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tienich.Auth;
 import tienich.ImageHelper;
 import tienich.LocalVietNam;
@@ -42,6 +52,7 @@ public class Home extends javax.swing.JFrame {
     CardLayout cardlayout;
 
     public static String tongtienTT;
+    private int rowTable[];
 
     public Home() {
         initComponents();
@@ -650,7 +661,9 @@ public class Home extends javax.swing.JFrame {
             MsgBox.notify("Vui lòng chọn sản phẩm trước.", this);
             return;
         }
+
         showForm(new ThanhToan(tableThanhToan));
+        System.out.println("vvvv");
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
@@ -781,7 +794,7 @@ public class Home extends javax.swing.JFrame {
         deleteBoard(SanPhamBoard);
 
         double row = (double) sanPhamList.size() / 3;
-        int heightBoard = (int) (Math.ceil(row) * 200 + Math.ceil(row)*20); // chieu dai cua bang chua san pham
+        int heightBoard = (int) (Math.ceil(row) * 200 + Math.ceil(row) * 20); // chieu dai cua bang chua san pham
         SanPhamBoard.setPreferredSize(new Dimension(677, heightBoard)); // SET kich thuoc cho bang san pham
 
         sanPhamList.forEach((x) -> {
@@ -941,5 +954,57 @@ public class Home extends javax.swing.JFrame {
         sanPhamBoard.removeAll();
         sanPhamBoard.revalidate();
         sanPhamBoard.repaint();
+    }
+
+    public void inhoadon() {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Hoa Don");
+
+        XSSFRow row = null;
+        Cell cell = null;
+
+        row = sheet.createRow(3);
+
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Sản phẩm");
+
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Số lượng");
+
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Thành tiền");
+
+        Home home = new Home();
+        int sizeTable = tblDatHang.getRowCount();
+
+        for (int i = 0; i < sizeTable; i++) {
+            row = sheet.createRow(4 + i);
+            rowTable[i] = i;
+
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 0));
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 1));
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 2));
+        }
+
+        row = sheet.createRow(sizeTable + 5);
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue(tongtienTT);
+
+        //save
+        File f = new File("F:\\Final/hoadon.xlsx");
+
+        try {
+            FileOutputStream fos = new FileOutputStream(f);
+            workbook.write(fos);
+            fos.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
