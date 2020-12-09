@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import tienich.Auth;
+import tienich.DateHelper;
 import tienich.LocalVietNam;
 import tienich.MsgBox;
 
@@ -91,11 +92,6 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         txtTongTien.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTongTien.setText("0");
         txtTongTien.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 0, new java.awt.Color(153, 153, 153)));
-        txtTongTien.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTongTienKeyReleased(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("Mệnh giá");
@@ -486,9 +482,10 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblThoatMouseClicked
 
     private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        filltext();
-        checktralai(); // sua lai
+        if (!isPay()) {
+            MsgBox.notify("Không đủ tiền", this);
+            return;
+        }
         insertHoaDon();
         insertChiTietHD();
     }//GEN-LAST:event_btnInHDActionPerformed
@@ -506,64 +503,50 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnATMActionPerformed
 
     private void btnMotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 1;
+        tangTien(1);
         filltext();
     }//GEN-LAST:event_btnMotActionPerformed
 
     private void btnHaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 2;
+        tangTien(2);
         filltext();
     }//GEN-LAST:event_btnHaiActionPerformed
 
     private void btnNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 5;
+        tangTien(5);
         filltext();
     }//GEN-LAST:event_btnNamActionPerformed
 
     private void btnMuoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuoiActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 10;
+        tangTien(10);
         filltext();
     }//GEN-LAST:event_btnMuoiActionPerformed
 
     private void btnHaiChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiChucActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 20;
+        tangTien(20);
         filltext();
     }//GEN-LAST:event_btnHaiChucActionPerformed
 
     private void btnNamChucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamChucActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 50;
+        tangTien(50);
         filltext();
     }//GEN-LAST:event_btnNamChucActionPerformed
 
     private void btnMotTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotTramActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 100;
+        tangTien(100);
         filltext();
     }//GEN-LAST:event_btnMotTramActionPerformed
 
     private void btnHaiTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHaiTramActionPerformed
 
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 200;
+        tangTien(200);
         filltext();
     }//GEN-LAST:event_btnHaiTramActionPerformed
 
     private void btnNamTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNamTramActionPerformed
-        tienkhachdua = thanhtoan_tienkhachdua();
-        tienkhachdua = tienkhachdua + 500;
+        tangTien(500);
         filltext();
     }//GEN-LAST:event_btnNamTramActionPerformed
-
-    private void txtTongTienKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTongTienKeyReleased
-        tienkhachdua = thanhtoan_tienkhachdua();
-        filltext();
-    }//GEN-LAST:event_txtTongTienKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -612,7 +595,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         HoaDon hoadon = new HoaDon();
         hoadon.setMaNhanVien(manv);
-        hoadon.setNgayXuatHoaDon(ngayxuatHD);
+        hoadon.setNgayXuatHoaDon(DateHelper.convertDateToSqlDate(ngayxuatHD));
         hoadon.setLoaiKhachHang(ckbLoaiKhach.isSelected());
 
         try {
@@ -645,42 +628,27 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         }
     }
 
-    private int thanhtoan_tienkhachdua() {
-        String tongtientext = txtTongTien.getText();
-        int tongtien = 0;
-        if (tongtientext.length() == 0) {
-            tongtien = 0;
-        } else {
-            try {
-                tongtien = Integer.parseInt(tongtientext);
-            } catch (Exception e) {
-                MsgBox.notify("Tiền phải là số", this);
-            }
-        }
-        return tongtien;
-    }
-
-    private int tientralai() {
+    private int calculation() {
         int tongtien = Integer.parseInt(lbTongTien.getText().substring(0, lbTongTien.getText().length() - 5).replace(".", ""));
-        int tientralai = thanhtoan_tienkhachdua() - tongtien;
+        int tientralai = Integer.parseInt(txtTongTien.getText()) - tongtien;
         return tientralai;
     }
 
     private void filltext() {
         try {
-            txtTongTien.setText(String.valueOf(tienkhachdua));
             lbTien.setText(LocalVietNam.getCurrency(String.valueOf(tienkhachdua)));
-            lbTienTraLai.setText(LocalVietNam.getCurrency(String.valueOf(tientralai())));
+            lbTienTraLai.setText(LocalVietNam.getCurrency(String.valueOf(calculation())));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    private void tangTien(int tien) {
+        tienkhachdua = Integer.parseInt(txtTongTien.getText()) + tien;
+        txtTongTien.setText(tienkhachdua+"");
+    } 
 
-    private boolean checktralai() {
-        if (tientralai() < 0) {
-            MsgBox.notify("chưa đủ tiền", this);
-            return false;
-        }
-        return true;
+    private boolean isPay() {
+        return !lbTienTraLai.getText().startsWith("-");
     }
 }
