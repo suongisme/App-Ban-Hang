@@ -14,7 +14,7 @@ import java.util.Date;
  * @author SuongNguyen
  */
 public class LocalVietNam {
-
+    
     private static SimpleDateFormat vietNamFormatDate = new SimpleDateFormat();
 
     /**
