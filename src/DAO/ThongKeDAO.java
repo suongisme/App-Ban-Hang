@@ -52,10 +52,10 @@ public class ThongKeDAO {
         return obList;
     }
     
-    public List<Object[]> getHoaDonChiTiet(int maSanPham) throws SQLException {
+    public List<Object[]> getHoaDonChiTiet(int mahoadon) throws SQLException {
         String cols[] = {"tensanpham","soluong","gia"};
         String sqlpro = "{CALL pro_hoadonchitiet(?)}";
         
-        return getProcedure(sqlpro, cols, maSanPham);
+        return getProcedure(sqlpro, cols, mahoadon);
     }
 }

@@ -214,6 +214,10 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
         int thang = Integer.parseInt(txtThang.getText());
         int ngay = Integer.parseInt(txtNgay.getText());
         
+        if (nam < 1753) {
+            return;
+        }
+        
         DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
         model.setRowCount(0);
         try {
