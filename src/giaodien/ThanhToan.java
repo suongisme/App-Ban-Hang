@@ -1,15 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package giaodien;
 
 import DAO.HoaDonChiTietDAO;
 import DAO.HoaDonDAO;
-
 import entity.HoaDon;
-
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
@@ -17,10 +10,6 @@ import tienich.Auth;
 import tienich.LocalVietNam;
 import tienich.MsgBox;
 
-/**
- *
- * @author SuongNguyen
- */
 public class ThanhToan extends javax.swing.JInternalFrame {
 
     ArrayList<HoaDon> listHD = new ArrayList<>();
@@ -488,9 +477,15 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private void btnInHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInHDActionPerformed
         tienkhachdua = thanhtoan_tienkhachdua();
         filltext();
-        checktralai(); // sua lai
+        if (tientralai() < 0) {
+            MsgBox.notify("chưa đủ tiền", this);
+            return;
+        }
         insertHoaDon();
         insertChiTietHD();
+        Home home = new Home();
+        System.out.println("checkkk");
+        home.inhoadon();
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
@@ -616,7 +611,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         hoadon.setLoaiKhachHang(ckbLoaiKhach.isSelected());
 
         try {
-            hoadonDAO.insert(hoadon);
+            hoadonDAO.inserts(hoadon);
             MsgBox.notify("In hóa đơn thành công", this);
         } catch (Exception e) {
             e.printStackTrace();
@@ -676,11 +671,4 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         }
     }
 
-    private boolean checktralai() {
-        if (tientralai() < 0) {
-            MsgBox.notify("chưa đủ tiền", this);
-            return false;
-        }
-        return true;
-    }
 }

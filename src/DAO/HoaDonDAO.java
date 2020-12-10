@@ -25,6 +25,15 @@ public class HoaDonDAO implements DAO<HoaDon, Integer> {
     private final String SQL_SELECT = "SELECT * FROM hoadon";
     private final String SQL_SELECT_BY_ID = "SELECT * FROM hoadon WHERE mahoadon = ?";
 
+    public void inserts(HoaDon hd) {
+        JDBCHelper.executeUpdate(SQL_INSERT_HOADON,
+                hd.getMaNhanVien(),
+                hd.isLoaiKhachHang(),
+                DateHelper.convertDateToSqlDate(hd.getNgayXuatHoaDon())
+        );
+
+    }
+
     @Override
     public void insert(HoaDon entity) {
         try {
@@ -86,12 +95,12 @@ public class HoaDonDAO implements DAO<HoaDon, Integer> {
         Date dt = a.getTime();
         return this.selectBySQL(sql, DateHelper.convertDateToSqlDate(dt));
     }
-    
+
     public HoaDon selectLastHoaDon() {
         List<HoaDon> hoaDonList = this.selectBySQL(SQL_SELECT);
         if (hoaDonList.isEmpty()) {
             return null;
         }
-        return hoaDonList.get(hoaDonList.size()-1);
-    } 
+        return hoaDonList.get(hoaDonList.size() - 1);
+    }
 }

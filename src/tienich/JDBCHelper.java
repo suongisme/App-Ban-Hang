@@ -55,4 +55,31 @@ public class JDBCHelper {
     public static ResultSet queryResult(String sql, Object... parameter) throws SQLException {
         return getPrepareStatement(sql, parameter).executeQuery();
     }
+
+    public static void executeUpdate(String sql, Object... args) {
+        try {
+            PreparedStatement stmt = prepareStatement(sql, args);
+            try {
+                stmt.executeUpdate();
+            } finally {
+                stmt.getConnection().close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static PreparedStatement prepareStatement(String sql, Object... args) throws SQLException {
+        Connection connection = DriverManager.getConnection(CONNECT, USER, PASSWORD);
+        PreparedStatement pstmt = null;
+        if (sql.trim().startsWith("{")) {
+            pstmt = connection.prepareCall(sql);
+        } else {
+            pstmt = connection.prepareStatement(sql);
+        }
+        for (int i = 0; i < args.length; i++) {
+            pstmt.setObject(i + 1, args[i]);
+        }
+        return pstmt;
+    }
 }
