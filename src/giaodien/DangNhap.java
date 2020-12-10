@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import tienich.Auth;
 
 /**
@@ -27,6 +28,7 @@ public class DangNhap extends javax.swing.JFrame {
     public DangNhap() {
         initComponents();
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
     }
 
     /**
@@ -51,6 +53,7 @@ public class DangNhap extends javax.swing.JFrame {
         txtMatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Đăng nhập");
 
         blIMG.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         blIMG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -58,7 +59,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
         setLocationRelativeTo(null);
-
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
         initialization();
     }
 

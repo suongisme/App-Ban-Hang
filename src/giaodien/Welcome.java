@@ -7,6 +7,7 @@ package giaodien;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import tienich.JDBCHelper;
@@ -24,7 +25,7 @@ public class Welcome extends javax.swing.JFrame {
     public Welcome() {
         initComponents();
         setLocationRelativeTo(null);
-
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
         Timer a = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
