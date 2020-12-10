@@ -3,9 +3,19 @@ package giaodien;
 import DAO.HoaDonChiTietDAO;
 import DAO.HoaDonDAO;
 import entity.HoaDon;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tienich.Auth;
 import tienich.LocalVietNam;
 import tienich.MsgBox;
@@ -483,9 +493,11 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         }
         insertHoaDon();
         insertChiTietHD();
-        Home home = new Home();
-        System.out.println("checkkk");
-        home.inhoadon();
+        
+        if (cbxKhongLayHD.isSelected()) {
+            return;
+        }     
+        inhoadon();
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
@@ -670,5 +682,54 @@ public class ThanhToan extends javax.swing.JInternalFrame {
             e.printStackTrace();
         }
     }
+    public void inhoadon() {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Hoa Don");
 
+        XSSFRow row = sheet.createRow(0);
+        Cell cell = null;
+
+        cell = row.createCell(0, CellType.STRING);
+        cell.setCellValue("Sản phẩm");
+
+        cell = row.createCell(1, CellType.STRING);
+        cell.setCellValue("Số lượng");
+
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue("Thành tiền");
+
+        int sizeTable = table.getRowCount();
+        System.out.println(sizeTable);
+        for (int i = 0; i < sizeTable; i++) {
+            row = sheet.createRow(i+1);
+
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue(String.valueOf(table.getValueAt(i, 1)));
+
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue(String.valueOf(table.getValueAt(i, 2)));
+
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue(String.valueOf(table.getValueAt(i, 3)));
+        }
+
+        row = sheet.createRow(sizeTable + 1);
+        cell = row.createCell(2, CellType.STRING);
+        cell.setCellValue(Home.tongtienTT);
+
+        //save
+        File f = new File("F:\\sss.xlsx");
+        try {
+            f.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(ThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            FileOutputStream fos = new FileOutputStream(f);
+            workbook.write(fos);
+            fos.close();
+        } catch (IOException ex) {
+        }
+    }
 }

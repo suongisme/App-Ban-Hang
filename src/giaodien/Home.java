@@ -51,7 +51,8 @@ public class Home extends javax.swing.JFrame {
     CardLayout cardlayout;
 
     public static String tongtienTT;
-    public int rowTable[];
+    public  int rowTable[];
+
 
     public Home() {
         initComponents();
@@ -952,54 +953,5 @@ public class Home extends javax.swing.JFrame {
         sanPhamBoard.repaint();
     }
 
-    public  void inhoadon() {
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Hoa Don");
-
-        XSSFRow row = null;
-        Cell cell = null;
-
-        row = sheet.createRow(3);
-
-        cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue("Sản phẩm");
-
-        cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue("Số lượng");
-
-        cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue("Thành tiền");
-
-        Home home = new Home();
-        int sizeTable = tblDatHang.getRowCount();
-
-        for (int i = 0; i < sizeTable; i++) {
-            row = sheet.createRow(4 + i);
-            rowTable[i] = i;
-
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 0));
-
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 1));
-
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue((String) tblDatHang.getValueAt(this.rowTable[i], 2));
-        }
-
-        row = sheet.createRow(sizeTable + 5);
-        cell = row.createCell(2, CellType.STRING);
-        cell.setCellValue(tongtienTT);
-
-        //save
-        File f = new File("F:\\DuAnBanHangFinal2020.xlsx");
-
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            workbook.write(fos);
-            fos.close();
-        } catch (IOException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 }
