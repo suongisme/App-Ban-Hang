@@ -6,6 +6,7 @@
 package giaodien;
 
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import tienich.Auth;
 import tienich.EmailHelper;
 import tienich.MsgBox;
@@ -23,7 +24,7 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         lblEmail.setText(Auth.user.getEmail());
-        EmailHelper.sendEmail(lblEmail.getText());
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
         initialization();
     }
 
@@ -121,7 +122,10 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
 
     private void btnTiepTucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTucActionPerformed
         timeClick = System.currentTimeMillis();
-        if (isError(txtMaXacNhan.getText())) return;
+        System.out.println(isLower1Mintute());
+        if (isError(txtMaXacNhan.getText())) {
+            return;
+        }
         new QuenMatKhau3().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTiepTucActionPerformed
@@ -151,40 +155,40 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
     private long startTimeSendCode;
     private long timeClick;
     private final long miliSecondOf60Second = 60 * 1000;
-    
+
     private void initialization() {
         startTimeSendCode = System.currentTimeMillis();
     }
-    
+
     private boolean isError(String text) {
         if (isEmpty(text)) {
             MsgBox.notify("Xin mời nhập code!", this);
             return true;
         }
-        
+
         if (!is6Char(text)) {
             MsgBox.notify("Code phải 6 số", this);
             return true;
         }
-        
+
         if (!isNumber(text)) {
             MsgBox.notify("Sai định dạng số!", this);
             return true;
         }
-        
+
         if (!isTrueCode(text)) {
             MsgBox.notify("Code không chính xác", this);
             return true;
         }
-        
+
         if (!isLower1Mintute()) {
             MsgBox.notify("Xin lỗi! Code của bạn đã hết hạn", this);
             return true;
         }
-        
+
         return false;
     }
-    
+
     private boolean isNumber(String text) {
         try {
             int nb = Integer.parseInt(text);
@@ -193,19 +197,19 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
             return false;
         }
     }
-    
+
     private boolean isEmpty(String text) {
         return text.isEmpty();
     }
-    
+
     private boolean is6Char(String text) {
         return text.length() == 6;
     }
-    
+
     private boolean isTrueCode(String text) {
         return Integer.parseInt(text) == EmailHelper.codeReset;
     }
-    
+
     private boolean isLower1Mintute() {
         return (timeClick - startTimeSendCode) <= miliSecondOf60Second;
     }

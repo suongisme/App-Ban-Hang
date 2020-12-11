@@ -8,7 +8,9 @@ package giaodien;
 import DAO.NhanVienDAO;
 import entity.NhanVien;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import tienich.Auth;
+import tienich.EmailHelper;
 import tienich.MsgBox;
 
 /**
@@ -23,6 +25,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
     public QuenMatKhau() {
         initComponents();
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
         initialization();
     }
 
@@ -108,6 +111,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
 
     private void btnTiepTucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTiepTucActionPerformed
         if  (isError(txtEmail.getText())) return;
+        EmailHelper.sendEmail(Auth.user.getEmail());
         new QuenMatKhau2().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTiepTucActionPerformed

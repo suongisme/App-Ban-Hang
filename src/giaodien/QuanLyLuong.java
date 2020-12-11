@@ -76,6 +76,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         tblChiTiet = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Quản lý lương");
 
         pnlMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 255)));
         pnlMenu.setPreferredSize(new java.awt.Dimension(263, 474));
@@ -317,7 +318,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.PREFERRED_SIZE, 681, Short.MAX_VALUE)
         );
 

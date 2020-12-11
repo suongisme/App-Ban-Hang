@@ -71,6 +71,7 @@ public class ThongKe extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setClosable(true);
+        setTitle("Thống Kê");
 
         cbxDoanhThuNam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cbxDoanhThuNam.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(153, 153, 153)));

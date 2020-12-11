@@ -106,6 +106,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255), 2));
         setClosable(true);
+        setTitle("Quản lý nhân viên");
 
         pnlScreenMain.setLayout(new java.awt.CardLayout());
 
@@ -491,7 +492,7 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
                 .addComponent(btnDanhSachNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(lblTimE, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -7,6 +7,7 @@ package giaodien;
 
 import DAO.NhanVienDAO;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import tienich.Auth;
 import tienich.MsgBox;
 
@@ -22,6 +23,7 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
     public QuenMatKhau3() {
         initComponents();
         setLocationRelativeTo(null);
+        setIconImage(new ImageIcon("hinhanh\\chef.png").getImage());
         lblTenNguoiDung.setText(Auth.user.getTenNhanVien());
         initialization();
     }

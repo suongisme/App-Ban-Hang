@@ -53,6 +53,7 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
         tblHoaDon = new javax.swing.JTable();
 
         setClosable(true);
+        setTitle("Quản lý hóa đơn");
 
         lblNam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNam.setText("Năm");

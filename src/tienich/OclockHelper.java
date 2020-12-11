@@ -17,7 +17,7 @@ public class OclockHelper extends Thread {
 
     private static JLabel lblOclock;
     private static final Locale vietNam = new Locale("vi","vn");
-    private static SimpleDateFormat simpleDate = new SimpleDateFormat("EEE dd-MMM-yyyy HH:mm:ss", vietNam);
+    private static SimpleDateFormat simpleDate = new SimpleDateFormat("EEEE dd-MM-yyyy HH:mm:ss", vietNam);
     private static Thread oclockThread;
 
     private static void createThreadOclock() {
