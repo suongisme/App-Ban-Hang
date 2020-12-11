@@ -66,7 +66,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         lbHinhThuc = new javax.swing.JLabel();
         lbTien = new javax.swing.JLabel();
         lbTienTraLai = new javax.swing.JLabel();
-        cbxKhongLayHD = new javax.swing.JCheckBox();
+        rdoNoReceipt = new javax.swing.JCheckBox();
         ckbLoaiKhach = new javax.swing.JCheckBox();
         btnInHD = new javax.swing.JButton();
         btnHuy = new javax.swing.JButton();
@@ -294,8 +294,8 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         lbTienTraLai.setText("0");
         lbTienTraLai.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
-        cbxKhongLayHD.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        cbxKhongLayHD.setText("Không lấy hoá đơn");
+        rdoNoReceipt.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        rdoNoReceipt.setText("Không lấy hoá đơn");
 
         ckbLoaiKhach.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         ckbLoaiKhach.setText("Khách nước ngoài");
@@ -350,7 +350,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ckbLoaiKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxKhongLayHD, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(rdoNoReceipt, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -380,7 +380,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(lbTienTraLai))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxKhongLayHD)
+                .addComponent(rdoNoReceipt)
                 .addGap(18, 18, 18)
                 .addComponent(ckbLoaiKhach)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
@@ -480,13 +480,17 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         insertHoaDon();
         insertChiTietHD();
 
-        if (cbxKhongLayHD.isSelected()) {
+        if (rdoNoReceipt.isSelected()) {
             return;
         }
         try {
             HoaDon hd = hoadonDAO.selectLastHoaDon();
-            ExcelHelper.writeExcelFile("hoadon\\"+hd.getMaHoaDon()+"-"+hd.getNgayXuatHoaDon()+".xlsx", hd, tienkhachdua);
-            ExcelHelper.writeExcelFile("hdnhabep\\"+hd.getMaHoaDon()+"-"+hd.getNgayXuatHoaDon()+".xlsx", hd, tienkhachdua);
+            String fileName = hd.getMaHoaDon()+"-"+hd.getNgayXuatHoaDon();
+            ExcelHelper.writeExcelFile("hoadon\\"+fileName+".xlsx", hd, tienkhachdua);
+            ExcelHelper.writeExcelFile("hdnhabep\\"+fileName+".xlsx", hd, tienkhachdua);
+            
+            Runtime.getRuntime().exec("cmd /c start excel hdnhabep\\" +fileName);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -567,7 +571,6 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNamTram;
     private javax.swing.JButton btnTienMat;
     private javax.swing.JButton btnVisa;
-    private javax.swing.JCheckBox cbxKhongLayHD;
     private javax.swing.JCheckBox ckbLoaiKhach;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -588,6 +591,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblThoat;
     private javax.swing.JPanel pnlMenhGia;
     private javax.swing.JPanel pnlPhuongThucThanhToan;
+    private javax.swing.JCheckBox rdoNoReceipt;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 
