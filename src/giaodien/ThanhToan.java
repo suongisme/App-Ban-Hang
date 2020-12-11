@@ -2,12 +2,14 @@ package giaodien;
 
 import DAO.HoaDonChiTietDAO;
 import DAO.HoaDonDAO;
+import DAO.ThongKeDAO;
 import entity.HoaDon;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tienich.Auth;
 import tienich.DateHelper;
+import tienich.ExcelHelper;
 import tienich.LocalVietNam;
 import tienich.MsgBox;
 
@@ -488,11 +491,17 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         }
         insertHoaDon();
         insertChiTietHD();
-        
+
         if (cbxKhongLayHD.isSelected()) {
             return;
-        }     
-        inhoadon();
+        }
+        try {
+            HoaDon hd = hoadonDAO.selectLastHoaDon();
+            ExcelHelper.writeExcelFile("hoadon\\"+hd.getMaHoaDon()+"-"+hd.getNgayXuatHoaDon()+".xlsx", hd, tienkhachdua);
+            ExcelHelper.writeExcelFile("hdnhabep\\"+hd.getMaHoaDon()+"-"+hd.getNgayXuatHoaDon()+".xlsx", hd, tienkhachdua);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnInHDActionPerformed
 
     private void btnMasterCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasterCardActionPerformed
@@ -642,67 +651,72 @@ public class ThanhToan extends javax.swing.JInternalFrame {
     private void filltext() {
         try {
             lbTien.setText(LocalVietNam.getCurrency(String.valueOf(tienkhachdua)));
-            lbTienTraLai.setText(LocalVietNam.getCurrency(String.valueOf(calculation())));
+            int tienThua = calculation();
+            if (tienThua < 0) {
+                lbTienTraLai.setText("-"+LocalVietNam.getCurrency(String.valueOf(calculation()).substring(1)));
+            } else {
+               lbTienTraLai.setText(LocalVietNam.getCurrency(String.valueOf(calculation()))); 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void inhoadon() {
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Hoa Don");
+//    public void inhoadon() {
+//        XSSFWorkbook workbook = new XSSFWorkbook();
+//        XSSFSheet sheet = workbook.createSheet("Hoa Don");
+//
+//        XSSFRow row = sheet.createRow(0);
+//        Cell cell = null;
+//
+//        cell = row.createCell(0, CellType.STRING);
+//        cell.setCellValue("Sản phẩm");
+//
+//        cell = row.createCell(1, CellType.STRING);
+//        cell.setCellValue("Số lượng");
+//
+//        cell = row.createCell(2, CellType.STRING);
+//        cell.setCellValue("Thành tiền");
+//
+//        int sizeTable = table.getRowCount();
+//        System.out.println(sizeTable);
+//        for (int i = 0; i < sizeTable; i++) {
+//            row = sheet.createRow(i + 1);
+//
+//            cell = row.createCell(0, CellType.STRING);
+//            cell.setCellValue(String.valueOf(table.getValueAt(i, 1)));
+//
+//            cell = row.createCell(1, CellType.STRING);
+//            cell.setCellValue(String.valueOf(table.getValueAt(i, 2)));
+//
+//            cell = row.createCell(2, CellType.STRING);
+//            cell.setCellValue(String.valueOf(table.getValueAt(i, 3)));
+//        }
+//
+//        row = sheet.createRow(sizeTable + 1);
+//        cell = row.createCell(2, CellType.STRING);
+//        cell.setCellValue(Home.tongtienTT);
+//
+//        //save
+//        File f = new File("hoadon\\hoadon.xlsx");
+//        try {
+//            f.createNewFile();
+//        } catch (IOException ex) {
+//            Logger.getLogger(ThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        try {
+//            FileOutputStream fos = new FileOutputStream(f);
+//            workbook.write(fos);
+//            fos.close();
+//        } catch (IOException ex) {
+//        }
+//    }
 
-        XSSFRow row = sheet.createRow(0);
-        Cell cell = null;
-
-        cell = row.createCell(0, CellType.STRING);
-        cell.setCellValue("Sản phẩm");
-
-        cell = row.createCell(1, CellType.STRING);
-        cell.setCellValue("Số lượng");
-
-        cell = row.createCell(2, CellType.STRING);
-        cell.setCellValue("Thành tiền");
-
-        int sizeTable = table.getRowCount();
-        System.out.println(sizeTable);
-        for (int i = 0; i < sizeTable; i++) {
-            row = sheet.createRow(i+1);
-
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue(String.valueOf(table.getValueAt(i, 1)));
-
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue(String.valueOf(table.getValueAt(i, 2)));
-
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue(String.valueOf(table.getValueAt(i, 3)));
-        }
-
-        row = sheet.createRow(sizeTable + 1);
-        cell = row.createCell(2, CellType.STRING);
-        cell.setCellValue(Home.tongtienTT);
-
-        //save
-        File f = new File("F:\\sss.xlsx");
-        try {
-            f.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(ThanhToan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            workbook.write(fos);
-            fos.close();
-        } catch (IOException ex) {
-        }
-
-    
     private void tangTien(int tien) {
         tienkhachdua = Integer.parseInt(txtTongTien.getText()) + tien;
-        txtTongTien.setText(tienkhachdua+"");
-    } 
+        txtTongTien.setText(tienkhachdua + "");
+    }
 
     private boolean isPay() {
         return !lbTienTraLai.getText().startsWith("-");

@@ -56,6 +56,7 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
         lblChungNhan = new javax.swing.JLabel();
 
         setClosable(true);
+        setTitle("Receipt");
 
         mahoadon.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         mahoadon.setText("Mã hoá đơn:");

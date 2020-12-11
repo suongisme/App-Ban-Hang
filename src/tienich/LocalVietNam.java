@@ -46,7 +46,9 @@ public class LocalVietNam {
         duplicateMoney.reverse();
         String newMoney = "";
         for (int i = 0; i < duplicateMoney.length(); i++) {
+            
             newMoney += duplicateMoney.charAt(i);
+            
             if ((i + 1) % 3 == 0 && i < duplicateMoney.length() - 1) {
                 newMoney += ".";
             }
