@@ -267,7 +267,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
         jLabel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(204, 204, 204)));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jLabel5.setText(" Tiền              ");
+        jLabel5.setText("Khách Trả");
         jLabel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(204, 204, 204)));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
@@ -291,7 +291,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         lbTienTraLai.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbTienTraLai.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTienTraLai.setText("0");
+        lbTienTraLai.setText("-0");
         lbTienTraLai.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(204, 204, 204)));
 
         rdoNoReceipt.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
