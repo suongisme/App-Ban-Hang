@@ -472,7 +472,7 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         jLabel6.setText("Tổng tiền");
 
-        lblTongTien.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        lblTongTien.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblTongTien.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTongTien.setText("0");
 
