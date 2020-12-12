@@ -10,7 +10,6 @@ import DAO.NhanVienDAO;
 import DAO.ThongKeDAO;
 import entity.HoaDon;
 import entity.NhanVien;
-import exception.FormatVietNamException;
 import javax.swing.table.DefaultTableModel;
 import tienich.LocalVietNam;
 import tienich.MsgBox;
@@ -24,6 +23,11 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
     /**
      * Creates new form HoaDonChiTiet
      */
+    private ThongKeDAO thongKeDAO;
+    private HoaDonDAO hoaDonDAO;
+    private NhanVienDAO nhanVienDAO;
+    DefaultTableModel tableSanPham;
+
     public HoaDonChiTiet(int maHoaDon) {
         initComponents();
         init();
@@ -207,17 +211,11 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
     private javax.swing.JLabel thungan;
     // End of variables declaration//GEN-END:variables
 
-    private ThongKeDAO thongKeDAO;
-    private HoaDonDAO hoaDonDAO;
-    private NhanVienDAO nhanVienDAO;
-    DefaultTableModel tableSanPham;
-
     private void init() {
         thongKeDAO = new ThongKeDAO();
         hoaDonDAO = new HoaDonDAO();
         nhanVienDAO = new NhanVienDAO();
-        
-        
+
         tableSanPham = (DefaultTableModel) tblSanPham.getModel();
     }
 
@@ -229,25 +227,22 @@ public class HoaDonChiTiet extends javax.swing.JInternalFrame {
                 int soLuong = Integer.parseInt(x[1].toString());
                 int tien = Integer.parseInt(x[2].toString());
                 tongTien += (soLuong * tien);
-                tableSanPham.addRow(new Object[] {
-                    x[0],soLuong, LocalVietNam.getCurrency(soLuong*tien)
+                tableSanPham.addRow(new Object[]{
+                    x[0], soLuong, LocalVietNam.getCurrency(soLuong * tien)
                 });
             }
             lblTong.setText(LocalVietNam.getCurrency(tongTien));
-        } catch (FormatVietNamException vn) {
-            vn.printStackTrace();
-            MsgBox.notify(vn.getMessage(), this);
         } catch (Exception e) {
-            e.printStackTrace();
+            MsgBox.notify(e.getMessage(), this);
         }
-        
+
     }
 
     private void setForm(int maHoaDon) {
         HoaDon hd = hoaDonDAO.selectByID(maHoaDon);
         NhanVien nv = nhanVienDAO.selectByID(hd.getMaNhanVien());
-        
-        lblMaHoaDon.setText(hd.getMaHoaDon()+"");
+
+        lblMaHoaDon.setText(hd.getMaHoaDon() + "");
         lbNgayIn.setText(LocalVietNam.getDate(hd.getNgayXuatHoaDon()));
         lbThuNgan.setText(nv.getTenNhanVien());
         lbKhachHang.setText(hd.isLoaiKhachHang() ? "Nước ngoài" : "Trong Nước");

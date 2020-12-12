@@ -6,7 +6,6 @@
 package giaodien;
 
 import DAO.NhanVienDAO;
-import entity.NhanVien;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import tienich.Auth;

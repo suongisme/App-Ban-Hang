@@ -18,23 +18,13 @@ import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import tienich.Auth;
 import tienich.ImageHelper;
 import tienich.LocalVietNam;
@@ -51,9 +41,11 @@ public class Home extends javax.swing.JFrame {
      */
     CardLayout cardlayout;
 
-    public static String tongtienTT;
-    public  int rowTable[];
+    private DefaultTableModel tableThanhToan;
+    private DefaultComboBoxModel comboboxLoai;
 
+    private LoaiSanPhamDAO loaiSanPhamDAO;
+    private SanPhamDAO sanPhamDAO;
 
     public Home() {
         initComponents();
@@ -657,12 +649,11 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        tongtienTT = lblTongTien.getText();
         if (tableThanhToan.getRowCount() == 0) {
             MsgBox.notify("Vui lòng chọn sản phẩm trước.", this);
             return;
         }
-        showForm(new ThanhToan(tableThanhToan));
+        showForm(new ThanhToan(tableThanhToan, lblTongTien.getText()));
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblDatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatHangMouseClicked
@@ -731,12 +722,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTable tblDatHang;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
-
-    private DefaultTableModel tableThanhToan;
-    private DefaultComboBoxModel comboboxLoai;
-
-    private LoaiSanPhamDAO loaiSanPhamDAO;
-    private SanPhamDAO sanPhamDAO;
 
     private void initialization() {
         tableThanhToan = (DefaultTableModel) tblDatHang.getModel();
@@ -901,7 +886,6 @@ public class Home extends javax.swing.JFrame {
         try {
             tblDatHang.setValueAt(LocalVietNam.getCurrency(sp.getDonGia() * amount), row, 3);
         } catch (FormatVietNamException e) {
-            e.printStackTrace();
             tblDatHang.setValueAt("error", row, 3);
         }
     }
@@ -912,7 +896,6 @@ public class Home extends javax.swing.JFrame {
             tableThanhToan.removeRow(row);
             return;
         }
-
         tableThanhToan.setValueAt(--amount, row, 2);
     }
 
@@ -925,7 +908,6 @@ public class Home extends javax.swing.JFrame {
         try {
             tblDatHang.setValueAt(LocalVietNam.getCurrency(price - sp.getDonGia()), row, 3);
         } catch (FormatVietNamException vn) {
-            vn.printStackTrace();
             tblDatHang.setValueAt("error", row, 3);
         }
     }
@@ -945,7 +927,6 @@ public class Home extends javax.swing.JFrame {
         } catch (Exception e) {
             return e.getMessage();
         }
-
     }
 
     private void deleteBoard(JPanel sanPhamBoard) {
@@ -954,5 +935,4 @@ public class Home extends javax.swing.JFrame {
         sanPhamBoard.repaint();
     }
 
-    
 }

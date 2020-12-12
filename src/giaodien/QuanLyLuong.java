@@ -12,7 +12,6 @@ import entity.NhanVien;
 import exception.FormatVietNamException;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -39,8 +38,8 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         initComponents();
         cardlayout = (CardLayout) pnlScreenMain.getLayout();
         lblProfile.setIcon(
-                ImageHelper.getImage(Auth.user.getHinh(), 
-                201,200)
+            ImageHelper.getImage(Auth.user.getHinh(), 
+            201,200)
         );
         OclockHelper.startOclock(lblTime);
         initialization();
@@ -463,7 +462,6 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
                 tableChamCong.setValueAt("", i, 3);
                 tableChamCong.setValueAt("", i, 4);
             } catch (Exception e) {
-                e.printStackTrace();
                 MsgBox.notify(e.getMessage(), this);
             }
         }
@@ -493,7 +491,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             }
         
         } catch (Exception e) {
-            e.printStackTrace();
+            MsgBox.notify(e.getMessage(), this);
         }
     }
     
@@ -543,6 +541,7 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
             time.parse(t);
             return true;
         } catch (Exception e) {
+            MsgBox.notify(e.getMessage(), this);
             return false;
         }
     }

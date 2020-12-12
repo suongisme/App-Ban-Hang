@@ -26,6 +26,18 @@ public class ThongKe extends javax.swing.JInternalFrame {
     /**
      * Creates new form ThongKe
      */
+    private DefaultTableModel tableLuong;
+    private DefaultTableModel tableSanPham;
+    private DefaultTableModel tableDoanhThu;
+
+    private DefaultComboBoxModel comboBoxNamDoanhThu;
+    private DefaultComboBoxModel comboBoxNamLuongNhanVien;
+    private DefaultComboBoxModel comboBoxNamSanPhamBanChay;
+
+    private ThongKeDAO thongKeDAO;
+
+    private Calendar date;
+
     public ThongKe() {
         initComponents();
         initialization();
@@ -485,18 +497,6 @@ public class ThongKe extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup trongngoai;
     // End of variables declaration//GEN-END:variables
 
-    private DefaultTableModel tableLuong;
-    private DefaultTableModel tableSanPham;
-    private DefaultTableModel tableDoanhThu;
-
-    private DefaultComboBoxModel comboBoxNamDoanhThu;
-    private DefaultComboBoxModel comboBoxNamLuongNhanVien;
-    private DefaultComboBoxModel comboBoxNamSanPhamBanChay;
-
-    private ThongKeDAO thongKeDAO;
-
-    private Calendar date;
-
     private void initialization() {
         tableDoanhThu = (DefaultTableModel) tblDoanhThu.getModel();
         tableLuong = (DefaultTableModel) tblLuong.getModel();
@@ -523,7 +523,7 @@ public class ThongKe extends javax.swing.JInternalFrame {
             comboBoxYear.addElement(year);
         }
     }
-   
+
     private void fillDoanhThuTable() {
         tableDoanhThu.setRowCount(0);
         int nam = (int) cbxDoanhThuNam.getSelectedItem();
@@ -531,13 +531,12 @@ public class ThongKe extends javax.swing.JInternalFrame {
             int tongTien = 0;
             List<Object[]> a = thongKeDAO.getDoanhThu(nam);
             for (Object[] x : a) {
-                tableDoanhThu.addRow(new Object[] {
-                    "Tháng "+x[0],
+                tableDoanhThu.addRow(new Object[]{
+                    "Tháng " + x[0],
                     LocalVietNam.getCurrency(x[1]),
                     LocalVietNam.getCurrency(x[2]),
-                    LocalVietNam.getCurrency(x[3]),
-                });
-                tongTien += (int)x[3];
+                    LocalVietNam.getCurrency(x[3]),});
+                tongTien += (int) x[3];
             }
             lblTong.setText(LocalVietNam.getCurrency(tongTien));
         } catch (FormatVietNamException vn) {
@@ -549,8 +548,8 @@ public class ThongKe extends javax.swing.JInternalFrame {
 
     private void fillLuongNhanVien() {
         tableLuong.setRowCount(0);
-        
-        int nam =  Integer.parseInt(cbxNamLuongNhanVien.getSelectedItem().toString());
+
+        int nam = Integer.parseInt(cbxNamLuongNhanVien.getSelectedItem().toString());
         int thang = Integer.parseInt(cbxThangLuongNhanVien.getSelectedItem().toString());
 
         try {
@@ -558,9 +557,9 @@ public class ThongKe extends javax.swing.JInternalFrame {
             List<Object[]> a = thongKeDAO.getLuongNhanVien(thang, nam);
             for (Object[] x : a) {
                 int luongNhanVien = getLuongNhanVien(x[0], x[3]);
-                tableLuong.addRow(new Object[] {
-                    x[0],x[1],
-                    "Tháng "+x[2],
+                tableLuong.addRow(new Object[]{
+                    x[0], x[1],
+                    "Tháng " + x[2],
                     LocalVietNam.getTime(x[3]),
                     LocalVietNam.getCurrency(luongNhanVien)
                 });
@@ -571,20 +570,20 @@ public class ThongKe extends javax.swing.JInternalFrame {
             MsgBox.notify(vn.getMessage(), this);
         } catch (SQLException e) {
             MsgBox.notify("Thống kê lương lỗi", this);
-        } 
+        }
     }
 
     private void fillMatHangBanChay() {
         tableSanPham.setRowCount(0);
         boolean isForeigner = rdoNgoaiNuoc.isSelected();
-        int nam =  Integer.parseInt(cbxBanChayNam.getSelectedItem().toString());
+        int nam = Integer.parseInt(cbxBanChayNam.getSelectedItem().toString());
         int thang = Integer.parseInt(cbxBanChayThang.getSelectedItem().toString());
         try {
             List<Object[]> a = thongKeDAO.getMatHangBanChay(thang, nam, isForeigner);
-            
+
             for (Object[] x : a) {
                 tableSanPham.addRow(new Object[]{
-                    x[0], x[1], "Tháng "+x[2], x[3]
+                    x[0], x[1], "Tháng " + x[2], x[3]
                 });
             }
         } catch (SQLException e) {
@@ -600,8 +599,8 @@ public class ThongKe extends javax.swing.JInternalFrame {
             return null;
         }
 
-        double hsl = (double) nv.getHeSoLuong()/60;
+        double hsl = (double) nv.getHeSoLuong() / 60;
         double tgl = Double.parseDouble(tongGiolam.toString());
-        return (int)(hsl*tgl);
+        return (int) (hsl * tgl);
     }
 }

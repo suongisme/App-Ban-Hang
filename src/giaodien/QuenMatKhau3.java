@@ -20,6 +20,8 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
     /**
      * Creates new form QuenMatKhau3
      */
+    private NhanVienDAO nhanVienDAO;
+
     public QuenMatKhau3() {
         initComponents();
         setLocationRelativeTo(null);
@@ -145,10 +147,12 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBackMouseExited
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
-        if (isError(txtMatKhauMoi.getText(), txtNhapLai.getText())) return;
-        
+        if (isError(txtMatKhauMoi.getText(), txtNhapLai.getText())) {
+            return;
+        }
+
         changePassword();
-        
+
         if (MsgBox.confirm("Bạn có muốn đến trang đăng nhập không?", this)) {
             this.dispose();
             new DangNhap().setVisible(true);
@@ -165,37 +169,37 @@ public class QuenMatKhau3 extends javax.swing.JFrame {
     private javax.swing.JTextField txtMatKhauMoi;
     private javax.swing.JTextField txtNhapLai;
     // End of variables declaration//GEN-END:variables
-    private NhanVienDAO nhanVienDAO;
+    
     private void initialization() {
         nhanVienDAO = new NhanVienDAO();
     }
-    
+
     private boolean isError(String matKhauMoi, String xacNhanMatKhau) {
         if (isEmpty(matKhauMoi, xacNhanMatKhau)) {
             MsgBox.notify("Mật khẩu không được trống", this);
             return true;
         }
-        
+
         if (!isGreater8Char(matKhauMoi, xacNhanMatKhau)) {
             MsgBox.notify("Mật khẩu phải dài hơn 8 ký tự", this);
             return true;
         }
-        
+
         if (!isMatch(matKhauMoi, xacNhanMatKhau)) {
             MsgBox.notify("Mật khẩu mới và xác nhận mật khẩu không trùng nhau", this);
             return true;
         }
         return false;
     }
-    
+
     private boolean isEmpty(String matKhau, String xacNhanMatKhau) {
         return (matKhau.isEmpty() || xacNhanMatKhau.isEmpty());
     }
-    
+
     private boolean isGreater8Char(String matKhau, String xacNhanMatKhau) {
         return (matKhau.length() >= 8 && xacNhanMatKhau.length() >= 8);
     }
-    
+
     private boolean isMatch(String matKhauMoi, String xacNhanMatKhau) {
         return matKhauMoi.equals(xacNhanMatKhau);
     }

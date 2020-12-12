@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import tienich.JDBCHelper;
+import tienich.MsgBox;
 import tienich.OclockHelper;
 
 /**
@@ -42,9 +43,8 @@ public class Welcome extends javax.swing.JFrame {
         try {
             JDBCHelper.openConnection();
         } catch (Exception e) {
-            e.printStackTrace();
+            MsgBox.notify(e.getMessage(), this);
         }
-        OclockHelper.startOclock(null);
     }
 
     /**

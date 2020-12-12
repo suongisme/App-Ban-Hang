@@ -20,6 +20,10 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
     /**
      * Creates new form QuenMatKhau2
      */
+    private long startTimeSendCode;
+    private long timeClick;
+    private final long miliSecondOf60Second = 60 * 1000;
+
     public QuenMatKhau2() {
         initComponents();
         setLocationRelativeTo(null);
@@ -151,10 +155,6 @@ public class QuenMatKhau2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JTextField txtMaXacNhan;
     // End of variables declaration//GEN-END:variables
-
-    private long startTimeSendCode;
-    private long timeClick;
-    private final long miliSecondOf60Second = 60 * 1000;
 
     private void initialization() {
         startTimeSendCode = System.currentTimeMillis();

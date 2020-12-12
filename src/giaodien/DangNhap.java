@@ -7,7 +7,6 @@ package giaodien;
 
 import java.awt.Color;
 import entity.NhanVien;
-import javax.swing.UIManager;
 import tienich.MsgBox;
 import DAO.NhanVienDAO;
 import java.awt.event.KeyEvent;
@@ -286,8 +285,7 @@ public class DangNhap extends javax.swing.JFrame {
                 this.dispose();
             }
         } catch (Exception e) {
-            MsgBox.notify("Lỗi đăng nhập", this);
-            e.printStackTrace();
+            MsgBox.notify(e.getMessage(), this);
         }
     }
 }

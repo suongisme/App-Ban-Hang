@@ -37,6 +37,10 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
      * Creates new form QuanLySanPham
      */
     CardLayout cardlayout;
+    private SanPhamDAO sanPhamDAO;
+    private LoaiSanPhamDAO loaiSanPhamDAO;
+
+    DefaultComboBoxModel<LoaiSanPham> comboBoxLoai;
 
     public QuanLySanPham() {
         initComponents();
@@ -302,11 +306,6 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         pnlScreenMain.add(pnlChiTiet, "card3");
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTimKiemActionPerformed(evt);
-            }
-        });
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTimKiemKeyReleased(evt);
@@ -361,7 +360,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+            .addComponent(pnlMenun, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
             .addComponent(pnlScreenMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -393,7 +392,6 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
                 lblHinhAnh.setIcon(ImageHelper.getImage(nameFile, 273, 186));
             }
         } catch (Exception e) {
-            e.printStackTrace();
             MsgBox.notify("Chọn ảnh lỗi", this);
         }
     }//GEN-LAST:event_lblHinhAnhMouseClicked
@@ -409,11 +407,6 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     private void btnDanhSachNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDanhSachNhanVienActionPerformed
         cardlayout.show(pnlScreenMain, "card2");
     }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
-
-    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTimKiemActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCapNhat;
@@ -447,11 +440,6 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTenSanPham;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
-
-    private SanPhamDAO sanPhamDAO;
-    private LoaiSanPhamDAO loaiSanPhamDAO;
-
-    DefaultComboBoxModel<LoaiSanPham> comboBoxLoai;
 
     private void init() {
         sanPhamDAO = new SanPhamDAO();
@@ -569,7 +557,7 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             fillToBoard();
             clearForm();
         } catch (Exception e) {
-            e.printStackTrace();
+            MsgBox.notify(e.getMessage(),this);
         }
     }
 
@@ -584,13 +572,14 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
             fillToBoard();
             clearForm();
         } catch (Exception e) {
-            e.printStackTrace();
             MsgBox.notify(e.getMessage(), this);
         }
     }
 
     private void delete() {
-        if (!MsgBox.confirm("Bạn có muốn xóa " + txtTenSanPham.getText() + " không?", this)) return;
+        if (!MsgBox.confirm("Bạn có muốn xóa " + txtTenSanPham.getText() + " không?", this)) {
+            return;
+        }
         try {
             sanPhamDAO.delete(txtMaSanPham.getText());
             ImageHelper.delete(lblHinhAnh.getToolTipText());
@@ -600,7 +589,6 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             MsgBox.notify(e.getMessage(), this);
         }
-
     }
 
     private SanPham getForm() {
@@ -623,9 +611,9 @@ public class QuanLySanPham extends javax.swing.JInternalFrame {
 
     private boolean isError() {
         if (isEmpty(txtMaSanPham.getText())
-                || isEmpty(txtTenSanPham.getText())
-                || isEmpty(txtMoTa.getText())
-                || isEmpty(txtDonGia.getText())) {
+            || isEmpty(txtTenSanPham.getText())
+            || isEmpty(txtMoTa.getText())
+            || isEmpty(txtDonGia.getText())) {
             MsgBox.notify("Nhập đủ thông tin", this);
             return true;
         }

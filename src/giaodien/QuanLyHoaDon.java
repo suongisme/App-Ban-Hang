@@ -211,6 +211,10 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
             return;
         }
         
+        if (!isNumber(txtNam.getText()) || !isNumber(txtThang.getText()) || !isNumber(txtNgay.getText())) {
+            return;
+        }
+        
         int nam = Integer.parseInt(txtNam.getText());
         int thang = Integer.parseInt(txtThang.getText());
         int ngay = Integer.parseInt(txtNgay.getText());
@@ -240,5 +244,14 @@ public class QuanLyHoaDon extends javax.swing.JInternalFrame {
 
     private boolean isEmpty(String time) {
         return time.isEmpty();
+    }
+    
+    private boolean isNumber(String time) {
+        try {
+            Integer.parseInt(time);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

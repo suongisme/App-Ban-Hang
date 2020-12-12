@@ -32,7 +32,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlMenu" alignment="0" pref="705" max="32767" attributes="0"/>
+          <Component id="pnlMenu" alignment="0" pref="713" max="32767" attributes="0"/>
           <Component id="pnlScreenMain" alignment="0" pref="681" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
