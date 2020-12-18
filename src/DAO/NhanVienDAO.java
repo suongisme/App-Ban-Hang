@@ -133,7 +133,7 @@ public class NhanVienDAO implements DAO<NhanVien, String>{
     }
     
     public List<NhanVien> selectByName(String name) {
-        String sql = "SELECT * FROM nhanvien WHERE tennhanvien LIKE ?";
+        String sql = "SELECT * FROM nhanvien WHERE tennhanvien LIKE ? AND trangthai = 1";
         return this.selectBySQL(sql, "%"+name+"%");
     }
 }

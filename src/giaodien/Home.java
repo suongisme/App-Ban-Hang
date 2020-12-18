@@ -316,6 +316,7 @@ public class Home extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(59, 175, 218));
 
         cbxLoaiSanPham2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cbxLoaiSanPham2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         cbxLoaiSanPham2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbxLoaiSanPham2.setPreferredSize(new java.awt.Dimension(82, 30));
         cbxLoaiSanPham2.addItemListener(new java.awt.event.ItemListener() {
@@ -680,8 +681,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbxLoaiSanPham2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxLoaiSanPham2ItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            LoaiSanPham lsp = (LoaiSanPham) comboboxLoai.getSelectedItem();
+        LoaiSanPham lsp = (LoaiSanPham) comboboxLoai.getSelectedItem();
+        if (lsp != null) {
             List sanPhamList = sanPhamDAO.selectByTen(txtTimKiem.getText(), lsp.getMaLoaiSanPham());
             fillToBoard(sanPhamList);
         }

@@ -478,7 +478,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
             return;
         }
         insertHoaDon();
-        insertChiTietHD();
+        
 
         if (rdoNoReceipt.isSelected()) {
             return;
@@ -606,6 +606,7 @@ public class ThanhToan extends javax.swing.JInternalFrame {
 
         try {
             hoadonDAO.inserts(hoadon);
+            insertChiTietHD();
             MsgBox.notify("In hóa đơn thành công", this);
         } catch (Exception e) {
             MsgBox.notify(e.getMessage(), this);

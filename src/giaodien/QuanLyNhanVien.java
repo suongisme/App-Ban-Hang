@@ -573,10 +573,15 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDanhSachNhanVienActionPerformed
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
-        if (WindowChoose.openChoose()) {
-            String nameFile = WindowChoose.nameFile;
-            lblAnh.setIcon(ImageHelper.getImage(nameFile, 143, 174));
-            lblAnh.setToolTipText(nameFile);
+        try {
+            if (WindowChoose.openChoose()) {
+                String nameFile = WindowChoose.nameFile;
+                ImageHelper.copy(WindowChoose.path);
+                lblAnh.setIcon(ImageHelper.getImage(nameFile, 143, 174));
+                lblAnh.setToolTipText(nameFile);
+            }
+        } catch (Exception e) {
+            MsgBox.notify(e.getMessage(), this);
         }
     }//GEN-LAST:event_lblAnhMouseClicked
 
@@ -748,14 +753,14 @@ public class QuanLyNhanVien extends javax.swing.JInternalFrame {
 
         if (!txtEmail.getText().equalsIgnoreCase(emailRecently)) {
             if (isExistEmail(txtEmail.getText())) {
-                MsgBox.notify("Email này đã đăng ký",this);
+                MsgBox.notify("Email này đã đăng ký", this);
                 return;
             }
         }
 
         if (!txtSDT.getText().equalsIgnoreCase(phoneRecently)) {
             if (isExistPhone(txtSDT.getText())) {
-                MsgBox.notify("Số điện thoại này đã đăng ký",this);
+                MsgBox.notify("Số điện thoại này đã đăng ký", this);
                 return;
             }
         }

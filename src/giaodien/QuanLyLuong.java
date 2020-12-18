@@ -343,7 +343,6 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         insertLuong();
         fillChiTietLuong();
-        cardlayout.show(pnlScreenMain, "card3");
         btnDanhSachNhanVien.requestFocus();
     }//GEN-LAST:event_btnCapNhatActionPerformed
 
@@ -448,6 +447,12 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         for (int i=0; i<rowInTalbeChamCong; i++) {
             String gioDen = String.valueOf(tblChamCong.getValueAt(i, 3));
             String gioVe = String.valueOf(tblChamCong.getValueAt(i, 4));
+            String maNhanVien = String.valueOf(tblChamCong.getValueAt(i, 0));
+            
+            if (isDisable(maNhanVien)) {
+                tblChamCong.setValueAt("Tai khoan vi vo hieu hoa", i, 5);
+                continue;
+            }
             
             if (isEmpty(gioDen) && isEmpty(gioVe)) {
                 continue;
@@ -493,6 +498,11 @@ public class QuanLyLuong extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             MsgBox.notify(e.getMessage(), this);
         }
+    }
+    
+    private boolean isDisable(String manv) {
+        NhanVien nv = nhanVienDAO.selectByID(manv);
+        return !nv.isTrangThai();
     }
     
     private boolean isErrorTime(String gioDen, String gioVe, int row) {
